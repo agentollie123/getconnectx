@@ -126,6 +126,7 @@ export function PlaygroundSection() {
   const [commitment, setCommitment] = useState<string>("");
   const [cardStack, setCardStack] = useState<Profile[]>([]);
   const [started, setStarted] = useState(false);
+  const lastSwipeDir = useRef<"left" | "right">("right");
   const [stats, setStats] = useState({ connected: 0, skipped: 0 });
 
   const generateMatches = useCallback(() => {
