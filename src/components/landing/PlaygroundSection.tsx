@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { profiles, type Profile } from "@/lib/profileData";
 import { Sparkles, X, Check, MapPin, Briefcase, Rocket, Clock, ChevronDown } from "lucide-react";
+import logoIcon from "@/assets/logo-icon.png";
 
 function SwipeCard({
   profile,
