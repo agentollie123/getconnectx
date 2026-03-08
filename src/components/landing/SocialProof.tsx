@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
-import { Users, Link2, Globe } from "lucide-react";
+import { Users, Link2, Rocket, Globe } from "lucide-react";
 
 const stats = [
-  { icon: Users, value: "10,000+", label: "Builders" },
-  { icon: Link2, value: "150,000+", label: "Connections" },
-  { icon: Globe, value: "Growing", label: "Across Southeast Asia" },
+  { icon: Users, value: "12,000+", label: "Builders" },
+  { icon: Link2, value: "80,000+", label: "Connections Made" },
+  { icon: Rocket, value: "300+", label: "Startups Forming" },
+  { icon: Globe, value: "8+", label: "Cities" },
 ];
 
 export function SocialProof() {
   return (
     <section className="py-24">
       <div className="container mx-auto px-4">
+        {/* Community stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -18,13 +20,11 @@ export function SocialProof() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Builders are already connecting on{" "}
-            <span className="gradient-text">ConnectX</span>
+            Community <span className="gradient-text">Momentum</span>
           </h2>
         </motion.div>
 
-        {/* Stats */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-3xl mx-auto mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-20">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -46,8 +46,8 @@ export function SocialProof() {
         {/* As Seen In */}
         <div className="text-center mb-12">
           <p className="text-xs uppercase tracking-widest text-muted-foreground mb-6">As Seen In</p>
-          <div className="flex items-center justify-center gap-12 flex-wrap">
-            {["Tech in Asia", "Bisnis.com"].map((name) => (
+          <div className="flex items-center justify-center gap-8 flex-wrap">
+            {["Tech in Asia", "Bisnis.com", "e27", "DealStreetAsia"].map((name) => (
               <div key={name} className="glass-card px-6 py-3 rounded-lg">
                 <span className="font-display font-semibold text-muted-foreground text-lg">{name}</span>
               </div>
@@ -58,8 +58,8 @@ export function SocialProof() {
         {/* Powered By */}
         <div className="text-center">
           <p className="text-xs uppercase tracking-widest text-muted-foreground mb-6">Powered By</p>
-          <div className="flex items-center justify-center gap-12 flex-wrap">
-            {["Google", "NVIDIA", "Alibaba Cloud"].map((name) => (
+          <div className="flex items-center justify-center gap-8 flex-wrap">
+            {["Google Cloud", "NVIDIA", "Alibaba Cloud"].map((name) => (
               <div key={name} className="glass-card px-6 py-3 rounded-lg">
                 <span className="font-display font-semibold text-muted-foreground text-lg">{name}</span>
               </div>

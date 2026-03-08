@@ -18,7 +18,7 @@ export function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#modes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Product</a>
+          <a href="#modes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Ecosystem</a>
           <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
           <a href="#playground" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Playground</a>
           <Link to="/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Web App</Link>
@@ -30,7 +30,7 @@ export function Navbar() {
             Log In
           </Button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Download App
+            Start Exploring
           </Button>
         </div>
 
@@ -41,11 +41,11 @@ export function Navbar() {
 
       {open && (
         <div className="md:hidden glass-card border-t border-border/30 px-4 pb-4 space-y-3">
-          <a href="#modes" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Product</a>
+          <a href="#modes" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Ecosystem</a>
           <a href="#how-it-works" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>How It Works</a>
           <a href="#playground" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Playground</a>
           <Link to="/app" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Web App</Link>
-          <Button size="sm" className="w-full bg-primary text-primary-foreground">Download App</Button>
+          <Button size="sm" className="w-full bg-primary text-primary-foreground">Start Exploring</Button>
         </div>
       )}
     </nav>
