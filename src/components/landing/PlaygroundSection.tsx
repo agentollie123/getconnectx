@@ -18,10 +18,16 @@ function SwipeCard({
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0.5, 1, 1, 1, 0.5]);
+  const exitDir = useRef<"left" | "right">("right");
 
   const handleDragEnd = (_: any, info: PanInfo) => {
-    if (info.offset.x > 100) onSwipe("right");
-    else if (info.offset.x < -100) onSwipe("left");
+    if (info.offset.x > 100) {
+      exitDir.current = "right";
+      onSwipe("right");
+    } else if (info.offset.x < -100) {
+      exitDir.current = "left";
+      onSwipe("left");
+    }
   };
 
   return (
@@ -35,7 +41,7 @@ function SwipeCard({
       initial={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
       animate={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
       exit={{
-        x: 300,
+        x: exitDir.current === "right" ? 400 : -400,
         opacity: 0,
         transition: { duration: 0.3 },
       }}
