@@ -26,16 +26,20 @@ function SwipeCard({
   profile,
   onSwipe,
   isTop,
+  triggerExit,
 }: {
   profile: Profile;
   onSwipe: (dir: "left" | "right") => void;
   isTop: boolean;
+  triggerExit?: "left" | "right" | null;
 }) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-12, 12]);
   const likeOpacity = useTransform(x, [0, 100], [0, 1]);
   const nopeOpacity = useTransform(x, [-100, 0], [1, 0]);
   const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
+
+  const resolvedExit = triggerExit || exitDir;
 
   const handleDragEnd = (_: any, info: PanInfo) => {
     if (info.offset.x > 100) {
@@ -59,9 +63,9 @@ function SwipeCard({
       initial={{ scale: isTop ? 1 : 0.96, y: isTop ? 0 : 8, opacity: isTop ? 1 : 0.7 }}
       animate={{ scale: isTop ? 1 : 0.96, y: isTop ? 0 : 8, opacity: isTop ? 1 : 0.7, x: 0 }}
       exit={{
-        x: exitDir === "left" ? -400 : 400,
+        x: resolvedExit === "left" ? -400 : 400,
         opacity: 0,
-        rotate: exitDir === "left" ? -15 : 15,
+        rotate: resolvedExit === "left" ? -15 : 15,
         transition: { duration: 0.35 },
       }}
     >
@@ -351,12 +355,20 @@ export default function AppDemo() {
     setStats({ connected: 0, skipped: 0 });
   }, [location, stage, commitment, lookingFor]);
 
+  const [buttonSwipeDir, setButtonSwipeDir] = useState<"left" | "right" | null>(null);
+
   const handleSwipe = (dir: "left" | "right") => {
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
       skipped: dir === "left" ? prev.skipped + 1 : prev.skipped,
     }));
+    setButtonSwipeDir(null);
+  };
+
+  const handleButtonSwipe = (dir: "left" | "right") => {
+    setButtonSwipeDir(dir);
+    setTimeout(() => handleSwipe(dir), 50);
   };
 
   return (
@@ -445,20 +457,20 @@ export default function AppDemo() {
               <>
                 <AnimatePresence>
                   {cardStack.slice(0, 2).map((profile, i) => (
-                    <SwipeCard key={profile.id} profile={profile} onSwipe={handleSwipe} isTop={i === 0} />
+                    <SwipeCard key={profile.id} profile={profile} onSwipe={handleSwipe} isTop={i === 0} triggerExit={i === 0 ? buttonSwipeDir : null} />
                   ))}
                 </AnimatePresence>
 
                 {/* Action buttons */}
                 <div className="absolute -bottom-16 inset-x-0 flex items-center justify-center gap-8 z-20">
                   <button
-                    onClick={() => handleSwipe("left")}
+                    onClick={() => handleButtonSwipe("left")}
                     className="w-14 h-14 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
                   >
                     <X className="w-6 h-6 text-destructive" />
                   </button>
                   <button
-                    onClick={() => handleSwipe("right")}
+                    onClick={() => handleButtonSwipe("right")}
                     className="w-14 h-14 rounded-full border-2 border-primary/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
                   >
                     <Check className="w-6 h-6 text-primary" />
