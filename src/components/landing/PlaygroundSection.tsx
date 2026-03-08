@@ -312,6 +312,7 @@ export function PlaygroundSection() {
                           profile={profile}
                           onSwipe={handleSwipe}
                           isTop={i === 0}
+                          lastDir={lastSwipeDir}
                         />
                       ))}
                     </AnimatePresence>
