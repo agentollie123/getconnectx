@@ -10,10 +10,12 @@ function SwipeCard({
   profile,
   onSwipe,
   isTop,
+  lastDir,
 }: {
   profile: Profile;
   onSwipe: (dir: "left" | "right") => void;
   isTop: boolean;
+  lastDir: React.MutableRefObject<"left" | "right">;
 }) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
