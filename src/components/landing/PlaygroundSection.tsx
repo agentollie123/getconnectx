@@ -336,13 +336,13 @@ export function PlaygroundSection() {
               {started && cardStack.length > 0 && (
                 <div className="absolute bottom-4 inset-x-0 flex items-center justify-center gap-6 z-20">
                   <button
-                    onClick={() => handleSwipe("left")}
+                    onClick={() => handleButtonSwipe("left")}
                     className="w-14 h-14 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
                   >
                     <X className="w-6 h-6 text-destructive" />
                   </button>
                   <button
-                    onClick={() => handleSwipe("right")}
+                    onClick={() => handleButtonSwipe("right")}
                     className="w-14 h-14 rounded-full border-2 border-primary/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
                   >
                     <Check className="w-6 h-6 text-primary" />
