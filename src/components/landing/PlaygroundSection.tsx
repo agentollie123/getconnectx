@@ -10,15 +10,19 @@ function SwipeCard({
   profile,
   onSwipe,
   isTop,
+  triggerExit,
 }: {
   profile: Profile;
   onSwipe: (dir: "left" | "right") => void;
   isTop: boolean;
+  triggerExit?: "left" | "right" | null;
 }) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0.5, 1, 1, 1, 0.5]);
   const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
+
+  const resolvedExit = triggerExit || exitDir;
 
   const handleDragEnd = (_: any, info: PanInfo) => {
     if (info.offset.x > 80) {
@@ -42,9 +46,9 @@ function SwipeCard({
       initial={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
       animate={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10, x: 0 }}
       exit={{
-        x: exitDir === "left" ? -350 : 350,
+        x: resolvedExit === "left" ? -350 : 350,
         opacity: 0,
-        rotate: exitDir === "left" ? -15 : 15,
+        rotate: resolvedExit === "left" ? -15 : 15,
         transition: { duration: 0.3 },
       }}
     >
