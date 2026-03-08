@@ -25,6 +25,7 @@ export function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
             Log In
           </Button>
