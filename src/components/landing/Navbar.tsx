@@ -20,7 +20,7 @@ export function Navbar() {
           <a href="#modes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Ecosystem</a>
           <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
           <a href="#playground" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Playground</a>
-          <Link to="/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Web App</Link>
+          <Link to="/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Playground</Link>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
@@ -38,15 +38,15 @@ export function Navbar() {
         </button>
       </div>
 
-      {open && (
-        <div className="md:hidden glass-card border-t border-border/30 px-4 pb-4 space-y-3">
+      {open &&
+      <div className="md:hidden glass-card border-t border-border/30 px-4 pb-4 space-y-3">
           <a href="#modes" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Ecosystem</a>
           <a href="#how-it-works" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>How It Works</a>
           <a href="#playground" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Playground</a>
           <Link to="/app" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Web App</Link>
           <Button size="sm" className="w-full bg-primary text-primary-foreground">Start Exploring</Button>
         </div>
-      )}
-    </nav>
-  );
+      }
+    </nav>);
+
 }
