@@ -1,4 +1,5 @@
 import { Linkedin, Twitter } from "lucide-react";
+import logoIcon from "@/assets/logo-icon.png";
 
 const footerLinks = {
   Product: ["Discover", "Playground", "Idea Marketplace", "Download"],
@@ -13,9 +14,7 @@ export function Footer() {
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="font-display font-bold text-primary-foreground text-sm">CX</span>
-              </div>
+              <img src={logoIcon} alt="ConnectX" className="w-8 h-8 rounded-lg" />
               <span className="font-display font-bold text-lg text-foreground">ConnectX</span>
             </div>
             <p className="text-sm text-muted-foreground mb-2">
