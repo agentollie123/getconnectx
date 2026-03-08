@@ -146,12 +146,20 @@ export function PlaygroundSection() {
     setStats({ connected: 0, skipped: 0 });
   }, [location, stage, commitment]);
 
+  const [buttonSwipeDir, setButtonSwipeDir] = useState<"left" | "right" | null>(null);
+
   const handleSwipe = (dir: "left" | "right") => {
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
       skipped: dir === "left" ? prev.skipped + 1 : prev.skipped,
     }));
+    setButtonSwipeDir(null);
+  };
+
+  const handleButtonSwipe = (dir: "left" | "right") => {
+    setButtonSwipeDir(dir);
+    setTimeout(() => handleSwipe(dir), 50);
   };
 
   return (
