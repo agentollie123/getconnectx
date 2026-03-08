@@ -16,6 +16,7 @@ export interface Profile {
   location: string;
   stage: string;
   photo: string;
+  bio?: string;
 }
 
 export const profiles: Profile[] = [
