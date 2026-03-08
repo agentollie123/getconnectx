@@ -26,23 +26,24 @@ function SwipeCard({
   profile,
   onSwipe,
   isTop,
+  lastDir,
 }: {
   profile: Profile;
   onSwipe: (dir: "left" | "right") => void;
   isTop: boolean;
+  lastDir: React.MutableRefObject<"left" | "right">;
 }) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-12, 12]);
   const likeOpacity = useTransform(x, [0, 100], [0, 1]);
   const nopeOpacity = useTransform(x, [-100, 0], [1, 0]);
-  const exitDir = useRef<"left" | "right">("right");
 
   const handleDragEnd = (_: any, info: PanInfo) => {
     if (info.offset.x > 120) {
-      exitDir.current = "right";
+      lastDir.current = "right";
       onSwipe("right");
     } else if (info.offset.x < -120) {
-      exitDir.current = "left";
+      lastDir.current = "left";
       onSwipe("left");
     }
   };
@@ -57,7 +58,7 @@ function SwipeCard({
       onDragEnd={handleDragEnd}
       initial={{ scale: isTop ? 1 : 0.96, y: isTop ? 0 : 8, opacity: isTop ? 1 : 0.7 }}
       animate={{ scale: isTop ? 1 : 0.96, y: isTop ? 0 : 8, opacity: isTop ? 1 : 0.7 }}
-      exit={{ x: exitDir.current === "right" ? 400 : -400, opacity: 0, transition: { duration: 0.3 } }}
+      exit={{ x: lastDir.current === "right" ? 400 : -400, opacity: 0, transition: { duration: 0.3 } }}
     >
       {/* Swipe overlays */}
       {isTop && (
