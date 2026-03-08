@@ -332,6 +332,7 @@ export default function AppDemo() {
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [stats, setStats] = useState({ connected: 0, skipped: 0 });
   const [started, setStarted] = useState(true);
+  const lastSwipeDir = useRef<"left" | "right">("right");
 
   const generateMatches = useCallback(() => {
     const filtered = profiles.filter((p) => {
@@ -347,6 +348,7 @@ export default function AppDemo() {
   }, [location, stage, commitment, lookingFor]);
 
   const handleSwipe = (dir: "left" | "right") => {
+    lastSwipeDir.current = dir;
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
