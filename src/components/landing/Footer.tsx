@@ -4,7 +4,7 @@ import logoIcon from "@/assets/logo-icon.png";
 const footerLinks = {
   Product: ["Discover", "Playground", "Idea Marketplace", "Download"],
   Company: ["About", "Careers", "Press", "Contact"],
-  Resources: ["Blog", "Privacy Policy", "Terms of Service"],
+  Resources: ["Blog", "Privacy Policy", "Terms of Service"]
 };
 
 export function Footer() {
@@ -20,8 +20,8 @@ export function Footer() {
             <p className="text-sm text-muted-foreground mb-2">
               The operating system for starting companies.
             </p>
-            <p className="text-xs text-muted-foreground mb-4 italic">
-              LinkedIn + AngelList + Tinder for founders.
+            <p className="text-xs text-muted-foreground mb-4 italic">LinkedIn + AngelList + Bumble for founders.
+
             </p>
             <div className="flex gap-3">
               <a href="#" className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
@@ -33,18 +33,18 @@ export function Footer() {
             </div>
           </div>
 
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
+          {Object.entries(footerLinks).map(([title, links]) =>
+          <div key={title}>
               <h4 className="font-display font-semibold text-foreground mb-4">{title}</h4>
               <ul className="space-y-2">
-                {links.map((link) => (
-                  <li key={link}>
+                {links.map((link) =>
+              <li key={link}>
                     <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{link}</a>
                   </li>
-                ))}
+              )}
               </ul>
             </div>
-          ))}
+          )}
         </div>
 
         <div className="border-t border-border pt-6 text-center">
@@ -53,6 +53,6 @@ export function Footer() {
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
+
 }
