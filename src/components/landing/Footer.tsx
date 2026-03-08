@@ -1,9 +1,9 @@
 import { Linkedin, Twitter } from "lucide-react";
 
 const footerLinks = {
-  Product: ["Discover", "Playground", "Download"],
-  Company: ["About", "Careers", "Contact"],
-  Resources: ["Privacy Policy", "Terms of Service"],
+  Product: ["Discover", "Playground", "Idea Marketplace", "Download"],
+  Company: ["About", "Careers", "Press", "Contact"],
+  Resources: ["Blog", "Privacy Policy", "Terms of Service"],
 };
 
 export function Footer() {
@@ -18,8 +18,11 @@ export function Footer() {
               </div>
               <span className="font-display font-bold text-lg text-foreground">ConnectX</span>
             </div>
-            <p className="text-sm text-muted-foreground mb-4">
-              The startup matchmaking platform for Southeast Asia.
+            <p className="text-sm text-muted-foreground mb-2">
+              The operating system for starting companies.
+            </p>
+            <p className="text-xs text-muted-foreground mb-4 italic">
+              LinkedIn + AngelList + Tinder for founders.
             </p>
             <div className="flex gap-3">
               <a href="#" className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
@@ -37,9 +40,7 @@ export function Footer() {
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                      {link}
-                    </a>
+                    <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{link}</a>
                   </li>
                 ))}
               </ul>
@@ -49,7 +50,7 @@ export function Footer() {
 
         <div className="border-t border-border pt-6 text-center">
           <p className="text-xs text-muted-foreground">
-            © 2026 ConnectX. All rights reserved.
+            © 2026 ConnectX. All rights reserved. Building the infrastructure for the next generation of startups.
           </p>
         </div>
       </div>

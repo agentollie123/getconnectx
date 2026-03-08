@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { ArrowRight, Rocket } from "lucide-react";
 
 export function FinalCTA() {
   return (
@@ -15,17 +15,30 @@ export function FinalCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
+          <div className="inline-flex w-16 h-16 rounded-2xl bg-primary/10 items-center justify-center mb-6">
+            <Rocket className="w-8 h-8 text-primary" />
+          </div>
+
           <h2 className="font-display text-3xl sm:text-5xl font-bold mb-6 max-w-2xl mx-auto leading-tight">
-            Find the Right People to Build the{" "}
-            <span className="gradient-text">Future</span> With
+            Your Next Startup Starts With the{" "}
+            <span className="gradient-text">Right People</span>
           </h2>
 
-          <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary mb-4">
-            <Download className="w-4 h-4 mr-2" />
-            Download ConnectX
-          </Button>
+          <p className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto">
+            Join thousands of founders, engineers, and operators building the next generation of companies on ConnectX.
+          </p>
 
-          <p className="text-sm text-muted-foreground">Available on iOS and Android.</p>
+          <div className="flex flex-wrap justify-center gap-4 mb-4">
+            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary">
+              Start Building on ConnectX
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+            <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-secondary">
+              <a href="#playground">Try the Playground</a>
+            </Button>
+          </div>
+
+          <p className="text-sm text-muted-foreground">Available on iOS, Android, and Web.</p>
         </motion.div>
       </div>
     </section>
