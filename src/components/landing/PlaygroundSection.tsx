@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { profiles, type Profile } from "@/lib/profileData";
 import { Sparkles, X, Check, MapPin, Briefcase, Rocket, Clock, ChevronDown } from "lucide-react";
+import logoIcon from "@/assets/logo-icon.png";
 
 function SwipeCard({
   profile,
@@ -258,9 +259,7 @@ export function PlaygroundSection() {
               {/* App header */}
               <div className="h-12 bg-card border-b border-border flex items-center justify-center">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
-                    <span className="font-display font-bold text-primary-foreground text-[10px]">CX</span>
-                  </div>
+                  <img src={logoIcon} alt="ConnectX" className="w-6 h-6 rounded-md" />
                   <span className="font-display font-bold text-foreground text-sm">ConnectX</span>
                 </div>
               </div>

@@ -2,9 +2,8 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from "framer-motion";
 import {
   Home, Compass, Heart, MessageCircle, User,
-  ChevronLeft, ChevronRight, X, Check,
-  MapPin, Briefcase, Rocket, Clock, Search,
-  Link2, Lightbulb, GraduationCap, ChevronDown,
+  X, Check, MapPin, Briefcase, Rocket, Clock, Search,
+  Link2, Lightbulb, GraduationCap, Award, Globe, Building2, BookOpen,
 } from "lucide-react";
 import { profiles, type Profile } from "@/lib/profileData";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import logoIcon from "@/assets/logo-icon.png";
 
 const navItems = [
   { icon: Home, label: "Home" },
@@ -33,7 +33,6 @@ function SwipeCard({
 }) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-12, 12]);
-  const overlayOpacity = useTransform(x, [-150, -50, 0, 50, 150], [1, 0, 0, 0, 1]);
   const likeOpacity = useTransform(x, [0, 100], [0, 1]);
   const nopeOpacity = useTransform(x, [-100, 0], [1, 0]);
 
@@ -80,98 +79,68 @@ function SwipeCard({
             alt={profile.name}
             className="w-16 h-16 rounded-full object-cover ring-2 ring-primary/30"
           />
-          <div>
+          <div className="min-w-0">
             <h3 className="font-display font-bold text-xl text-foreground">{profile.name}</h3>
             <p className="text-sm text-muted-foreground">{profile.role}</p>
+            {profile.distance && (
+              <p className="text-xs text-primary mt-0.5">{profile.distance} away</p>
+            )}
           </div>
         </div>
 
         {/* Scrollable content */}
         <ScrollArea className="flex-1">
           <div className="p-5 space-y-4">
-            {/* Bio section */}
+            {/* Bio */}
             <div className="rounded-xl bg-muted/50 p-4">
-              <p className="text-xs font-semibold text-primary mb-1">
-                I'm {profile.commitment?.toLowerCase() === "exploring" ? "exploring" : `committed ${profile.commitment?.toLowerCase()}`}
-              </p>
+              <p className="text-xs font-semibold text-primary mb-1">About</p>
               <p className="text-sm text-foreground leading-relaxed">
-                {profile.bio || "Open to exciting startup opportunities and collaborations."}
+                {profile.bio || "Open to exciting startup opportunities."}
               </p>
             </div>
 
             {/* Quick info */}
-            <div className="rounded-xl bg-muted/50 p-4 space-y-3">
+            <div className="rounded-xl bg-muted/50 p-4 space-y-2.5">
               {profile.age && (
                 <div className="flex items-center gap-3 text-sm">
-                  <Briefcase className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-foreground">{profile.age}</span>
-                  <span className="text-border">|</span>
-                  <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-foreground">{profile.location}</span>
+                  <User className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-foreground">{profile.age} years old</span>
                 </div>
               )}
-
-              {profile.distance && (
-                <>
-                  <div className="border-t border-border" />
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <Search className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span>{profile.distance} away</span>
-                  </div>
-                </>
-              )}
-
-              {profile.startupIdea && (
-                <>
-                  <div className="border-t border-border" />
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <Lightbulb className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span>{profile.startupIdea}</span>
-                  </div>
-                </>
-              )}
-
-              {profile.experience && (
-                <>
-                  <div className="border-t border-border" />
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <GraduationCap className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span>{profile.experience}</span>
-                  </div>
-                </>
-              )}
-
-              {profile.stage && (
-                <>
-                  <div className="border-t border-border" />
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <Rocket className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span>{profile.stage}</span>
-                  </div>
-                </>
-              )}
-
-              {profile.portfolio && (
-                <>
-                  <div className="border-t border-border" />
-                  <div className="flex items-center gap-3 text-sm text-foreground">
-                    <Link2 className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span>{profile.portfolio}</span>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Interests */}
-            <div>
-              <p className="text-xs font-semibold text-foreground mb-2">Interested in</p>
-              <div className="flex flex-wrap gap-1.5">
-                {profile.interests.map((i) => (
-                  <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">
-                    {i}
-                  </span>
-                ))}
+              <div className="flex items-center gap-3 text-sm">
+                <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-foreground">{profile.location}</span>
               </div>
+              {profile.startupIdea && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Lightbulb className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-foreground">{profile.startupIdea}</span>
+                </div>
+              )}
+              <div className="flex items-center gap-3 text-sm">
+                <Rocket className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-foreground">{profile.stage}</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <Clock className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-foreground">{profile.commitment}</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <Search className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-foreground">Looking for: {profile.lookingFor === "Both" ? "Co-founder & Team" : profile.lookingFor}</span>
+              </div>
+              {profile.portfolio && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Link2 className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-foreground">{profile.portfolio}</span>
+                </div>
+              )}
+              {profile.languages && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Globe className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-foreground">{profile.languages.join(", ")}</span>
+                </div>
+              )}
             </div>
 
             {/* Skills */}
@@ -179,12 +148,82 @@ function SwipeCard({
               <p className="text-xs font-semibold text-foreground mb-2">Skills</p>
               <div className="flex flex-wrap gap-1.5">
                 {profile.skills.map((s) => (
-                  <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
-                    {s}
-                  </span>
+                  <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">{s}</span>
                 ))}
               </div>
             </div>
+
+            {/* Interests */}
+            <div>
+              <p className="text-xs font-semibold text-foreground mb-2">Interested in</p>
+              <div className="flex flex-wrap gap-1.5">
+                {profile.interests.map((i) => (
+                  <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">{i}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Work Experience */}
+            {profile.workExperience && profile.workExperience.length > 0 && (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Building2 className="w-4 h-4 text-primary" />
+                  <p className="text-xs font-semibold text-foreground">Work Experience</p>
+                </div>
+                <div className="space-y-3">
+                  {profile.workExperience.map((w, idx) => (
+                    <div key={idx} className="rounded-lg bg-muted/30 p-3 border-l-2 border-primary/40">
+                      <p className="text-sm font-semibold text-foreground">{w.title}</p>
+                      <p className="text-xs text-primary font-medium">{w.company}</p>
+                      <p className="text-[10px] text-muted-foreground mb-1">{w.duration}</p>
+                      {w.description && (
+                        <p className="text-xs text-muted-foreground leading-relaxed">{w.description}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Education */}
+            {profile.education && profile.education.length > 0 && (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <GraduationCap className="w-4 h-4 text-primary" />
+                  <p className="text-xs font-semibold text-foreground">Education</p>
+                </div>
+                <div className="space-y-2">
+                  {profile.education.map((e, idx) => (
+                    <div key={idx} className="rounded-lg bg-muted/30 p-3 border-l-2 border-accent/40">
+                      <p className="text-sm font-semibold text-foreground">{e.degree}</p>
+                      <p className="text-xs text-accent font-medium">{e.school}</p>
+                      <p className="text-[10px] text-muted-foreground">{e.year}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Certifications */}
+            {profile.certifications && profile.certifications.length > 0 && (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Award className="w-4 h-4 text-primary" />
+                  <p className="text-xs font-semibold text-foreground">Certifications</p>
+                </div>
+                <div className="space-y-2">
+                  {profile.certifications.map((c, idx) => (
+                    <div key={idx} className="flex items-start gap-2 rounded-lg bg-muted/30 p-3">
+                      <BookOpen className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">{c.name}</p>
+                        <p className="text-xs text-muted-foreground">{c.issuer} · {c.year}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </ScrollArea>
       </div>
@@ -276,7 +315,6 @@ function FilterField({ label, value, onChange, options }: {
 /* ─── Main Page ─── */
 export default function AppDemo() {
   const [activeNav, setActiveNav] = useState("Discover");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Filter state
   const [location, setLocation] = useState("");
@@ -312,13 +350,9 @@ export default function AppDemo() {
   return (
     <div className="min-h-screen bg-background flex">
       {/* Sidebar nav */}
-      <aside
-        className={`${sidebarOpen ? "w-16" : "w-16"} border-r border-border bg-card/50 flex flex-col transition-all duration-300 flex-shrink-0 hidden md:flex`}
-      >
+      <aside className="w-16 border-r border-border bg-card/50 flex flex-col flex-shrink-0 hidden md:flex">
         <div className="p-3 flex items-center justify-center border-b border-border">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="font-display font-bold text-primary-foreground text-sm">CX</span>
-          </div>
+          <img src={logoIcon} alt="ConnectX" className="w-8 h-8 rounded-lg" />
         </div>
 
         <nav className="flex-1 p-2 space-y-1">
@@ -360,9 +394,7 @@ export default function AppDemo() {
         <header className="flex-shrink-0 glass-card border-b border-border/30 px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 lg:hidden">
-              <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
-                <span className="font-display font-bold text-primary-foreground text-[10px]">CX</span>
-              </div>
+              <img src={logoIcon} alt="ConnectX" className="w-6 h-6 rounded-md" />
               <span className="font-display font-bold text-foreground text-sm">ConnectX</span>
             </div>
             <span className="hidden lg:inline font-display text-lg font-bold text-foreground">{activeNav}</span>
@@ -379,7 +411,7 @@ export default function AppDemo() {
 
         {/* Card area centered */}
         <div className="flex-1 flex items-center justify-center p-6">
-          <div className="relative w-full max-w-md h-[540px]">
+          <div className="relative w-full max-w-md h-[580px]">
             {!started || cardStack.length === 0 ? (
               <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-8 shadow-xl">
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
