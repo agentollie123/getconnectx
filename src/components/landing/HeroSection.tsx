@@ -127,7 +127,7 @@ export function HeroSection() {
 
             <div className="flex flex-wrap gap-4">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary">
-                Start Exploring
+                Join Waiting list
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
               <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-secondary">
