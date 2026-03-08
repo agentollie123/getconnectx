@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,18 +10,24 @@ function SwipeCard({
   profile,
   onSwipe,
   isTop,
+  lastDir,
 }: {
   profile: Profile;
   onSwipe: (dir: "left" | "right") => void;
   isTop: boolean;
+  lastDir: React.MutableRefObject<"left" | "right">;
 }) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0.5, 1, 1, 1, 0.5]);
-
   const handleDragEnd = (_: any, info: PanInfo) => {
-    if (info.offset.x > 100) onSwipe("right");
-    else if (info.offset.x < -100) onSwipe("left");
+    if (info.offset.x > 100) {
+      lastDir.current = "right";
+      onSwipe("right");
+    } else if (info.offset.x < -100) {
+      lastDir.current = "left";
+      onSwipe("left");
+    }
   };
 
   return (
@@ -35,7 +41,7 @@ function SwipeCard({
       initial={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
       animate={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
       exit={{
-        x: 300,
+        x: lastDir.current === "right" ? 400 : -400,
         opacity: 0,
         transition: { duration: 0.3 },
       }}
@@ -120,6 +126,7 @@ export function PlaygroundSection() {
   const [commitment, setCommitment] = useState<string>("");
   const [cardStack, setCardStack] = useState<Profile[]>([]);
   const [started, setStarted] = useState(false);
+  const lastSwipeDir = useRef<"left" | "right">("right");
   const [stats, setStats] = useState({ connected: 0, skipped: 0 });
 
   const generateMatches = useCallback(() => {
@@ -135,6 +142,7 @@ export function PlaygroundSection() {
   }, [location, stage, commitment]);
 
   const handleSwipe = (dir: "left" | "right") => {
+    lastSwipeDir.current = dir;
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
@@ -304,6 +312,7 @@ export function PlaygroundSection() {
                           profile={profile}
                           onSwipe={handleSwipe}
                           isTop={i === 0}
+                          lastDir={lastSwipeDir}
                         />
                       ))}
                     </AnimatePresence>
