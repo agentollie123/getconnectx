@@ -142,6 +142,7 @@ export function PlaygroundSection() {
   }, [location, stage, commitment]);
 
   const handleSwipe = (dir: "left" | "right") => {
+    lastSwipeDir.current = dir;
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
