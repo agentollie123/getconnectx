@@ -20,7 +20,7 @@ export function Navbar() {
           <a href="#modes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Ecosystem</a>
           <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
           <a href="#playground" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Playground</a>
-          <Link to="/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Playground</Link>
+          <Link to="/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">App</Link>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
