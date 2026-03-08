@@ -41,7 +41,7 @@ function SwipeCard({
       initial={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
       animate={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
       exit={{
-        x: exitDir.current === "right" ? 400 : -400,
+        x: lastDir.current === "right" ? 400 : -400,
         opacity: 0,
         transition: { duration: 0.3 },
       }}
