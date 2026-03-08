@@ -457,7 +457,7 @@ export default function AppDemo() {
               <>
                 <AnimatePresence>
                   {cardStack.slice(0, 2).map((profile, i) => (
-                    <SwipeCard key={profile.id} profile={profile} onSwipe={handleSwipe} isTop={i === 0} />
+                    <SwipeCard key={profile.id} profile={profile} onSwipe={handleSwipe} isTop={i === 0} triggerExit={i === 0 ? buttonSwipeDir : null} />
                   ))}
                 </AnimatePresence>
 
