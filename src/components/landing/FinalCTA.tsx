@@ -26,8 +26,8 @@ export function FinalCTA() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+          viewport={{ once: true }}>
+          
           <div className="inline-flex w-16 h-16 rounded-2xl bg-primary/10 items-center justify-center mb-6">
             <Rocket className="w-8 h-8 text-primary" />
           </div>
@@ -47,39 +47,39 @@ export function FinalCTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="max-w-md mx-auto mb-10"
-          >
-            {submitted ? (
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="flex items-center justify-center gap-3 rounded-2xl bg-primary/10 border border-primary/20 p-6"
-              >
+            className="max-w-md mx-auto mb-10">
+            
+            {submitted ?
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="flex items-center justify-center gap-3 rounded-2xl bg-primary/10 border border-primary/20 p-6">
+              
                 <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
                 <div className="text-left">
                   <p className="font-display font-bold text-foreground">You're on the list!</p>
                   <p className="text-sm text-muted-foreground">We'll notify you when ConnectX launches.</p>
                 </div>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              </motion.div> :
+
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="pl-10 h-12 bg-card border-border text-foreground"
-                  />
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="pl-10 h-12 bg-card border-border text-foreground" />
+                
                 </div>
                 <Button type="submit" size="lg" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 glow-primary whitespace-nowrap">
                   Join Waiting List
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </form>
-            )}
+            }
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-4 mb-4">
@@ -88,9 +88,9 @@ export function FinalCTA() {
             </Button>
           </div>
 
-          <p className="text-sm text-muted-foreground">Available on iOS, Android, and Web.</p>
+          <p className="text-sm text-muted-foreground">Available on iOS and Android  </p>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 }
