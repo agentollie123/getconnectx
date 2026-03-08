@@ -18,10 +18,16 @@ function SwipeCard({
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0.5, 1, 1, 1, 0.5]);
+  const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
 
   const handleDragEnd = (_: any, info: PanInfo) => {
-    if (info.offset.x > 100) onSwipe("right");
-    else if (info.offset.x < -100) onSwipe("left");
+    if (info.offset.x > 80) {
+      setExitDir("right");
+      onSwipe("right");
+    } else if (info.offset.x < -80) {
+      setExitDir("left");
+      onSwipe("left");
+    }
   };
 
   return (
@@ -29,14 +35,16 @@ function SwipeCard({
       className="absolute inset-0"
       style={{ x, rotate, opacity, zIndex: isTop ? 10 : 1 }}
       drag={isTop ? "x" : false}
-      dragConstraints={{ left: 0, right: 0 }}
+      dragConstraints={{ left: -250, right: 250 }}
+      dragSnapToOrigin
       dragElastic={0.8}
       onDragEnd={handleDragEnd}
       initial={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
-      animate={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10 }}
+      animate={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10, x: 0 }}
       exit={{
-        x: 300,
+        x: exitDir === "left" ? -350 : 350,
         opacity: 0,
+        rotate: exitDir === "left" ? -15 : 15,
         transition: { duration: 0.3 },
       }}
     >
