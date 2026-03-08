@@ -3,15 +3,22 @@ import { MapPin } from "lucide-react";
 import { useState } from "react";
 
 const cities = [
-  { name: "Jakarta", builders: 2140, founders: 320, engineers: 890, x: 71, y: 62 },
-  { name: "Singapore", builders: 1850, founders: 410, engineers: 720, x: 68.5, y: 55 },
-  { name: "Bangalore", builders: 3200, founders: 580, engineers: 1600, x: 53, y: 48 },
-  { name: "San Francisco", builders: 4100, founders: 920, engineers: 1800, x: 10, y: 34 },
-  { name: "London", builders: 2800, founders: 640, engineers: 1100, x: 33, y: 23 },
-  { name: "Dubai", builders: 1200, founders: 280, engineers: 450, x: 44.5, y: 40 },
+  { name: "Jakarta", builders: 2140, founders: 320, engineers: 890, x: 70.5, y: 63 },
+  { name: "Singapore", builders: 1850, founders: 410, engineers: 720, x: 68, y: 56 },
+  { name: "Bangalore", builders: 3200, founders: 580, engineers: 1600, x: 52, y: 48 },
+  { name: "San Francisco", builders: 4100, founders: 920, engineers: 1800, x: 11, y: 33 },
+  { name: "London", builders: 2800, founders: 640, engineers: 1100, x: 32, y: 22 },
+  { name: "Dubai", builders: 1200, founders: 280, engineers: 450, x: 44, y: 40 },
   { name: "Manila", builders: 980, founders: 190, engineers: 380, x: 76, y: 50 },
-  { name: "Ho Chi Minh City", builders: 1100, founders: 210, engineers: 420, x: 69.5, y: 50 },
+  { name: "Ho Chi Minh City", builders: 1100, founders: 210, engineers: 420, x: 69, y: 51 },
 ];
+
+// Simplified world map SVG path (continents outline)
+const WORLD_PATH = `M 3,22 C 5,18 8,16 12,14 C 16,12 20,13 24,15 C 26,16 28,18 30,18 C 32,17 33,15 35,14 C 37,13 39,14 40,16 C 40,18 39,20 38,22 C 37,24 36,26 35,28 C 34,30 33,32 33,34 C 33,37 34,40 33,43 C 32,46 30,48 28,50 C 26,52 24,54 22,57 C 20,60 18,64 16,68 C 14,72 12,76 11,78 C 10,76 9,73 9,70 C 9,67 10,64 10,61 C 9,58 7,55 6,52 C 5,49 4,46 4,43 C 3,40 3,37 3,34 C 3,30 3,26 3,22 Z
+M 28,14 C 30,12 32,10 35,10 C 38,10 40,12 42,13 C 44,14 46,14 48,13 C 50,12 52,12 53,14 C 54,16 54,18 53,20 C 52,22 50,24 49,26 C 48,28 47,30 47,32 C 46,34 45,36 44,38 C 43,40 42,42 41,43 C 40,42 40,40 40,38 C 40,36 41,34 41,32 C 40,30 38,28 36,27 C 34,26 32,26 30,27 C 29,25 28,23 28,21 C 28,19 28,16 28,14 Z
+M 54,10 C 56,8 59,7 62,8 C 65,9 68,12 70,14 C 72,16 74,18 76,19 C 78,20 80,20 82,19 C 84,18 86,16 88,16 C 90,16 92,18 93,20 C 94,22 94,24 93,26 C 92,28 90,30 88,31 C 86,32 84,32 82,32 C 80,32 78,31 77,30 C 76,29 75,28 74,28 C 72,28 70,30 68,32 C 66,34 64,36 63,38 C 62,40 61,42 60,44 C 58,46 56,48 55,50 C 54,52 54,55 53,58 C 52,60 50,62 49,60 C 48,58 48,55 48,52 C 48,49 49,46 50,43 C 51,40 52,37 52,34 C 52,31 51,28 51,25 C 51,22 52,19 52,16 C 52,14 53,12 54,10 Z
+M 64,42 C 66,40 68,39 70,40 C 72,41 74,43 75,46 C 76,49 76,52 76,55 C 76,58 75,61 74,64 C 73,67 71,70 69,72 C 67,74 65,75 63,74 C 61,73 60,70 59,67 C 58,64 58,60 59,56 C 60,52 61,48 62,45 C 63,43 63,42 64,42 Z
+M 82,38 C 84,36 86,35 88,36 C 90,37 92,40 93,43 C 94,46 94,50 93,54 C 92,58 90,62 88,65 C 86,68 84,70 82,72 C 80,74 78,75 76,74 C 74,73 73,70 73,67 C 73,64 74,60 75,56 C 76,52 78,48 79,44 C 80,41 81,39 82,38 Z`;
 
 export function NetworkMap() {
   const [active, setActive] = useState<number | null>(null);
@@ -39,61 +46,28 @@ export function NetworkMap() {
 
         {/* Map */}
         <div className="relative max-w-4xl mx-auto glass-card rounded-2xl p-6 sm:p-8 overflow-hidden" style={{ minHeight: 420 }}>
-          {/* World map SVG */}
+          {/* World map SVG background */}
           <svg
-            className="absolute inset-4 sm:inset-8"
-            viewBox="0 0 1000 500"
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 100 85"
             preserveAspectRatio="xMidYMid meet"
-            style={{ opacity: 0.12 }}
+            style={{ opacity: 0.08 }}
           >
-            {/* North America */}
-            <path d="M 50,100 C 55,85 70,75 90,70 C 110,65 130,60 150,58 C 170,56 185,55 200,60 C 215,65 225,72 235,80 C 240,85 242,90 240,98 C 238,106 230,115 225,125 C 220,135 218,142 215,150 C 212,158 210,165 205,175 C 200,185 195,195 190,200 C 185,205 178,208 172,210 C 166,212 160,212 155,215 C 148,218 140,225 132,230 C 124,235 116,238 108,235 C 100,232 95,225 90,215 C 85,205 82,192 78,180 C 74,168 70,155 68,145 C 65,135 62,128 58,120 C 54,112 50,108 48,105 Z" fill="hsl(var(--foreground))" />
-            {/* Central America */}
-            <path d="M 150,215 C 155,220 158,228 160,235 C 162,242 162,248 160,255 C 158,260 154,264 148,265 C 142,266 138,264 135,260 C 132,256 130,250 130,243 C 130,236 132,228 136,222 C 140,216 145,213 150,215 Z" fill="hsl(var(--foreground))" />
-            {/* South America */}
-            <path d="M 175,265 C 182,260 190,258 198,262 C 206,266 212,275 216,285 C 220,295 222,308 222,320 C 222,332 220,345 216,358 C 212,371 206,382 200,392 C 194,402 188,410 180,418 C 172,426 165,430 158,428 C 151,426 146,418 142,408 C 138,398 136,385 136,372 C 136,359 138,345 140,332 C 142,319 146,308 150,298 C 154,288 160,280 165,273 C 170,266 174,264 175,265 Z" fill="hsl(var(--foreground))" />
-            {/* Europe */}
-            <path d="M 310,65 C 320,60 332,58 345,60 C 358,62 370,68 380,75 C 390,82 395,90 398,100 C 400,110 398,118 395,125 C 392,132 386,138 378,142 C 370,146 362,148 352,148 C 342,148 332,145 325,140 C 318,135 312,128 308,120 C 304,112 302,102 305,92 C 308,82 312,72 310,65 Z" fill="hsl(var(--foreground))" />
-            {/* UK */}
-            <path d="M 298,72 C 302,68 308,66 312,70 C 316,74 316,80 314,86 C 312,92 308,96 304,94 C 300,92 298,86 298,80 C 298,76 298,74 298,72 Z" fill="hsl(var(--foreground))" />
-            {/* Africa */}
-            <path d="M 340,165 C 350,158 362,155 375,158 C 388,161 400,170 408,182 C 416,194 420,210 422,228 C 424,246 422,265 418,282 C 414,299 408,315 400,330 C 392,345 382,358 372,368 C 362,378 352,385 342,388 C 332,391 322,388 315,380 C 308,372 304,360 302,345 C 300,330 302,312 305,295 C 308,278 314,262 320,248 C 326,234 332,222 336,210 C 340,198 342,185 342,175 C 342,168 341,164 340,165 Z" fill="hsl(var(--foreground))" />
-            {/* Middle East */}
-            <path d="M 400,145 C 410,140 422,138 435,142 C 448,146 458,155 465,168 C 468,175 468,182 465,188 C 462,194 455,198 448,200 C 441,202 432,200 425,195 C 418,190 412,182 408,172 C 404,162 402,152 400,145 Z" fill="hsl(var(--foreground))" />
-            {/* India */}
-            <path d="M 475,170 C 485,165 498,164 508,170 C 518,176 525,188 528,202 C 531,216 530,232 525,245 C 520,258 512,268 502,272 C 492,276 482,274 474,266 C 466,258 462,245 460,230 C 458,215 460,200 465,188 C 470,176 475,170 475,170 Z" fill="hsl(var(--foreground))" />
-            {/* Russia/Central Asia */}
-            <path d="M 385,55 C 405,48 430,45 460,46 C 490,47 525,52 560,55 C 595,58 630,62 660,60 C 690,58 715,52 735,50 C 755,48 770,50 778,55 C 786,60 788,68 785,78 C 782,88 775,98 765,105 C 755,112 742,115 728,115 C 714,115 700,112 685,108 C 670,104 655,100 640,98 C 625,96 610,96 595,98 C 580,100 565,104 550,105 C 535,106 520,104 505,100 C 490,96 475,90 462,84 C 449,78 438,72 428,68 C 418,64 410,62 402,62 C 394,62 388,65 385,55 Z" fill="hsl(var(--foreground))" />
-            {/* China/East Asia */}
-            <path d="M 570,115 C 585,108 605,105 625,110 C 645,115 665,128 678,142 C 691,156 698,172 700,185 C 702,198 698,208 690,215 C 682,222 670,225 658,222 C 646,219 635,210 625,198 C 615,186 608,172 600,160 C 592,148 585,138 578,130 C 571,122 568,118 570,115 Z" fill="hsl(var(--foreground))" />
-            {/* Japan */}
-            <path d="M 722,130 C 726,125 732,122 736,126 C 740,130 742,138 742,148 C 742,158 740,168 736,175 C 732,182 728,185 724,180 C 720,175 718,165 718,155 C 718,145 720,135 722,130 Z" fill="hsl(var(--foreground))" />
-            {/* Southeast Asia */}
-            <path d="M 620,225 C 630,220 642,218 655,222 C 668,226 680,235 688,248 C 696,261 700,278 698,292 C 696,306 688,315 678,318 C 668,321 656,318 645,310 C 634,302 625,290 620,275 C 615,260 614,245 616,235 C 618,228 619,225 620,225 Z" fill="hsl(var(--foreground))" />
-            {/* Indonesia */}
-            <path d="M 640,300 C 652,296 668,295 685,298 C 702,301 720,308 732,315 C 740,320 742,325 738,328 C 734,331 724,332 712,330 C 700,328 686,324 672,318 C 658,312 648,306 642,302 Z" fill="hsl(var(--foreground))" />
-            {/* Philippines */}
-            <path d="M 720,240 C 724,235 730,232 734,236 C 738,240 740,248 740,258 C 740,268 738,278 734,285 C 730,292 726,295 722,290 C 718,285 716,275 716,264 C 716,253 718,244 720,240 Z" fill="hsl(var(--foreground))" />
-            {/* Australia */}
-            <path d="M 680,345 C 698,338 720,335 742,340 C 764,345 785,358 798,372 C 811,386 818,402 815,415 C 812,428 800,435 785,438 C 770,441 752,438 735,430 C 718,422 702,410 692,395 C 682,380 678,365 678,355 C 678,348 679,344 680,345 Z" fill="hsl(var(--foreground))" />
-            {/* New Zealand */}
-            <path d="M 820,415 C 824,410 830,408 834,412 C 838,416 840,424 840,432 C 840,440 838,446 834,448 C 830,450 826,448 824,442 C 822,436 820,428 820,422 C 820,418 820,415 820,415 Z" fill="hsl(var(--foreground))" />
-            {/* Greenland */}
-            <path d="M 215,25 C 228,20 245,18 260,22 C 275,26 288,35 295,45 C 302,55 302,65 295,72 C 288,79 275,82 262,78 C 249,74 238,65 230,55 C 222,45 218,35 215,28 Z" fill="hsl(var(--foreground))" />
+            <path d={WORLD_PATH} fill="hsl(var(--foreground))" />
           </svg>
 
-          {/* Grid overlay */}
+          {/* Latitude / longitude grid lines */}
           <svg
-            className="absolute inset-4 sm:inset-8"
-            viewBox="0 0 1000 500"
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 100 85"
             preserveAspectRatio="xMidYMid meet"
             style={{ opacity: 0.04 }}
           >
-            {[100, 200, 300, 400].map((y) => (
-              <line key={`h-${y}`} x1="0" y1={y} x2="1000" y2={y} stroke="hsl(var(--foreground))" strokeWidth="1" strokeDasharray="8,8" />
+            {[15, 30, 45, 60, 75].map((y) => (
+              <line key={`h-${y}`} x1="0" y1={y} x2="100" y2={y} stroke="hsl(var(--foreground))" strokeWidth="0.2" />
             ))}
-            {[200, 400, 600, 800].map((x) => (
-              <line key={`v-${x}`} x1={x} y1="0" x2={x} y2="500" stroke="hsl(var(--foreground))" strokeWidth="1" strokeDasharray="8,8" />
+            {[15, 30, 45, 60, 75, 90].map((x) => (
+              <line key={`v-${x}`} x1={x} y1="0" x2={x} y2="85" stroke="hsl(var(--foreground))" strokeWidth="0.2" />
             ))}
           </svg>
 
@@ -117,7 +91,7 @@ export function NetworkMap() {
               <div className="relative w-3 h-3 rounded-full bg-primary border-2 border-background shadow-lg" />
 
               {/* City label */}
-              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 text-[9px] text-muted-foreground whitespace-nowrap font-medium hidden sm:block">
+              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-[9px] text-muted-foreground whitespace-nowrap font-medium hidden sm:block">
                 {city.name}
               </span>
 

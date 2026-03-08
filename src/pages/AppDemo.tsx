@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from "framer-motion";
 import {
   Home, Compass, Heart, MessageCircle, User,
@@ -26,12 +26,10 @@ function SwipeCard({
   profile,
   onSwipe,
   isTop,
-  lastDir,
 }: {
   profile: Profile;
   onSwipe: (dir: "left" | "right") => void;
   isTop: boolean;
-  lastDir: React.MutableRefObject<"left" | "right">;
 }) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-12, 12]);
@@ -39,13 +37,8 @@ function SwipeCard({
   const nopeOpacity = useTransform(x, [-100, 0], [1, 0]);
 
   const handleDragEnd = (_: any, info: PanInfo) => {
-    if (info.offset.x > 120) {
-      lastDir.current = "right";
-      onSwipe("right");
-    } else if (info.offset.x < -120) {
-      lastDir.current = "left";
-      onSwipe("left");
-    }
+    if (info.offset.x > 120) onSwipe("right");
+    else if (info.offset.x < -120) onSwipe("left");
   };
 
   return (
@@ -58,7 +51,7 @@ function SwipeCard({
       onDragEnd={handleDragEnd}
       initial={{ scale: isTop ? 1 : 0.96, y: isTop ? 0 : 8, opacity: isTop ? 1 : 0.7 }}
       animate={{ scale: isTop ? 1 : 0.96, y: isTop ? 0 : 8, opacity: isTop ? 1 : 0.7 }}
-      exit={{ x: lastDir.current === "right" ? 400 : -400, opacity: 0, transition: { duration: 0.3 } }}
+      exit={{ x: 300, opacity: 0, transition: { duration: 0.3 } }}
     >
       {/* Swipe overlays */}
       {isTop && (
@@ -332,7 +325,6 @@ export default function AppDemo() {
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [stats, setStats] = useState({ connected: 0, skipped: 0 });
   const [started, setStarted] = useState(true);
-  const lastSwipeDir = useRef<"left" | "right">("right");
 
   const generateMatches = useCallback(() => {
     const filtered = profiles.filter((p) => {
@@ -348,7 +340,6 @@ export default function AppDemo() {
   }, [location, stage, commitment, lookingFor]);
 
   const handleSwipe = (dir: "left" | "right") => {
-    lastSwipeDir.current = dir;
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
@@ -442,7 +433,7 @@ export default function AppDemo() {
               <>
                 <AnimatePresence>
                   {cardStack.slice(0, 2).map((profile, i) => (
-                    <SwipeCard key={profile.id} profile={profile} onSwipe={handleSwipe} isTop={i === 0} lastDir={lastSwipeDir} />
+                    <SwipeCard key={profile.id} profile={profile} onSwipe={handleSwipe} isTop={i === 0} />
                   ))}
                 </AnimatePresence>
 
