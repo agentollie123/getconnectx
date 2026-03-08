@@ -29,7 +29,7 @@ export function Navbar() {
             Log In
           </Button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Start Exploring
+            Join Waiting list
           </Button>
         </div>
 
