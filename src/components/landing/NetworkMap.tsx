@@ -4,21 +4,25 @@ import { useState } from "react";
 
 const cities = [
   { name: "Jakarta", builders: 2140, founders: 320, engineers: 890, x: 70.5, y: 63 },
-  { name: "Singapore", builders: 1850, founders: 410, engineers: 720, x: 68, y: 56 },
-  { name: "Bangalore", builders: 3200, founders: 580, engineers: 1600, x: 52, y: 48 },
-  { name: "San Francisco", builders: 4100, founders: 920, engineers: 1800, x: 11, y: 33 },
-  { name: "London", builders: 2800, founders: 640, engineers: 1100, x: 32, y: 22 },
-  { name: "Dubai", builders: 1200, founders: 280, engineers: 450, x: 44, y: 40 },
+  { name: "Singapore", builders: 1850, founders: 410, engineers: 720, x: 68, y: 55 },
+  { name: "Bangalore", builders: 3200, founders: 580, engineers: 1600, x: 52, y: 50 },
+  { name: "San Francisco", builders: 4100, founders: 920, engineers: 1800, x: 10, y: 34 },
+  { name: "London", builders: 2800, founders: 640, engineers: 1100, x: 33, y: 24 },
+  { name: "Dubai", builders: 1200, founders: 280, engineers: 450, x: 44, y: 42 },
   { name: "Manila", builders: 980, founders: 190, engineers: 380, x: 76, y: 50 },
-  { name: "Ho Chi Minh City", builders: 1100, founders: 210, engineers: 420, x: 69, y: 51 },
+  { name: "Ho Chi Minh City", builders: 1100, founders: 210, engineers: 420, x: 69, y: 52 },
 ];
 
-// Simplified world map SVG path (continents outline)
-const WORLD_PATH = `M 3,22 C 5,18 8,16 12,14 C 16,12 20,13 24,15 C 26,16 28,18 30,18 C 32,17 33,15 35,14 C 37,13 39,14 40,16 C 40,18 39,20 38,22 C 37,24 36,26 35,28 C 34,30 33,32 33,34 C 33,37 34,40 33,43 C 32,46 30,48 28,50 C 26,52 24,54 22,57 C 20,60 18,64 16,68 C 14,72 12,76 11,78 C 10,76 9,73 9,70 C 9,67 10,64 10,61 C 9,58 7,55 6,52 C 5,49 4,46 4,43 C 3,40 3,37 3,34 C 3,30 3,26 3,22 Z
-M 28,14 C 30,12 32,10 35,10 C 38,10 40,12 42,13 C 44,14 46,14 48,13 C 50,12 52,12 53,14 C 54,16 54,18 53,20 C 52,22 50,24 49,26 C 48,28 47,30 47,32 C 46,34 45,36 44,38 C 43,40 42,42 41,43 C 40,42 40,40 40,38 C 40,36 41,34 41,32 C 40,30 38,28 36,27 C 34,26 32,26 30,27 C 29,25 28,23 28,21 C 28,19 28,16 28,14 Z
-M 54,10 C 56,8 59,7 62,8 C 65,9 68,12 70,14 C 72,16 74,18 76,19 C 78,20 80,20 82,19 C 84,18 86,16 88,16 C 90,16 92,18 93,20 C 94,22 94,24 93,26 C 92,28 90,30 88,31 C 86,32 84,32 82,32 C 80,32 78,31 77,30 C 76,29 75,28 74,28 C 72,28 70,30 68,32 C 66,34 64,36 63,38 C 62,40 61,42 60,44 C 58,46 56,48 55,50 C 54,52 54,55 53,58 C 52,60 50,62 49,60 C 48,58 48,55 48,52 C 48,49 49,46 50,43 C 51,40 52,37 52,34 C 52,31 51,28 51,25 C 51,22 52,19 52,16 C 52,14 53,12 54,10 Z
-M 64,42 C 66,40 68,39 70,40 C 72,41 74,43 75,46 C 76,49 76,52 76,55 C 76,58 75,61 74,64 C 73,67 71,70 69,72 C 67,74 65,75 63,74 C 61,73 60,70 59,67 C 58,64 58,60 59,56 C 60,52 61,48 62,45 C 63,43 63,42 64,42 Z
-M 82,38 C 84,36 86,35 88,36 C 90,37 92,40 93,43 C 94,46 94,50 93,54 C 92,58 90,62 88,65 C 86,68 84,70 82,72 C 80,74 78,75 76,74 C 74,73 73,70 73,67 C 73,64 74,60 75,56 C 76,52 78,48 79,44 C 80,41 81,39 82,38 Z`;
+// Real simplified world map paths (Natural Earth inspired)
+const CONTINENTS = {
+  northAmerica: "M5,20 L8,15 L12,12 L18,10 L22,12 L25,10 L28,12 L30,15 L28,18 L25,20 L22,22 L20,28 L18,32 L15,35 L12,38 L10,35 L8,30 L6,25 Z M12,38 L14,42 L16,45 L18,48 L16,50 L14,48 L12,44 L10,40 Z",
+  southAmerica: "M18,52 L20,50 L22,48 L25,50 L27,54 L28,58 L27,62 L26,66 L24,70 L22,74 L20,76 L18,78 L17,74 L16,70 L17,66 L18,62 L17,58 L18,54 Z",
+  europe: "M32,12 L34,10 L36,8 L38,10 L40,12 L42,10 L44,12 L46,14 L44,16 L42,18 L40,20 L38,22 L36,24 L34,22 L32,20 L30,18 L32,16 Z",
+  africa: "M32,30 L34,28 L36,26 L38,28 L40,30 L42,32 L44,34 L46,38 L46,42 L44,46 L42,50 L40,54 L38,58 L36,62 L34,66 L32,68 L30,66 L28,62 L30,58 L32,54 L30,50 L28,46 L28,42 L30,38 L30,34 Z",
+  asia: "M44,8 L48,6 L52,8 L56,6 L60,8 L64,10 L68,12 L72,14 L76,16 L80,18 L84,16 L88,18 L90,22 L88,26 L84,28 L80,30 L76,32 L72,34 L68,36 L64,38 L60,40 L56,42 L52,44 L48,42 L46,38 L44,34 L42,30 L44,26 L46,22 L48,18 L46,14 L44,12 Z M52,44 L54,48 L56,50 L58,48 L60,46 Z",
+  seAsia: "M64,44 L66,42 L68,44 L70,46 L72,48 L74,50 L76,52 L74,54 L72,56 L70,58 L68,60 L66,58 L64,56 L62,54 L64,50 L66,48 Z M72,56 L74,58 L76,56 L78,54 Z M68,60 L70,62 L72,64 L70,66 L68,64 Z",
+  oceania: "M78,56 L82,54 L86,52 L90,54 L92,58 L90,62 L86,66 L82,68 L78,66 L76,62 L78,58 Z M92,52 L94,54 L92,56 L90,54 Z",
+};
 
 export function NetworkMap() {
   const [active, setActive] = useState<number | null>(null);
@@ -46,29 +50,53 @@ export function NetworkMap() {
 
         {/* Map */}
         <div className="relative max-w-4xl mx-auto glass-card rounded-2xl p-6 sm:p-8 overflow-hidden" style={{ minHeight: 420 }}>
-          {/* World map SVG background */}
+          {/* World map SVG */}
           <svg
             className="absolute inset-0 w-full h-full"
             viewBox="0 0 100 85"
             preserveAspectRatio="xMidYMid meet"
-            style={{ opacity: 0.08 }}
           >
-            <path d={WORLD_PATH} fill="hsl(var(--foreground))" />
-          </svg>
+            {/* Grid lines */}
+            {[17, 34, 51, 68].map((y) => (
+              <line key={`h-${y}`} x1="0" y1={y} x2="100" y2={y} stroke="hsl(var(--foreground))" strokeWidth="0.15" opacity="0.06" />
+            ))}
+            {[20, 40, 60, 80].map((x) => (
+              <line key={`v-${x}`} x1={x} y1="0" x2={x} y2="85" stroke="hsl(var(--foreground))" strokeWidth="0.15" opacity="0.06" />
+            ))}
 
-          {/* Latitude / longitude grid lines */}
-          <svg
-            className="absolute inset-0 w-full h-full"
-            viewBox="0 0 100 85"
-            preserveAspectRatio="xMidYMid meet"
-            style={{ opacity: 0.04 }}
-          >
-            {[15, 30, 45, 60, 75].map((y) => (
-              <line key={`h-${y}`} x1="0" y1={y} x2="100" y2={y} stroke="hsl(var(--foreground))" strokeWidth="0.2" />
+            {/* Continents */}
+            {Object.values(CONTINENTS).map((path, i) => (
+              <path
+                key={i}
+                d={path}
+                fill="hsl(var(--primary))"
+                opacity="0.12"
+                stroke="hsl(var(--primary))"
+                strokeWidth="0.3"
+                strokeOpacity="0.2"
+              />
             ))}
-            {[15, 30, 45, 60, 75, 90].map((x) => (
-              <line key={`v-${x}`} x1={x} y1="0" x2={x} y2="85" stroke="hsl(var(--foreground))" strokeWidth="0.2" />
-            ))}
+
+            {/* Connection lines between cities */}
+            {cities.map((city, i) =>
+              cities.slice(i + 1).map((other, j) => {
+                const dist = Math.hypot(city.x - other.x, city.y - other.y);
+                if (dist > 35) return null;
+                return (
+                  <line
+                    key={`${i}-${j}`}
+                    x1={city.x}
+                    y1={city.y}
+                    x2={other.x}
+                    y2={other.y}
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="0.2"
+                    opacity="0.15"
+                    strokeDasharray="1 1"
+                  />
+                );
+              })
+            )}
           </svg>
 
           {/* City markers */}
@@ -85,13 +113,13 @@ export function NetworkMap() {
               onMouseLeave={() => setActive(null)}
             >
               {/* Pulse ring */}
-              <div className="absolute inset-0 w-4 h-4 -m-0.5">
-                <div className="w-full h-full rounded-full bg-primary/30 animate-ping" />
+              <div className="absolute inset-0 w-5 h-5 -m-1">
+                <div className="w-full h-full rounded-full bg-primary/25 animate-ping" />
               </div>
-              <div className="relative w-3 h-3 rounded-full bg-primary border-2 border-background shadow-lg" />
+              <div className="relative w-3 h-3 rounded-full bg-primary border-2 border-background shadow-lg shadow-primary/30" />
 
               {/* City label */}
-              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-[9px] text-muted-foreground whitespace-nowrap font-medium hidden sm:block">
+              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 text-[9px] text-muted-foreground whitespace-nowrap font-medium hidden sm:block">
                 {city.name}
               </span>
 
@@ -113,7 +141,7 @@ export function NetworkMap() {
             </motion.div>
           ))}
 
-          {/* City labels for mobile */}
+          {/* Mobile city labels */}
           <div className="sm:hidden flex flex-wrap gap-2 mt-4 justify-center absolute bottom-4 inset-x-4">
             {cities.slice(0, 5).map((city) => (
               <span key={city.name} className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
