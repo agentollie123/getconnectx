@@ -1,369 +1,88 @@
 import { useState, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import {
-  Home, Compass, Heart, MessageCircle, User,
-  X, Check, MapPin, Briefcase, Rocket, Clock, Search,
-  Link2, Lightbulb, GraduationCap, Award, Globe, Building2, BookOpen,
+  Home, Heart, MessageCircle, Users, User,
+  X, Check, Bookmark, Compass, ArrowLeft,
+  Sparkles, CloudLightning,
 } from "lucide-react";
 import { profiles, type Profile } from "@/lib/profileData";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import logoIcon from "@/assets/logo-icon.png";
 
+import { FilterPanel, type FilterState } from "@/components/app/FilterPanel";
+import { SwipeCard } from "@/components/app/SwipeCard";
+import { MatchModal } from "@/components/app/MatchModal";
+import { CompatibilityReport } from "@/components/app/CompatibilityReport";
+import { MatchesView } from "@/components/app/MatchesView";
+import { ChatView } from "@/components/app/ChatView";
+import { TeamBuilderView } from "@/components/app/TeamBuilderView";
+import { ProfileView } from "@/components/app/ProfileView";
+import { DemoLimitModal } from "@/components/app/DemoLimitModal";
+import { NetworkStats } from "@/components/app/NetworkStats";
+
 const navItems = [
   { icon: Home, label: "Home" },
-  { icon: Compass, label: "Discover" },
   { icon: Heart, label: "Matches" },
-  { icon: MessageCircle, label: "Messages" },
+  { icon: MessageCircle, label: "Chat" },
+  { icon: Users, label: "Team Builder" },
   { icon: User, label: "Profile" },
 ];
 
-/* ─── Swipe Card ─── */
-function SwipeCard({
-  profile,
-  onSwipe,
-  isTop,
-  triggerExit,
-}: {
-  profile: Profile;
-  onSwipe: (dir: "left" | "right") => void;
-  isTop: boolean;
-  triggerExit?: "left" | "right" | null;
-}) {
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-200, 200], [-12, 12]);
-  const likeOpacity = useTransform(x, [0, 100], [0, 1]);
-  const nopeOpacity = useTransform(x, [-100, 0], [1, 0]);
-  const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
+const COMING_SOON = [
+  { label: "Founder ↔ Investor", desc: "Get matched with aligned investors" },
+  { label: "Founder ↔ Strategic Partner", desc: "Find enterprise partners" },
+  { label: "Founder ↔ Advisors", desc: "Connect with seasoned mentors" },
+];
 
-  const resolvedExit = triggerExit || exitDir;
-
-  const handleDragEnd = (_: any, info: PanInfo) => {
-    if (info.offset.x > 100) {
-      setExitDir("right");
-      onSwipe("right");
-    } else if (info.offset.x < -100) {
-      setExitDir("left");
-      onSwipe("left");
-    }
-  };
-
-  return (
-    <motion.div
-      className="absolute inset-0 cursor-grab active:cursor-grabbing"
-      style={{ x, rotate, zIndex: isTop ? 10 : 1 }}
-      drag={isTop ? "x" : false}
-      dragConstraints={{ left: -300, right: 300 }}
-      dragSnapToOrigin
-      dragElastic={0.7}
-      onDragEnd={handleDragEnd}
-      initial={{ scale: isTop ? 1 : 0.96, y: isTop ? 0 : 8, opacity: isTop ? 1 : 0.7 }}
-      animate={{ scale: isTop ? 1 : 0.96, y: isTop ? 0 : 8, opacity: isTop ? 1 : 0.7, x: 0 }}
-      exit={{
-        x: resolvedExit === "left" ? -400 : 400,
-        opacity: 0,
-        rotate: resolvedExit === "left" ? -15 : 15,
-        transition: { duration: 0.35 },
-      }}
-    >
-      {/* Swipe overlays */}
-      {isTop && (
-        <>
-          <motion.div
-            className="absolute top-6 right-6 z-20 px-4 py-2 rounded-lg border-2 border-primary bg-primary/20 font-display font-bold text-primary text-lg -rotate-12"
-            style={{ opacity: likeOpacity }}
-          >
-            CONNECT
-          </motion.div>
-          <motion.div
-            className="absolute top-6 left-6 z-20 px-4 py-2 rounded-lg border-2 border-destructive bg-destructive/20 font-display font-bold text-destructive text-lg rotate-12"
-            style={{ opacity: nopeOpacity }}
-          >
-            SKIP
-          </motion.div>
-        </>
-      )}
-
-      <div className="h-full rounded-2xl bg-card border border-border overflow-hidden flex flex-col shadow-xl">
-        {/* Photo + name header */}
-        <div className="p-5 flex items-center gap-4 border-b border-border">
-          <img
-            src={profile.photo}
-            alt={profile.name}
-            className="w-16 h-16 rounded-full object-cover ring-2 ring-primary/30"
-          />
-          <div className="min-w-0">
-            <h3 className="font-display font-bold text-xl text-foreground">{profile.name}</h3>
-            <p className="text-sm text-muted-foreground">{profile.role}</p>
-            {profile.distance && (
-              <p className="text-xs text-primary mt-0.5">{profile.distance} away</p>
-            )}
-          </div>
-        </div>
-
-        {/* Scrollable content */}
-        <ScrollArea className="flex-1">
-          <div className="p-5 space-y-4">
-            {/* Bio */}
-            <div className="rounded-xl bg-muted/50 p-4">
-              <p className="text-xs font-semibold text-primary mb-1">About</p>
-              <p className="text-sm text-foreground leading-relaxed">
-                {profile.bio || "Open to exciting startup opportunities."}
-              </p>
-            </div>
-
-            {/* Quick info */}
-            <div className="rounded-xl bg-muted/50 p-4 space-y-2.5">
-              {profile.age && (
-                <div className="flex items-center gap-3 text-sm">
-                  <User className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-foreground">{profile.age} years old</span>
-                </div>
-              )}
-              <div className="flex items-center gap-3 text-sm">
-                <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
-                <span className="text-foreground">{profile.location}</span>
-              </div>
-              {profile.startupIdea && (
-                <div className="flex items-center gap-3 text-sm">
-                  <Lightbulb className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-foreground">{profile.startupIdea}</span>
-                </div>
-              )}
-              <div className="flex items-center gap-3 text-sm">
-                <Rocket className="w-4 h-4 text-primary flex-shrink-0" />
-                <span className="text-foreground">{profile.stage}</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                <Clock className="w-4 h-4 text-primary flex-shrink-0" />
-                <span className="text-foreground">{profile.commitment}</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                <Search className="w-4 h-4 text-primary flex-shrink-0" />
-                <span className="text-foreground">Looking for: {profile.lookingFor === "Both" ? "Co-founder & Team" : profile.lookingFor}</span>
-              </div>
-              {profile.portfolio && (
-                <div className="flex items-center gap-3 text-sm">
-                  <Link2 className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-foreground">{profile.portfolio}</span>
-                </div>
-              )}
-              {profile.languages && (
-                <div className="flex items-center gap-3 text-sm">
-                  <Globe className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-foreground">{profile.languages.join(", ")}</span>
-                </div>
-              )}
-            </div>
-
-            {/* Skills */}
-            <div>
-              <p className="text-xs font-semibold text-foreground mb-2">Skills</p>
-              <div className="flex flex-wrap gap-1.5">
-                {profile.skills.map((s) => (
-                  <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">{s}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* Interests */}
-            <div>
-              <p className="text-xs font-semibold text-foreground mb-2">Interested in</p>
-              <div className="flex flex-wrap gap-1.5">
-                {profile.interests.map((i) => (
-                  <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">{i}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* Work Experience */}
-            {profile.workExperience && profile.workExperience.length > 0 && (
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <Building2 className="w-4 h-4 text-primary" />
-                  <p className="text-xs font-semibold text-foreground">Work Experience</p>
-                </div>
-                <div className="space-y-3">
-                  {profile.workExperience.map((w, idx) => (
-                    <div key={idx} className="rounded-lg bg-muted/30 p-3 border-l-2 border-primary/40">
-                      <p className="text-sm font-semibold text-foreground">{w.title}</p>
-                      <p className="text-xs text-primary font-medium">{w.company}</p>
-                      <p className="text-[10px] text-muted-foreground mb-1">{w.duration}</p>
-                      {w.description && (
-                        <p className="text-xs text-muted-foreground leading-relaxed">{w.description}</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Education */}
-            {profile.education && profile.education.length > 0 && (
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <GraduationCap className="w-4 h-4 text-primary" />
-                  <p className="text-xs font-semibold text-foreground">Education</p>
-                </div>
-                <div className="space-y-2">
-                  {profile.education.map((e, idx) => (
-                    <div key={idx} className="rounded-lg bg-muted/30 p-3 border-l-2 border-accent/40">
-                      <p className="text-sm font-semibold text-foreground">{e.degree}</p>
-                      <p className="text-xs text-accent font-medium">{e.school}</p>
-                      <p className="text-[10px] text-muted-foreground">{e.year}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Certifications */}
-            {profile.certifications && profile.certifications.length > 0 && (
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <Award className="w-4 h-4 text-primary" />
-                  <p className="text-xs font-semibold text-foreground">Certifications</p>
-                </div>
-                <div className="space-y-2">
-                  {profile.certifications.map((c, idx) => (
-                    <div key={idx} className="flex items-start gap-2 rounded-lg bg-muted/30 p-3">
-                      <BookOpen className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">{c.name}</p>
-                        <p className="text-xs text-muted-foreground">{c.issuer} · {c.year}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </ScrollArea>
-      </div>
-    </motion.div>
-  );
-}
-
-/* ─── Filters Sidebar ─── */
-function FiltersSidebar({
-  location, setLocation,
-  stage, setStage,
-  commitment, setCommitment,
-  lookingFor, setLookingFor,
-  onGenerate,
-}: {
-  location: string; setLocation: (v: string) => void;
-  stage: string; setStage: (v: string) => void;
-  commitment: string; setCommitment: (v: string) => void;
-  lookingFor: string; setLookingFor: (v: string) => void;
-  onGenerate: () => void;
-}) {
-  return (
-    <div className="space-y-6">
-      <div>
-        <p className="text-xs text-primary font-medium mb-1">Welcome to ConnectX</p>
-        <h2 className="font-display text-xl font-bold text-foreground">What are you looking for?</h2>
-      </div>
-
-      <p className="text-sm text-muted-foreground">Basic preferences</p>
-
-      <div className="space-y-4">
-        <FilterField label="Location" value={location} onChange={setLocation}
-          options={[
-            { value: "all", label: "Any" }, { value: "Jakarta, Indonesia", label: "Jakarta" },
-            { value: "Singapore", label: "Singapore" }, { value: "Bangalore, India", label: "Bangalore" },
-            { value: "Ho Chi Minh City, Vietnam", label: "Ho Chi Minh City" },
-            { value: "Manila, Philippines", label: "Manila" }, { value: "Dubai, UAE", label: "Dubai" },
-          ]}
-        />
-        <FilterField label="Looking For" value={lookingFor} onChange={setLookingFor}
-          options={[
-            { value: "all", label: "Any" }, { value: "Co-founder", label: "Co-founder" },
-            { value: "Team", label: "Team Member" }, { value: "Both", label: "Both" },
-          ]}
-        />
-        <FilterField label="Startup Stage" value={stage} onChange={setStage}
-          options={[
-            { value: "all", label: "Any" }, { value: "Idea Stage", label: "Idea Stage" },
-            { value: "MVP", label: "MVP" }, { value: "Pre-revenue", label: "Pre-revenue" },
-            { value: "Seed", label: "Seed" },
-          ]}
-        />
-        <FilterField label="Commitment" value={commitment} onChange={setCommitment}
-          options={[
-            { value: "all", label: "Any" }, { value: "Exploring", label: "Exploring" },
-            { value: "Part-time", label: "Part-time" }, { value: "Full-time", label: "Full-time" },
-          ]}
-        />
-      </div>
-
-      <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" onClick={onGenerate}>
-        Generate Candidates
-      </Button>
-    </div>
-  );
-}
-
-function FilterField({ label, value, onChange, options }: {
-  label: string; value: string; onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-}) {
-  return (
-    <div>
-      <label className="text-sm font-medium text-foreground mb-1.5 block">{label}</label>
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="bg-card border-border">
-          <SelectValue placeholder="Any" />
-        </SelectTrigger>
-        <SelectContent>
-          {options.map((o) => (
-            <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
-  );
-}
-
-/* ─── Main Page ─── */
 export default function AppDemo() {
-  const [activeNav, setActiveNav] = useState("Discover");
-
-  // Filter state
-  const [location, setLocation] = useState("");
-  const [stage, setStage] = useState("");
-  const [commitment, setCommitment] = useState("");
-  const [lookingFor, setLookingFor] = useState("");
-
+  const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [stats, setStats] = useState({ connected: 0, skipped: 0 });
-  const [started, setStarted] = useState(true);
+  const [connectedProfiles, setConnectedProfiles] = useState<Profile[]>([]);
+  const [buttonSwipeDir, setButtonSwipeDir] = useState<"left" | "right" | null>(null);
 
-  const generateMatches = useCallback(() => {
+  // Modals
+  const [matchProfile, setMatchProfile] = useState<Profile | null>(null);
+  const [reportProfile, setReportProfile] = useState<Profile | null>(null);
+  const [showDemoLimit, setShowDemoLimit] = useState(false);
+  const [chatTarget, setChatTarget] = useState<Profile | null>(null);
+  const [swipeCount, setSwipeCount] = useState(0);
+
+  const generateMatches = useCallback((filters: FilterState) => {
     const filtered = profiles.filter((p) => {
-      if (location && location !== "all" && p.location !== location) return false;
-      if (stage && stage !== "all" && p.stage !== stage) return false;
-      if (commitment && commitment !== "all" && p.commitment !== commitment) return false;
-      if (lookingFor && lookingFor !== "all" && p.lookingFor !== lookingFor) return false;
+      if (filters.stage.length > 0 && !filters.stage.some((s) => p.stage.includes(s.replace(" Stage", "")))) return false;
       return true;
     });
     setCardStack(filtered.length > 0 ? [...filtered] : [...profiles]);
-    setStarted(true);
     setStats({ connected: 0, skipped: 0 });
-  }, [location, stage, commitment, lookingFor]);
-
-  const [buttonSwipeDir, setButtonSwipeDir] = useState<"left" | "right" | null>(null);
+  }, []);
 
   const handleSwipe = (dir: "left" | "right") => {
+    const current = cardStack[0];
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
       skipped: dir === "left" ? prev.skipped + 1 : prev.skipped,
     }));
     setButtonSwipeDir(null);
+
+    const newCount = swipeCount + 1;
+    setSwipeCount(newCount);
+
+    if (dir === "right" && current) {
+      setConnectedProfiles((prev) => [...prev, current]);
+      // Show match modal on every 2nd right swipe
+      if (newCount % 2 === 0) {
+        setTimeout(() => setMatchProfile(current), 400);
+      }
+    }
+
+    // Show demo limit after 5 swipes
+    if (newCount === 5) {
+      setTimeout(() => setShowDemoLimit(true), 500);
+    }
   };
 
   const handleButtonSwipe = (dir: "left" | "right") => {
@@ -371,132 +90,230 @@ export default function AppDemo() {
     setTimeout(() => handleSwipe(dir), 50);
   };
 
+  const resetDeck = () => {
+    setCardStack([...profiles]);
+    setStats({ connected: 0, skipped: 0 });
+    setSwipeCount(0);
+  };
+
+  const renderMainContent = () => {
+    // Show compatibility report overlay
+    if (reportProfile) {
+      return (
+        <div className="h-full">
+          <CompatibilityReport profile={reportProfile} onBack={() => setReportProfile(null)} />
+        </div>
+      );
+    }
+
+    switch (activeNav) {
+      case "Matches":
+        return (
+          <MatchesView
+            connectedProfiles={connectedProfiles}
+            onViewReport={(p) => setReportProfile(p)}
+            onChat={(p) => {
+              setChatTarget(p);
+              setActiveNav("Chat");
+            }}
+          />
+        );
+      case "Chat":
+        return <ChatView activeChat={chatTarget} />;
+      case "Team Builder":
+        return <TeamBuilderView />;
+      case "Profile":
+        return <ProfileView />;
+      default:
+        return renderHomeView();
+    }
+  };
+
+  const renderHomeView = () => (
+    <div className="flex-1 flex items-center justify-center p-4 sm:p-6">
+      <div className="relative w-full max-w-md h-[520px]">
+        {cardStack.length === 0 ? (
+          <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-8 shadow-xl">
+            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
+              <Check className="w-8 h-8 text-primary" />
+            </div>
+            <p className="font-display font-semibold text-foreground mb-2">You've seen everyone!</p>
+            <p className="text-sm text-muted-foreground mb-1">
+              Connected: {stats.connected} · Skipped: {stats.skipped}
+            </p>
+            <p className="text-xs text-muted-foreground mb-4">Adjust filters to discover more builders</p>
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={resetDeck}>
+              Start Over
+            </Button>
+          </div>
+        ) : (
+          <>
+            <AnimatePresence>
+              {cardStack.slice(0, 2).map((profile, i) => (
+                <SwipeCard
+                  key={profile.id}
+                  profile={profile}
+                  onSwipe={handleSwipe}
+                  isTop={i === 0}
+                  triggerExit={i === 0 ? buttonSwipeDir : null}
+                />
+              ))}
+            </AnimatePresence>
+
+            {/* Action buttons */}
+            <div className="absolute -bottom-16 inset-x-0 flex items-center justify-center gap-6 z-20">
+              <button
+                onClick={() => handleButtonSwipe("left")}
+                className="w-14 h-14 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
+              >
+                <X className="w-6 h-6 text-destructive" />
+              </button>
+              <button
+                onClick={() => {}}
+                className="w-10 h-10 rounded-full border border-accent/30 bg-card flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+              >
+                <Bookmark className="w-4 h-4 text-accent" />
+              </button>
+              <button
+                onClick={() => handleButtonSwipe("right")}
+                className="w-14 h-14 rounded-full border-2 border-green-400/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
+              >
+                <Check className="w-6 h-6 text-green-400" />
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Sidebar nav */}
-      <aside className="w-16 border-r border-border bg-card/50 flex flex-col flex-shrink-0 hidden md:flex">
-        <div className="p-3 flex items-center justify-center border-b border-border">
-          <img src={logoIcon} alt="ConnectX" className="w-8 h-8 rounded-lg" />
+    <div className="min-h-screen bg-[hsl(0,0%,6%)] flex items-center justify-center p-2 sm:p-6">
+      {/* Mobile frame */}
+      <div className="w-full max-w-5xl h-[90vh] max-h-[800px] rounded-3xl border-2 border-border/30 bg-background overflow-hidden shadow-2xl flex flex-col">
+
+        {/* Top bar with stats */}
+        <header className="flex-shrink-0 bg-card/80 border-b border-border/50 px-4 py-2.5 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <img src={logoIcon} alt="ConnectX" className="w-7 h-7 rounded-lg" />
+            <span className="font-display font-bold text-foreground text-sm">Welcome to ConnectX</span>
+          </div>
+          <NetworkStats />
+        </header>
+
+        {/* Body */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Sidebar nav */}
+          <aside className="w-14 bg-card/30 border-r border-border/50 flex flex-col flex-shrink-0 hidden md:flex">
+            <nav className="flex-1 py-2 space-y-0.5">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => {
+                    setActiveNav(item.label);
+                    setReportProfile(null);
+                  }}
+                  className={`w-full flex flex-col items-center gap-0.5 py-2.5 text-[9px] transition-colors ${
+                    activeNav === item.label
+                      ? "text-primary bg-primary/5"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                  }`}
+                  title={item.label}
+                >
+                  <item.icon className="w-4.5 h-4.5" />
+                  <span className="leading-none">{item.label === "Team Builder" ? "Team" : item.label}</span>
+                </button>
+              ))}
+            </nav>
+          </aside>
+
+          {/* Filter panel - only show on Home */}
+          {activeNav === "Home" && !reportProfile && (
+            <aside className="hidden lg:flex w-72 border-r border-border/50 bg-card/20 p-4 flex-col overflow-hidden">
+              <FilterPanel onGenerate={generateMatches} />
+            </aside>
+          )}
+
+          {/* Main content */}
+          <main className="flex-1 flex flex-col overflow-hidden">
+            {/* Sub-header */}
+            <div className="flex-shrink-0 px-4 py-2 border-b border-border/30 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                {reportProfile && (
+                  <button onClick={() => setReportProfile(null)} className="text-muted-foreground hover:text-foreground">
+                    <ArrowLeft className="w-4 h-4" />
+                  </button>
+                )}
+                <span className="font-display text-sm font-semibold text-foreground">{activeNav}</span>
+              </div>
+              {activeNav === "Home" && (
+                <Badge variant="outline" className="border-primary/30 text-primary text-[10px]">
+                  {stats.connected} connected · {stats.skipped} skipped
+                </Badge>
+              )}
+            </div>
+
+            {/* Content area */}
+            <div className="flex-1 overflow-hidden">
+              {renderMainContent()}
+            </div>
+          </main>
         </div>
 
-        <nav className="flex-1 p-2 space-y-1">
+        {/* Coming Soon + Footer */}
+        <footer className="flex-shrink-0 bg-card/50 border-t border-border/50 px-4 py-2">
+          <div className="flex items-center justify-between gap-4 overflow-x-auto">
+            <div className="flex items-center gap-3 flex-shrink-0">
+              {COMING_SOON.map((c) => (
+                <div key={c.label} className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-muted/30 border border-border/30 flex-shrink-0">
+                  <Sparkles className="w-3 h-3 text-accent" />
+                  <span className="text-[9px] text-muted-foreground whitespace-nowrap">{c.label}</span>
+                  <span className="text-[8px] text-muted-foreground/50 px-1 py-0.5 rounded bg-muted/50">Soon</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <CloudLightning className="w-3 h-3 text-primary" />
+              <span className="text-[9px] text-muted-foreground whitespace-nowrap">Powered by modern AI infrastructure</span>
+            </div>
+          </div>
+        </footer>
+
+        {/* Mobile bottom nav */}
+        <nav className="md:hidden flex-shrink-0 bg-card border-t border-border/50 flex items-center justify-around py-1.5">
           {navItems.map((item) => (
             <button
               key={item.label}
-              onClick={() => setActiveNav(item.label)}
-              className={`w-full flex items-center justify-center p-2.5 rounded-lg text-sm transition-colors ${
-                activeNav === item.label
-                  ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+              onClick={() => {
+                setActiveNav(item.label);
+                setReportProfile(null);
+              }}
+              className={`flex flex-col items-center gap-0.5 px-2 py-1 text-[9px] ${
+                activeNav === item.label ? "text-primary" : "text-muted-foreground"
               }`}
-              title={item.label}
             >
-              <item.icon className="w-5 h-5" />
+              <item.icon className="w-4 h-4" />
+              <span>{item.label === "Team Builder" ? "Team" : item.label}</span>
             </button>
           ))}
         </nav>
+      </div>
 
-        <div className="p-2 border-t border-border flex justify-center">
-          <ThemeToggle />
-        </div>
-      </aside>
-
-      {/* Filter panel */}
-      <aside className="hidden lg:block w-80 border-r border-border bg-card/30 p-6 overflow-y-auto">
-        <FiltersSidebar
-          location={location} setLocation={setLocation}
-          stage={stage} setStage={setStage}
-          commitment={commitment} setCommitment={setCommitment}
-          lookingFor={lookingFor} setLookingFor={setLookingFor}
-          onGenerate={generateMatches}
-        />
-      </aside>
-
-      {/* Main content — swipe area */}
-      <main className="flex-1 flex flex-col overflow-hidden">
-        {/* Top bar */}
-        <header className="flex-shrink-0 glass-card border-b border-border/30 px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 lg:hidden">
-              <img src={logoIcon} alt="ConnectX" className="w-6 h-6 rounded-md" />
-              <span className="font-display font-bold text-foreground text-sm">ConnectX</span>
-            </div>
-            <span className="hidden lg:inline font-display text-lg font-bold text-foreground">{activeNav}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Badge variant="outline" className="border-primary/30 text-primary text-xs">
-              {stats.connected} connected · {stats.skipped} skipped
-            </Badge>
-            <div className="lg:hidden">
-              <ThemeToggle />
-            </div>
-          </div>
-        </header>
-
-        {/* Card area centered */}
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="relative w-full max-w-md h-[580px]">
-            {!started || cardStack.length === 0 ? (
-              <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-8 shadow-xl">
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
-                  {cardStack.length === 0 ? <Check className="w-8 h-8 text-primary" /> : <Compass className="w-8 h-8 text-primary" />}
-                </div>
-                <p className="font-display font-semibold text-foreground mb-2">
-                  {cardStack.length === 0 ? "You've seen everyone!" : "Ready to discover?"}
-                </p>
-                <p className="text-sm text-muted-foreground mb-4">
-                  {cardStack.length === 0
-                    ? `Connected: ${stats.connected} · Skipped: ${stats.skipped}`
-                    : "Use filters on the left to set preferences, then start swiping!"}
-                </p>
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={generateMatches}>
-                  {cardStack.length === 0 ? "Start Over" : "Generate Candidates"}
-                </Button>
-              </div>
-            ) : (
-              <>
-                <AnimatePresence>
-                  {cardStack.slice(0, 2).map((profile, i) => (
-                    <SwipeCard key={profile.id} profile={profile} onSwipe={handleSwipe} isTop={i === 0} triggerExit={i === 0 ? buttonSwipeDir : null} />
-                  ))}
-                </AnimatePresence>
-
-                {/* Action buttons */}
-                <div className="absolute -bottom-16 inset-x-0 flex items-center justify-center gap-8 z-20">
-                  <button
-                    onClick={() => handleButtonSwipe("left")}
-                    className="w-14 h-14 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
-                  >
-                    <X className="w-6 h-6 text-destructive" />
-                  </button>
-                  <button
-                    onClick={() => handleButtonSwipe("right")}
-                    className="w-14 h-14 rounded-full border-2 border-primary/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
-                  >
-                    <Check className="w-6 h-6 text-primary" />
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </main>
-
-      {/* Mobile bottom nav */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 glass-card border-t border-border/30 flex items-center justify-around py-2 z-30">
-        {navItems.map((item) => (
-          <button
-            key={item.label}
-            onClick={() => setActiveNav(item.label)}
-            className={`flex flex-col items-center gap-0.5 px-3 py-1 text-xs ${
-              activeNav === item.label ? "text-primary" : "text-muted-foreground"
-            }`}
-          >
-            <item.icon className="w-5 h-5" />
-            <span>{item.label}</span>
-          </button>
-        ))}
-      </nav>
+      {/* Modals */}
+      <MatchModal
+        profile={matchProfile}
+        onClose={() => setMatchProfile(null)}
+        onChat={() => {
+          setChatTarget(matchProfile);
+          setMatchProfile(null);
+          setActiveNav("Chat");
+        }}
+        onReport={() => {
+          setReportProfile(matchProfile!);
+          setMatchProfile(null);
+        }}
+      />
+      <DemoLimitModal open={showDemoLimit} onClose={() => setShowDemoLimit(false)} />
     </div>
   );
 }
