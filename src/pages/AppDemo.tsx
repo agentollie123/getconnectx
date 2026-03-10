@@ -252,7 +252,6 @@ export default function AppDemo() {
             isStartupMode={isStartupMode(matchingMode)}
             connectedStartups={connectedStartups}
           />
-          />
         );
       case "Profile":
         return (
