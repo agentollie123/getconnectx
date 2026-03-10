@@ -28,8 +28,10 @@ export function Navbar() {
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
             Log In
           </Button>
-          <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Join Waiting list
+          <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+            <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">
+              Join Waiting list
+            </a>
           </Button>
         </div>
 
