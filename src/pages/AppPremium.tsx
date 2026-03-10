@@ -12,7 +12,8 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import logoIcon from "@/assets/logo-icon.png";
 
-import { PremiumFilterPanel } from "@/components/app/PremiumFilterPanel";
+import { PremiumFilterPanel, type PremiumFilterState } from "@/components/app/PremiumFilterPanel";
+import { startups as allStartups } from "@/lib/startupData";
 import { SwipeCard } from "@/components/app/SwipeCard";
 import { StartupSwipeCard } from "@/components/app/StartupSwipeCard";
 import { StartupDetailModal } from "@/components/app/StartupDetailModal";
