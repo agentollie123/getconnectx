@@ -22,7 +22,7 @@ const Index = () => {
       <FounderProblem />
       <EcosystemMatchmaking />
       <StartupPipeline />
-      <NetworkMap />
+      
       <SocialDiscovery />
       <IdeaMarketplace />
       <PlaygroundSection />
