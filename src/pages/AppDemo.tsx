@@ -249,6 +249,8 @@ export default function AppDemo() {
           <TeamBuilderView
             teamMembers={teamMembers}
             onFindMembers={() => setActiveNav("Home")}
+            isStartupMode={isStartupMode(matchingMode)}
+            connectedStartups={connectedStartups}
           />
         );
       case "Profile":
