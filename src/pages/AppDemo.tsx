@@ -200,10 +200,6 @@ export default function AppDemo() {
 
   const renderHomeView = () => (
     <div className="flex-1 flex flex-col items-center justify-center p-3 relative">
-      {/* Matching mode selector */}
-      <div className="w-full max-w-[380px] mb-3">
-        <MatchingModeSelector mode={matchingMode} onModeChange={setMatchingMode} />
-      </div>
 
       <div className="relative w-full max-w-[360px] h-[420px]">
         {cardStack.length === 0 ? (
