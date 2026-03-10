@@ -14,11 +14,11 @@ const stats = [
 ];
 
 const partners = [
-  { src: logoNvidia, alt: "NVIDIA Inception Program", height: 48 },
-  { src: logoTechInAsia, alt: "Tech in Asia", height: 28 },
-  { src: logoGoogleStartups, alt: "Google for Startups", height: 36 },
-  { src: logoBisnis, alt: "Bisnis.com", height: 32 },
-  { src: logoAlibabaCloud, alt: "Alibaba Cloud", height: 28 },
+  { src: logoNvidia, alt: "NVIDIA Inception Program" },
+  { src: logoGoogleStartups, alt: "Google for Startups" },
+  { src: logoAlibabaCloud, alt: "Alibaba Cloud" },
+  { src: logoTechInAsia, alt: "Tech in Asia" },
+  { src: logoBisnis, alt: "Bisnis.com" },
 ];
 
 export function SocialProof() {
