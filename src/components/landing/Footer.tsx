@@ -46,7 +46,7 @@ export function Footer() {
               {socials.map((s) => {
                 const Icon = s.icon;
                 return (
-                  <a key={s.label} href={s.href} aria-label={s.label} className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
                     <Icon className="w-4 h-4" />
                   </a>
                 );
