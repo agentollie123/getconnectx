@@ -132,9 +132,11 @@ export function HeroSection() {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-secondary">
-                <Play className="w-4 h-4 mr-2" />
-                <a href="#playground">Try the Playground</a>
+              <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-secondary" asChild>
+                <a href="/app">
+                  <Play className="w-4 h-4 mr-2" />
+                  Try the Playground
+                </a>
               </Button>
             </div>
 
