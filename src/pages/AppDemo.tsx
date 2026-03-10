@@ -224,7 +224,7 @@ export default function AppDemo() {
       case "Profile":
         return (
           <ScrollArea className="h-full">
-            <ProfileView matchingMode={matchingMode} onModeChange={handleModeChange} />
+            <ProfileView />
             <div className="px-4 pb-4">
               <V2ComingSoonGrid />
             </div>
