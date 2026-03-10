@@ -269,7 +269,7 @@ export default function AppDemo() {
             <VersionBadge tier="free" version={1} />
           </div>
           <div className="flex items-center gap-2">
-            <SwipeLimitBar current={swipeCount} max={DAILY_SWIPE_LIMIT} />
+            <SwipeLimitBar current={swipeCount} max={0} isPremium />
           </div>
         </div>
 
