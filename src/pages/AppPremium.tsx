@@ -2,12 +2,13 @@ import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Home, Heart, MessageCircle, Users, User,
-  X, Check, Zap, ArrowLeft, Sparkles, SlidersHorizontal, Crown,
-  Code, Palette, TrendingUp, Briefcase,
+  X, Check, Zap, ArrowLeft, SlidersHorizontal, Crown,
+  Code, Palette, TrendingUp, Briefcase, Map, RotateCcw, Undo2,
 } from "lucide-react";
 import { profiles, type Profile } from "@/lib/profileData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import logoIcon from "@/assets/logo-icon.png";
 
 import { PremiumFilterPanel } from "@/components/app/PremiumFilterPanel";
@@ -21,6 +22,9 @@ import { ProfileView } from "@/components/app/ProfileView";
 import { SpotlightModal } from "@/components/app/SpotlightModal";
 import { AddToTeamModal } from "@/components/app/AddToTeamModal";
 import { PremiumLikedYouSection } from "@/components/app/PremiumLikedYouSection";
+import { VersionBadge, MatchingModeSelector, SwipeLimitBar } from "@/components/app/VersionBadge";
+import { V2ComingSoonStrip, V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
+import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 
 const navItems = [
   { icon: Home, label: "Home" },
@@ -28,18 +32,13 @@ const navItems = [
   { icon: MessageCircle, label: "Chat" },
   { icon: Users, label: "Team" },
   { icon: User, label: "Profile" },
+  { icon: Map, label: "Roadmap" },
 ];
 
 const STATS_BAR = [
   { label: "Builders", value: "12K+" },
   { label: "Connections", value: "80K+" },
   { label: "Teams", value: "300+" },
-];
-
-const COMING_SOON = [
-  "Founder ↔ Investor",
-  "Founder ↔ Partner",
-  "Founder ↔ Advisor",
 ];
 
 const INITIAL_TEAM = [
@@ -56,6 +55,8 @@ export default function AppPremium() {
   const [connectedProfiles, setConnectedProfiles] = useState<Profile[]>([]);
   const [buttonSwipeDir, setButtonSwipeDir] = useState<"left" | "right" | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [matchingMode, setMatchingMode] = useState("founder-cofounder");
+  const [lastSwiped, setLastSwiped] = useState<Profile | null>(null);
 
   const [matchProfile, setMatchProfile] = useState<Profile | null>(null);
   const [reportProfile, setReportProfile] = useState<Profile | null>(null);
@@ -77,6 +78,7 @@ export default function AppPremium() {
 
   const handleSwipe = (dir: "left" | "right") => {
     const current = cardStack[0];
+    setLastSwiped(current);
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
@@ -97,6 +99,14 @@ export default function AppPremium() {
   const handleButtonSwipe = (dir: "left" | "right") => {
     setButtonSwipeDir(dir);
     setTimeout(() => handleSwipe(dir), 50);
+  };
+
+  const handleRewind = () => {
+    if (lastSwiped) {
+      setCardStack((prev) => [lastSwiped!, ...prev]);
+      setLastSwiped(null);
+      setSwipeCount((c) => Math.max(0, c - 1));
+    }
   };
 
   const resetDeck = () => {
@@ -150,7 +160,20 @@ export default function AppPremium() {
           />
         );
       case "Profile":
-        return <ProfileView />;
+        return (
+          <ScrollArea className="h-full">
+            <ProfileView />
+            <div className="px-4 pb-4">
+              <V2ComingSoonGrid showPremium />
+            </div>
+          </ScrollArea>
+        );
+      case "Roadmap":
+        return (
+          <ScrollArea className="h-full">
+            <VersionRoadmap />
+          </ScrollArea>
+        );
       default:
         return null;
     }
@@ -169,6 +192,11 @@ export default function AppPremium() {
 
       {/* Center — swipe cards */}
       <div className="flex-1 flex flex-col items-center justify-center p-3 lg:p-6 relative">
+        {/* Matching mode */}
+        <div className="w-full max-w-[400px] mb-3">
+          <MatchingModeSelector mode={matchingMode} onModeChange={setMatchingMode} />
+        </div>
+
         {/* Mobile filter toggle */}
         {showFilters && (
           <motion.div
@@ -181,7 +209,7 @@ export default function AppPremium() {
           </motion.div>
         )}
 
-        <div className="relative w-full max-w-[360px] h-[460px]">
+        <div className="relative w-full max-w-[360px] h-[420px]">
           {cardStack.length === 0 ? (
             <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
@@ -191,7 +219,6 @@ export default function AppPremium() {
               <p className="text-xs text-muted-foreground mb-1">
                 {stats.connected} connected · {stats.skipped} skipped
               </p>
-              <p className="text-[10px] text-muted-foreground mb-3">Adjust filters for more</p>
               <Button size="sm" className="bg-primary text-primary-foreground" onClick={resetDeck}>
                 Start Over
               </Button>
@@ -212,12 +239,22 @@ export default function AppPremium() {
         </div>
 
         {cardStack.length > 0 && (
-          <div className="flex items-center justify-center gap-5 mt-5 z-20">
+          <div className="flex items-center justify-center gap-4 mt-4 z-20">
             <button
               onClick={() => handleButtonSwipe("left")}
-              className="w-14 h-14 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90"
+              className="w-13 h-13 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90"
             >
               <X className="w-6 h-6 text-destructive" />
+            </button>
+            <button
+              onClick={handleRewind}
+              disabled={!lastSwiped}
+              className={`w-10 h-10 rounded-full border border-accent/40 bg-card flex items-center justify-center shadow-md hover:scale-110 transition-transform active:scale-90 ${
+                !lastSwiped ? "opacity-30" : "glow-accent"
+              }`}
+              title="Rewind last swipe"
+            >
+              <RotateCcw className="w-4 h-4 text-accent" />
             </button>
             <button
               onClick={() => setShowSpotlight(true)}
@@ -227,7 +264,7 @@ export default function AppPremium() {
             </button>
             <button
               onClick={() => handleButtonSwipe("right")}
-              className="w-14 h-14 rounded-full border-2 border-green-400/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90"
+              className="w-13 h-13 rounded-full border-2 border-green-400/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90"
             >
               <Check className="w-6 h-6 text-green-400" />
             </button>
@@ -249,19 +286,17 @@ export default function AppPremium() {
         <div className="flex items-center gap-2.5">
           <img src={logoIcon} alt="ConnectX" className="w-7 h-7 rounded-md" />
           <span className="font-display font-bold text-foreground text-sm">ConnectX</span>
-          <span className="hidden sm:flex items-center gap-1 text-[9px] px-2 py-0.5 rounded-full bg-gradient-to-r from-accent/20 to-primary/20 text-accent font-bold border border-accent/30">
-            <Crown className="w-3 h-3" /> PREMIUM
-          </span>
+          <VersionBadge tier="premium" version={1} />
         </div>
 
         <div className="flex items-center gap-3">
+          <SwipeLimitBar current={swipeCount} max={0} isPremium />
           {STATS_BAR.map((s) => (
-            <div key={s.label} className="flex items-center gap-1">
+            <div key={s.label} className="flex items-center gap-1 hidden sm:flex">
               <span className="text-[10px] font-bold text-primary">{s.value}</span>
-              <span className="text-[9px] text-muted-foreground hidden sm:inline">{s.label}</span>
+              <span className="text-[9px] text-muted-foreground">{s.label}</span>
             </div>
           ))}
-          {/* Mobile filter button */}
           {activeNav === "Home" && (
             <button
               onClick={() => setShowFilters(!showFilters)}
@@ -305,14 +340,8 @@ export default function AppPremium() {
       </div>
 
       {/* Coming soon strip */}
-      <div className="flex-shrink-0 px-3 py-1.5 bg-card/40 border-t border-border/20 flex items-center gap-2 overflow-x-auto">
-        {COMING_SOON.map((c) => (
-          <div key={c} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-muted/30 border border-border/20 flex-shrink-0">
-            <Sparkles className="w-2.5 h-2.5 text-accent" />
-            <span className="text-[8px] text-muted-foreground whitespace-nowrap">{c}</span>
-            <span className="text-[7px] text-primary font-bold">SOON</span>
-          </div>
-        ))}
+      <div className="flex-shrink-0 px-3 py-1.5 bg-card/40 border-t border-border/20">
+        <V2ComingSoonStrip />
       </div>
 
       {/* Bottom nav */}
@@ -325,12 +354,12 @@ export default function AppPremium() {
               setReportProfile(null);
               setShowFilters(false);
             }}
-            className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-colors ${
+            className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-colors ${
               activeNav === item.label ? "text-primary" : "text-muted-foreground"
             }`}
           >
-            <item.icon className={`w-5 h-5 ${activeNav === item.label ? "drop-shadow-[0_0_6px_hsl(var(--primary))]" : ""}`} />
-            <span className="text-[9px] font-medium">{item.label}</span>
+            <item.icon className={`w-4 h-4 ${activeNav === item.label ? "drop-shadow-[0_0_6px_hsl(var(--primary))]" : ""}`} />
+            <span className="text-[8px] font-medium">{item.label}</span>
             {activeNav === item.label && <div className="w-1 h-1 rounded-full bg-primary" />}
           </button>
         ))}
