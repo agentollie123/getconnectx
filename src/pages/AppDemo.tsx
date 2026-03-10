@@ -84,10 +84,6 @@ export default function AppDemo() {
   }, []);
 
   const handleSwipe = (dir: "left" | "right") => {
-    if (swipeCount >= DAILY_SWIPE_LIMIT) {
-      setShowUpgrade(true);
-      return;
-    }
 
     const current = cardStack[0];
     setCardStack((prev) => prev.slice(1));
@@ -112,10 +108,6 @@ export default function AppDemo() {
   };
 
   const handleButtonSwipe = (dir: "left" | "right") => {
-    if (swipeCount >= DAILY_SWIPE_LIMIT) {
-      setShowUpgrade(true);
-      return;
-    }
     setButtonSwipeDir(dir);
     setTimeout(() => handleSwipe(dir), 50);
   };
@@ -277,7 +269,7 @@ export default function AppDemo() {
             <VersionBadge tier="free" version={1} />
           </div>
           <div className="flex items-center gap-2">
-            <SwipeLimitBar current={swipeCount} max={DAILY_SWIPE_LIMIT} />
+            <SwipeLimitBar current={swipeCount} max={0} isPremium />
           </div>
         </div>
 
