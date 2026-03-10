@@ -25,7 +25,6 @@ export interface FilterState {
 }
 
 const LOCATIONS = ["Anywhere", "Same City", "Same Country", "Remote Friendly"];
-const DISTANCES = ["10 km", "25 km", "50 km", "100 km", "Remote"];
 const LOOKING_FOR = [
   "Founder → Co-Founder", "Founder → Team", "Co-Founder → Startup",
   "Team Member → Startup",
