@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Users, Link2, Rocket, Globe } from "lucide-react";
+import partnersBanner from "@/assets/partners-banner.png";
 
 const stats = [
   { icon: Users, value: "12,000+", label: "Builders" },
