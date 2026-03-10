@@ -110,7 +110,7 @@ export function HeroSection() {
             
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-6">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              The Operating System for Starting Companies
+              The Platform Where Startups Begin
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
