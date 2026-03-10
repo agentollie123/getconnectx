@@ -29,17 +29,14 @@ export function FinalCTA() {
             Join thousands of founders, engineers, and operators building the next generation of companies on ConnectX.
           </p>
 
-          <div className="max-w-md mx-auto mb-10">
+          <div className="flex flex-wrap justify-center gap-4 mb-4">
             <Button size="lg" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
               <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">
                 Join Waiting List
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
             </Button>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-4">
-            <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-secondary" asChild>
+            <Button size="lg" variant="outline" className="h-12 border-border text-foreground hover:bg-secondary" asChild>
               <a href="/app">Try the Playground</a>
             </Button>
           </div>
