@@ -36,12 +36,12 @@ const MODES = [
 
 export function MatchingModeSelector({ mode, onModeChange }: MatchingModeSelectorProps) {
   return (
-    <div className="flex gap-1 overflow-x-auto pb-1 px-1 scrollbar-none">
+    <div className="flex flex-wrap gap-1 justify-center pb-1 px-1">
       {MODES.map((m) => (
         <button
           key={m.id}
           onClick={() => onModeChange(m.id)}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium whitespace-nowrap border transition-all flex-shrink-0 ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium whitespace-nowrap border transition-all ${
             mode === m.id
               ? "bg-primary/15 text-primary border-primary/40 shadow-sm"
               : "bg-card border-border/50 text-muted-foreground hover:border-primary/30"

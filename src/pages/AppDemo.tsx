@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import logoIcon from "@/assets/logo-icon.png";
 
 import { FilterPanel, type FilterState } from "@/components/app/FilterPanel";
+import { startups as allStartups } from "@/lib/startupData";
 import { SwipeCard } from "@/components/app/SwipeCard";
 import { StartupSwipeCard } from "@/components/app/StartupSwipeCard";
 import { StartupDetailModal } from "@/components/app/StartupDetailModal";
