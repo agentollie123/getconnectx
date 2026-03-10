@@ -351,10 +351,19 @@ export function PlaygroundSection() {
               )}
             </div>
 
-            {/* Disclaimer */}
-            <p className="text-[10px] text-muted-foreground text-center mt-4 max-w-[320px]">
-              This playground simulates the ConnectX mobile app experience. All profiles displayed are fictional but representative of users on the platform.
-            </p>
+            {/* CTA to full app */}
+            <div className="text-center mt-4 space-y-2">
+              <a
+                href="/app"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors glow-primary"
+              >
+                <Rocket className="w-4 h-4" />
+                Open Full App Demo
+              </a>
+              <p className="text-[10px] text-muted-foreground max-w-[320px]">
+                Explore all features — swipe modes, team builder, chat & more.
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>

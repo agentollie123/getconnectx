@@ -94,9 +94,11 @@ export function IdeaMarketplace() {
           viewport={{ once: true }}
           className="text-center mt-8"
         >
-          <Button variant="outline" className="border-border text-foreground hover:bg-secondary">
-            Browse All Ideas
-            <ArrowRight className="w-4 h-4 ml-2" />
+          <Button asChild variant="outline" className="border-primary/20 text-primary hover:bg-primary/10">
+            <a href="/app">
+              Discover Startups in the App
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
           </Button>
         </motion.div>
       </div>
