@@ -210,7 +210,6 @@ export default function AppDemo() {
             onViewReport={(p) => setReportProfile(p)}
             onChat={(p) => { setChatTarget(p); setActiveNav("Chat"); }}
             onAcceptLike={(p) => setConnectedProfiles((prev) => [...prev, p])}
-            connectedStartups={connectedStartups}
           />
         );
       case "Chat":
