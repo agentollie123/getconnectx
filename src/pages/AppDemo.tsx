@@ -328,11 +328,6 @@ export default function AppDemo() {
           {renderMainContent()}
         </div>
 
-        {/* Coming soon strip */}
-        <div className="flex-shrink-0 px-3 py-1.5 bg-card/40 border-t border-border/20">
-          <V2ComingSoonStrip />
-        </div>
-
         {/* Bottom nav */}
         <nav className="flex-shrink-0 bg-card border-t border-border/30 flex items-center justify-around py-1 pb-2">
           {navItems.map((item) => (
