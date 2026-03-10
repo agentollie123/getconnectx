@@ -70,7 +70,7 @@ export function SocialProof() {
                 key={p.alt}
                 src={p.src}
                 alt={p.alt}
-                className="object-contain h-8 max-w-[140px] brightness-0 invert opacity-50 hover:opacity-80 transition-all duration-300"
+                className={p.className}
               />
             ))}
           </div>
