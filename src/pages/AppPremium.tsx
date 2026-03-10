@@ -277,11 +277,6 @@ export default function AppPremium() {
           </motion.div>
         )}
 
-        {/* Mode Selector */}
-        <div className="w-full max-w-[380px] mb-2">
-          <MatchingModeSelector mode={matchingMode} onModeChange={handleModeChange} />
-          <p className="text-[10px] text-muted-foreground mt-1 px-1 text-center">{FEED_TITLES[matchingMode]}</p>
-        </div>
 
         <div className="relative w-full max-w-[360px] h-[420px]">
           {isEmpty ? (
