@@ -173,13 +173,13 @@ export function PlaygroundSection() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-medium mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            Interactive Demo
+            Try the App
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            ConnectX <span className="gradient-text-accent">Playground</span>
+            Swipe. Match. <span className="gradient-text-accent">Build Together.</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
-            Simulate the matching experience. Set your preferences and swipe to connect.
+            Experience how ConnectX helps you discover co-founders and teammates — try the interactive demo below or jump into the full app.
           </p>
         </motion.div>
 
