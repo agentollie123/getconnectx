@@ -305,7 +305,7 @@ export default function AppPremium() {
 
         {!isEmpty && (
           <div className="flex items-center justify-center gap-4 mt-4 z-20">
-            <button onClick={() => handleButtonSwipe("left")} className="w-13 h-13 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
+            <button onClick={() => handleButtonSwipe("left")} className="w-[52px] h-[52px] rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
               <X className="w-6 h-6 text-destructive" />
             </button>
             <button onClick={handleRewind} disabled={!canRewind} className={`w-10 h-10 rounded-full border border-accent/40 bg-card flex items-center justify-center shadow-md hover:scale-110 transition-transform active:scale-90 ${!canRewind ? "opacity-30" : "glow-accent"}`} title="Rewind last swipe">
