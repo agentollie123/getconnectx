@@ -28,8 +28,10 @@ export function Navbar() {
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
             Log In
           </Button>
-          <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Join Waiting list
+          <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+            <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">
+              Join Waiting list
+            </a>
           </Button>
         </div>
 
@@ -44,7 +46,9 @@ export function Navbar() {
           <a href="#how-it-works" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>How It Works</a>
           <a href="#playground" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Playground</a>
           <Link to="/app" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Web App</Link>
-          <Button size="sm" className="w-full bg-primary text-primary-foreground">Join Waiting list</Button>
+          <Button size="sm" className="w-full bg-primary text-primary-foreground" asChild>
+            <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">Join Waiting list</a>
+          </Button>
         </div>
       }
     </nav>);
