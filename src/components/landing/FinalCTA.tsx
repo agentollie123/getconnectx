@@ -1,12 +1,8 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ArrowRight, Rocket, CheckCircle2, Mail } from "lucide-react";
+import { ArrowRight, Rocket } from "lucide-react";
 
 export function FinalCTA() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
