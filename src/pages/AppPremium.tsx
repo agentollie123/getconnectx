@@ -12,7 +12,8 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import logoIcon from "@/assets/logo-icon.png";
 
-import { PremiumFilterPanel } from "@/components/app/PremiumFilterPanel";
+import { PremiumFilterPanel, type PremiumFilterState } from "@/components/app/PremiumFilterPanel";
+import { startups as allStartups } from "@/lib/startupData";
 import { SwipeCard } from "@/components/app/SwipeCard";
 import { StartupSwipeCard } from "@/components/app/StartupSwipeCard";
 import { StartupDetailModal } from "@/components/app/StartupDetailModal";
@@ -25,7 +26,7 @@ import { ProfileView } from "@/components/app/ProfileView";
 import { SpotlightModal } from "@/components/app/SpotlightModal";
 import { AddToTeamModal } from "@/components/app/AddToTeamModal";
 import { PremiumLikedYouSection } from "@/components/app/PremiumLikedYouSection";
-import { VersionBadge, MatchingModeSelector, SwipeLimitBar } from "@/components/app/VersionBadge";
+import { VersionBadge, SwipeLimitBar } from "@/components/app/VersionBadge";
 import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 
@@ -84,13 +85,29 @@ export default function AppPremium() {
   const [matchedStartup, setMatchedStartup] = useState<Startup | null>(null);
   const [chatStartupTarget, setChatStartupTarget] = useState<Startup | null>(null);
 
-  const generateMatches = useCallback((filters: any) => {
-    const filtered = profiles.filter((p) => {
-      if (filters.stage?.length > 0 && !filters.stage.some((s: string) => p.stage.includes(s.replace(" Stage", "")))) return false;
-      return true;
-    });
-    setCardStack(filtered.length > 0 ? [...filtered] : [...profiles]);
+  const generateMatches = useCallback((filters: PremiumFilterState) => {
+    const hasCofounderStartup = filters.lookingFor.includes("Co-Founder → Startup");
+    const hasTeamStartup = filters.lookingFor.includes("Team Member → Startup");
+
+    if (hasCofounderStartup || hasTeamStartup) {
+      const mode: MatchingMode = hasCofounderStartup ? "cofounder-startup" : "team-startup";
+      setMatchingMode(mode);
+      const filtered = hasCofounderStartup
+        ? allStartups.filter(s => s.lookingFor === "co-founder" || s.lookingFor === "both")
+        : allStartups.filter(s => s.lookingFor === "team" || s.lookingFor === "both");
+      setStartupStack([...filtered]);
+    } else {
+      const hasFounderTeam = filters.lookingFor.includes("Founder → Team");
+      setMatchingMode(hasFounderTeam ? "founder-team" : "founder-cofounder");
+
+      const filtered = profiles.filter((p) => {
+        if (filters.stage.length > 0 && !filters.stage.some((s) => p.stage.includes(s.replace(" Stage", "")))) return false;
+        return true;
+      });
+      setCardStack(filtered.length > 0 ? [...filtered] : [...profiles]);
+    }
     setStats({ connected: 0, skipped: 0 });
+    setSwipeCount(0);
     setShowFilters(false);
   }, []);
 
@@ -260,11 +277,6 @@ export default function AppPremium() {
           </motion.div>
         )}
 
-        {/* Mode Selector */}
-        <div className="w-full max-w-[380px] mb-2">
-          <MatchingModeSelector mode={matchingMode} onModeChange={handleModeChange} />
-          <p className="text-[10px] text-muted-foreground mt-1 px-1 text-center">{FEED_TITLES[matchingMode]}</p>
-        </div>
 
         <div className="relative w-full max-w-[360px] h-[420px]">
           {isEmpty ? (
@@ -293,7 +305,7 @@ export default function AppPremium() {
 
         {!isEmpty && (
           <div className="flex items-center justify-center gap-4 mt-4 z-20">
-            <button onClick={() => handleButtonSwipe("left")} className="w-13 h-13 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
+            <button onClick={() => handleButtonSwipe("left")} className="w-[52px] h-[52px] rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
               <X className="w-6 h-6 text-destructive" />
             </button>
             <button onClick={handleRewind} disabled={!canRewind} className={`w-10 h-10 rounded-full border border-accent/40 bg-card flex items-center justify-center shadow-md hover:scale-110 transition-transform active:scale-90 ${!canRewind ? "opacity-30" : "glow-accent"}`} title="Rewind last swipe">
@@ -302,7 +314,7 @@ export default function AppPremium() {
             <button onClick={() => setShowSpotlight(true)} className="w-11 h-11 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90 glow-primary">
               <Zap className="w-5 h-5 text-primary-foreground" />
             </button>
-            <button onClick={() => handleButtonSwipe("right")} className="w-13 h-13 rounded-full border-2 border-green-400/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
+            <button onClick={() => handleButtonSwipe("right")} className="w-[52px] h-[52px] rounded-full border-2 border-green-400/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
               <Check className="w-6 h-6 text-green-400" />
             </button>
           </div>
