@@ -192,11 +192,6 @@ export default function AppPremium() {
 
       {/* Center — swipe cards */}
       <div className="flex-1 flex flex-col items-center justify-center p-3 lg:p-6 relative">
-        {/* Matching mode */}
-        <div className="w-full max-w-[400px] mb-3">
-          <MatchingModeSelector mode={matchingMode} onModeChange={setMatchingMode} />
-        </div>
-
         {/* Mobile filter toggle */}
         {showFilters && (
           <motion.div
