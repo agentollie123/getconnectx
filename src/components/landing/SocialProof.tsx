@@ -1,12 +1,24 @@
 import { motion } from "framer-motion";
 import { Users, Link2, Rocket, Globe } from "lucide-react";
-import partnersBanner from "@/assets/partners-banner.png";
+import logoNvidia from "@/assets/logo-nvidia-inception.png";
+import logoTechInAsia from "@/assets/logo-techinasia.png";
+import logoGoogleStartups from "@/assets/logo-google-startups.png";
+import logoBisnis from "@/assets/logo-bisnis.png";
+import logoAlibabaCloud from "@/assets/logo-alibaba-cloud.png";
 
 const stats = [
   { icon: Users, value: "12,000+", label: "Builders" },
   { icon: Link2, value: "80,000+", label: "Connections Made" },
   { icon: Rocket, value: "300+", label: "Startups Forming" },
   { icon: Globe, value: "8+", label: "Cities" },
+];
+
+const partners = [
+  { src: logoNvidia, alt: "NVIDIA Inception Program", height: 48 },
+  { src: logoTechInAsia, alt: "Tech in Asia", height: 28 },
+  { src: logoGoogleStartups, alt: "Google for Startups", height: 36 },
+  { src: logoBisnis, alt: "Bisnis.com", height: 32 },
+  { src: logoAlibabaCloud, alt: "Alibaba Cloud", height: 28 },
 ];
 
 export function SocialProof() {
@@ -45,17 +57,25 @@ export function SocialProof() {
         </div>
 
         {/* Partners & Backers */}
-        <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
           <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8">Backed & Supported By</p>
-          <div className="flex items-center justify-center">
-            <img 
-              src={partnersBanner} 
-              alt="NVIDIA Inception Program, Tech in Asia, Google for Startups, Bisnis Indonesia" 
-              className="max-w-full h-auto opacity-70 dark:invert dark:opacity-60"
-              style={{ maxHeight: '60px' }}
-            />
+          <div className="flex items-center justify-center gap-10 md:gap-14 flex-wrap">
+            {partners.map((p) => (
+              <img
+                key={p.alt}
+                src={p.src}
+                alt={p.alt}
+                style={{ height: p.height }}
+                className="object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 dark:brightness-0 dark:invert dark:opacity-50 dark:hover:brightness-100 dark:hover:invert-0 dark:hover:opacity-100"
+              />
+            ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
