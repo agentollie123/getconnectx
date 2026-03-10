@@ -6,12 +6,15 @@ import {
   Code, Palette, TrendingUp, Briefcase, Crown, Map, RotateCcw,
 } from "lucide-react";
 import { profiles, type Profile } from "@/lib/profileData";
+import { startups, type Startup } from "@/lib/startupData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import logoIcon from "@/assets/logo-icon.png";
 
 import { FilterPanel, type FilterState } from "@/components/app/FilterPanel";
 import { SwipeCard } from "@/components/app/SwipeCard";
+import { StartupSwipeCard } from "@/components/app/StartupSwipeCard";
+import { StartupDetailModal } from "@/components/app/StartupDetailModal";
 import { MatchModal } from "@/components/app/MatchModal";
 import { CompatibilityReport } from "@/components/app/CompatibilityReport";
 import { MatchesView } from "@/components/app/MatchesView";
@@ -23,7 +26,7 @@ import { SpotlightModal } from "@/components/app/SpotlightModal";
 import { AddToTeamModal } from "@/components/app/AddToTeamModal";
 import { UpgradeModal } from "@/components/app/UpgradeModal";
 import { VersionBadge, MatchingModeSelector, SwipeLimitBar } from "@/components/app/VersionBadge";
-import { V2ComingSoonStrip, V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
+import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
@@ -37,14 +40,6 @@ const navItems = [
   { icon: Map, label: "Roadmap" },
 ];
 
-const STATS_BAR = [
-  { label: "Builders", value: "12K+" },
-  { label: "Connections", value: "80K+" },
-  { label: "Teams", value: "300+" },
-];
-
-const DAILY_SWIPE_LIMIT = 10;
-
 const INITIAL_TEAM = [
   { role: "Founder", type: "Business", icon: Briefcase, filled: true, profile: null as Profile | null, equity: 40, commitment: "Full-time" },
   { role: "Co-Founder", type: "Engineering", icon: Code, filled: true, profile: profiles[0], equity: 25, commitment: "Full-time" },
@@ -52,15 +47,28 @@ const INITIAL_TEAM = [
   { role: "Early Team", type: "Growth Marketer", icon: TrendingUp, filled: false, profile: null as Profile | null },
 ];
 
+type MatchingMode = "founder-cofounder" | "founder-team" | "cofounder-startup" | "team-startup";
+
+const isStartupMode = (mode: MatchingMode) => mode === "cofounder-startup" || mode === "team-startup";
+
+const FEED_TITLES: Record<MatchingMode, string> = {
+  "founder-cofounder": "Discover Co-Founders",
+  "founder-team": "Discover Team Members",
+  "cofounder-startup": "Discover Startups Looking for Co-Founders",
+  "team-startup": "Discover Startups Looking for Team Members",
+};
+
 export default function AppDemo() {
   const navigate = useNavigate();
   const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
+  const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
   const [stats, setStats] = useState({ connected: 0, skipped: 0 });
   const [connectedProfiles, setConnectedProfiles] = useState<Profile[]>([]);
+  const [connectedStartups, setConnectedStartups] = useState<Startup[]>([]);
   const [buttonSwipeDir, setButtonSwipeDir] = useState<"left" | "right" | null>(null);
   const [showFilters, setShowFilters] = useState(false);
-  const [matchingMode, setMatchingMode] = useState("founder-cofounder");
+  const [matchingMode, setMatchingMode] = useState<MatchingMode>("founder-cofounder");
 
   // Modals
   const [matchProfile, setMatchProfile] = useState<Profile | null>(null);
@@ -72,6 +80,8 @@ export default function AppDemo() {
   const [chatTarget, setChatTarget] = useState<Profile | null>(null);
   const [swipeCount, setSwipeCount] = useState(0);
   const [teamMembers, setTeamMembers] = useState(INITIAL_TEAM);
+  const [startupDetail, setStartupDetail] = useState<Startup | null>(null);
+  const [matchedStartup, setMatchedStartup] = useState<Startup | null>(null);
 
   const generateMatches = useCallback((filters: FilterState) => {
     const filtered = profiles.filter((p) => {
@@ -83,7 +93,41 @@ export default function AppDemo() {
     setShowFilters(false);
   }, []);
 
+  const handleModeChange = (mode: string) => {
+    const m = mode as MatchingMode;
+    setMatchingMode(m);
+    setButtonSwipeDir(null);
+    if (isStartupMode(m)) {
+      const filtered = m === "cofounder-startup"
+        ? startups.filter(s => s.lookingFor === "co-founder" || s.lookingFor === "both")
+        : startups.filter(s => s.lookingFor === "team" || s.lookingFor === "both");
+      setStartupStack([...filtered]);
+    } else {
+      setCardStack([...profiles]);
+    }
+    setStats({ connected: 0, skipped: 0 });
+    setSwipeCount(0);
+  };
+
   const handleSwipe = (dir: "left" | "right") => {
+    if (isStartupMode(matchingMode)) {
+      const current = startupStack[0];
+      setStartupStack((prev) => prev.slice(1));
+      setStats((prev) => ({
+        connected: dir === "right" ? prev.connected + 1 : prev.connected,
+        skipped: dir === "left" ? prev.skipped + 1 : prev.skipped,
+      }));
+      setButtonSwipeDir(null);
+      setSwipeCount((c) => c + 1);
+
+      if (dir === "right" && current) {
+        setConnectedStartups((prev) => [...prev, current]);
+        if ((swipeCount + 1) % 2 === 0) {
+          setTimeout(() => setMatchedStartup(current), 400);
+        }
+      }
+      return;
+    }
 
     const current = cardStack[0];
     setCardStack((prev) => prev.slice(1));
@@ -113,7 +157,14 @@ export default function AppDemo() {
   };
 
   const resetDeck = () => {
-    setCardStack([...profiles]);
+    if (isStartupMode(matchingMode)) {
+      const filtered = matchingMode === "cofounder-startup"
+        ? startups.filter(s => s.lookingFor === "co-founder" || s.lookingFor === "both")
+        : startups.filter(s => s.lookingFor === "team" || s.lookingFor === "both");
+      setStartupStack([...filtered]);
+    } else {
+      setCardStack([...profiles]);
+    }
     setStats({ connected: 0, skipped: 0 });
     setSwipeCount(0);
   };
@@ -159,6 +210,7 @@ export default function AppDemo() {
             onViewReport={(p) => setReportProfile(p)}
             onChat={(p) => { setChatTarget(p); setActiveNav("Chat"); }}
             onAcceptLike={(p) => setConnectedProfiles((prev) => [...prev, p])}
+            connectedStartups={connectedStartups}
           />
         );
       case "Chat":
@@ -173,7 +225,7 @@ export default function AppDemo() {
       case "Profile":
         return (
           <ScrollArea className="h-full">
-            <ProfileView />
+            <ProfileView matchingMode={matchingMode} onModeChange={handleModeChange} />
             <div className="px-4 pb-4">
               <V2ComingSoonGrid />
             </div>
@@ -190,11 +242,19 @@ export default function AppDemo() {
     }
   };
 
+  const currentStack = isStartupMode(matchingMode) ? startupStack : cardStack;
+  const isEmpty = currentStack.length === 0;
+
   const renderHomeView = () => (
-    <div className="flex-1 flex flex-col items-center justify-center p-3 relative">
+    <div className="flex-1 flex flex-col items-center p-3 relative">
+      {/* Mode Selector */}
+      <div className="w-full max-w-[380px] mb-2">
+        <MatchingModeSelector mode={matchingMode} onModeChange={handleModeChange} />
+        <p className="text-[10px] text-muted-foreground mt-1 px-1 text-center">{FEED_TITLES[matchingMode]}</p>
+      </div>
 
       <div className="relative w-full max-w-[360px] h-[420px]">
-        {cardStack.length === 0 ? (
+        {isEmpty ? (
           <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
             <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
               <Check className="w-7 h-7 text-primary" />
@@ -208,6 +268,18 @@ export default function AppDemo() {
               Start Over
             </Button>
           </div>
+        ) : isStartupMode(matchingMode) ? (
+          <AnimatePresence>
+            {startupStack.slice(0, 2).map((startup, i) => (
+              <StartupSwipeCard
+                key={startup.id}
+                startup={startup}
+                onSwipe={handleSwipe}
+                isTop={i === 0}
+                triggerExit={i === 0 ? buttonSwipeDir : null}
+              />
+            ))}
+          </AnimatePresence>
         ) : (
           <AnimatePresence>
             {cardStack.slice(0, 2).map((profile, i) => (
@@ -224,7 +296,7 @@ export default function AppDemo() {
       </div>
 
       {/* Swipe controls */}
-      {cardStack.length > 0 && (
+      {!isEmpty && (
         <div className="flex items-center justify-center gap-4 mt-4 z-20">
           <button
             onClick={() => handleButtonSwipe("left")}
@@ -356,6 +428,27 @@ export default function AppDemo() {
           setMatchProfile(null);
         }}
       />
+      <StartupDetailModal
+        startup={startupDetail}
+        onClose={() => setStartupDetail(null)}
+        onInterested={() => {
+          if (startupDetail) {
+            setConnectedStartups((prev) => [...prev, startupDetail]);
+          }
+          setStartupDetail(null);
+        }}
+        onPass={() => setStartupDetail(null)}
+      />
+      {matchedStartup && (
+        <StartupMatchModal
+          startup={matchedStartup}
+          onClose={() => setMatchedStartup(null)}
+          onChat={() => {
+            setMatchedStartup(null);
+            setActiveNav("Chat");
+          }}
+        />
+      )}
       <DemoLimitModal open={showDemoLimit} onClose={() => setShowDemoLimit(false)} />
       <SpotlightModal open={showSpotlight} onClose={() => setShowSpotlight(false)} />
       <UpgradeModal open={showUpgrade} onClose={() => setShowUpgrade(false)} />
@@ -364,6 +457,42 @@ export default function AppDemo() {
         onClose={() => setAddToTeamTarget(null)}
         onConfirm={handleAddToTeamConfirm}
       />
+    </div>
+  );
+}
+
+// Inline startup match modal
+function StartupMatchModal({ startup, onClose, onChat }: { startup: Startup; onClose: () => void; onChat: () => void }) {
+  const initials = startup.name.split(" ").map(w => w[0]).join("").slice(0, 2);
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4" onClick={onClose}>
+      <div className="relative w-full max-w-sm rounded-2xl bg-card border border-border p-8 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground">
+          <X className="w-5 h-5" />
+        </button>
+
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-4">
+          <span className="text-xl font-display font-bold text-primary-foreground">{initials}</span>
+        </div>
+
+        <h2 className="font-display text-xl font-bold gradient-text mb-1">Startup Match! 🚀</h2>
+        <p className="text-sm text-foreground font-semibold mb-1">{startup.name}</p>
+        <p className="text-xs text-muted-foreground mb-1">Founded by {startup.founder}</p>
+
+        <Badge variant="outline" className="text-[10px] border-primary/30 text-primary mb-4">
+          Startup Match
+        </Badge>
+
+        <p className="text-xs text-muted-foreground mb-4">
+          {startup.founder} is interested in connecting with you for <span className="text-primary font-medium">{startup.openRoles[0]}</span>
+        </p>
+
+        <div className="flex gap-3">
+          <Button className="flex-1 bg-primary text-primary-foreground" onClick={onChat}>
+            <MessageCircle className="w-4 h-4 mr-1.5" /> Chat with Founder
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
