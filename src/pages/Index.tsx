@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FounderProblem } from "@/components/landing/FounderProblem";
+import { FomoScale } from "@/components/landing/FomoScale";
 import { EcosystemMatchmaking } from "@/components/landing/EcosystemMatchmaking";
 import { StartupPipeline } from "@/components/landing/StartupPipeline";
 import { NetworkMap } from "@/components/landing/NetworkMap";
@@ -20,6 +21,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <FounderProblem />
+      <FomoScale />
       <EcosystemMatchmaking />
       <StartupPipeline />
       <NetworkMap />
