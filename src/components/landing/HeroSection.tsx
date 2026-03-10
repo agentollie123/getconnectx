@@ -117,12 +117,14 @@ export function HeroSection() {
               <span className="gradient-text">Not Just Conversations.</span>
             </h1>
 
-            <p className="text-lg text-muted-foreground max-w-lg mb-4 leading-relaxed">
-              ConnectX is a startup matchmaking platform connecting founders, builders, and early believers to start companies together.
-            </p>
+            <div className="text-lg text-muted-foreground max-w-lg mb-4 leading-relaxed space-y-1">
+              <p>Find co-founders.</p>
+              <p>Build startup teams.</p>
+              <p>Join early-stage startups.</p>
+            </div>
 
-            <p className="text-base text-foreground/70 max-w-lg mb-8">
-              Find your co-founder, assemble your startup team, and build the next generation of companies.
+            <p className="text-base font-semibold text-foreground/80 max-w-lg mb-8">
+              All in one ecosystem.
             </p>
 
             <div className="flex flex-wrap gap-4">

@@ -1,24 +1,28 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, Users, Search, ArrowRight } from "lucide-react";
+import { Code, Palette, Box, TrendingUp, ArrowRight, BarChart3, Building2, Globe } from "lucide-react";
 
-const problems = [
+const earlyTeamNeeds = [
+  { icon: Code, label: "Engineers" },
+  { icon: Palette, label: "Designers" },
+  { icon: Box, label: "Product Builders" },
+  { icon: TrendingUp, label: "Growth Operators" },
+];
+
+const dataPoints = [
   {
-    icon: AlertTriangle,
-    stat: "90%",
-    label: "of startups fail due to team issues",
-    description: "The #1 reason startups fail isn't the idea — it's the team.",
+    icon: BarChart3,
+    stat: "65%",
+    label: "of laid-off workers want to start a business",
   },
   {
-    icon: Users,
-    stat: "Millions",
-    label: "of builders want to join startups",
-    description: "Engineers, designers, operators — eager to build, but can't find the right team.",
+    icon: Building2,
+    stat: "13%+",
+    label: "of laid-off professionals eventually start companies",
   },
   {
-    icon: Search,
-    stat: "73%",
-    label: "of founders struggle to find co-founders",
-    description: "The right co-founder can make or break your startup. Finding them is broken.",
+    icon: Globe,
+    stat: "0",
+    label: "global networks connecting them — until now",
   },
 ];
 
@@ -26,36 +30,100 @@ export function FounderProblem() {
   return (
     <section className="py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
+        {/* Early Team Pain Point */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-6"
         >
-          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            The Global <span className="gradient-text">Founder Problem</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-destructive/10 border border-destructive/20 text-destructive text-xs font-medium mb-6">
+            Early Team Pain Point
+          </div>
+
+          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 max-w-2xl mx-auto leading-tight">
+            Startups don't just need co-founders.{" "}
+            <span className="gradient-text">They need early believers.</span>
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto">
-            Starting a company is hard enough. Finding the right people to build it with shouldn't be.
-          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
-          {problems.map((p, i) => (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-center mb-10"
+        >
+          <p className="text-muted-foreground mb-6">Early-stage startups need:</p>
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {earlyTeamNeeds.map((need, i) => (
+              <motion.div
+                key={need.label}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="glass-card rounded-xl px-4 py-3 flex items-center gap-2"
+              >
+                <need.icon className="w-5 h-5 text-primary" />
+                <span className="text-sm font-medium text-foreground">{need.label}</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="max-w-xl mx-auto mb-20"
+        >
+          <div className="glass-card rounded-2xl p-6 text-center">
+            <p className="text-sm text-muted-foreground mb-4">
+              But talented builders struggle to find early-stage startups worth joining.
+            </p>
+            <p className="text-sm font-semibold text-foreground mb-3">This creates a massive gap between:</p>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              <span className="px-3 py-1.5 rounded-lg bg-primary/10 text-primary text-sm font-medium">Founders with ideas</span>
+              <ArrowRight className="w-4 h-4 text-muted-foreground hidden sm:block" />
+              <span className="px-3 py-1.5 rounded-lg bg-accent/20 text-accent-foreground text-sm font-medium">Builders looking for opportunities</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Global Shift */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-6">
+            Global Shift Toward Entrepreneurship
+          </div>
+
+          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 max-w-2xl mx-auto">
+            More people want to build startups{" "}
+            <span className="gradient-text">than ever before.</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-10">
+          {dataPoints.map((d, i) => (
             <motion.div
-              key={p.stat}
+              key={d.stat}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
               className="glass-card rounded-2xl p-6 text-center"
             >
-              <div className="inline-flex w-14 h-14 rounded-xl bg-destructive/10 items-center justify-center mb-4">
-                <p.icon className="w-7 h-7 text-destructive" />
+              <div className="inline-flex w-12 h-12 rounded-xl bg-primary/10 items-center justify-center mb-4">
+                <d.icon className="w-6 h-6 text-primary" />
               </div>
-              <div className="font-display text-4xl font-bold text-foreground mb-2">{p.stat}</div>
-              <p className="text-sm font-semibold text-foreground mb-2">{p.label}</p>
-              <p className="text-xs text-muted-foreground">{p.description}</p>
+              <div className="font-display text-3xl font-bold text-foreground mb-2">{d.stat}</div>
+              <p className="text-sm text-muted-foreground">{d.label}</p>
             </motion.div>
           ))}
         </div>
@@ -66,9 +134,14 @@ export function FounderProblem() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-            <ArrowRight className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">ConnectX solves startup formation.</span>
+          <div className="glass-card inline-block rounded-xl px-6 py-4 max-w-lg">
+            <p className="text-sm text-muted-foreground mb-2">
+              The next generation of builders doesn't just want jobs.{" "}
+              <span className="text-foreground font-semibold">They want to build companies.</span>
+            </p>
+            <p className="text-sm text-primary font-semibold">
+              ConnectX is the global network connecting them.
+            </p>
           </div>
         </motion.div>
       </div>
