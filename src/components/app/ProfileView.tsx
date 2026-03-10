@@ -65,14 +65,14 @@ export function ProfileView() {
           </p>
         </div>
 
-        {/* Looking For */}
+        {/* Looking For - Mode selector */}
         <div className="rounded-xl bg-card border border-border p-3">
           <div className="flex items-center gap-1.5 mb-2">
             <Search className="w-3.5 h-3.5 text-primary" />
             <p className="text-xs font-semibold text-foreground">Looking For</p>
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {["Technical Co-Founder", "Backend Engineers", "Product Builders"].map((r) => (
+            {["Founder → Co-Founder", "Founder → Team", "Co-Founder → Startup", "Team Member → Startup"].map((r) => (
               <span key={r} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">{r}</span>
             ))}
           </div>
