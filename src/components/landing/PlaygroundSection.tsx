@@ -10,13 +10,13 @@ function SwipeCard({
   profile,
   onSwipe,
   isTop,
-  triggerExit
-
-
-
-
-
-}: {profile: Profile;onSwipe: (dir: "left" | "right") => void;isTop: boolean;triggerExit?: "left" | "right" | null;}) {
+  triggerExit,
+}: {
+  profile: Profile;
+  onSwipe: (dir: "left" | "right") => void;
+  isTop: boolean;
+  triggerExit?: "left" | "right" | null;
+}) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0.5, 1, 1, 1, 0.5]);
@@ -49,17 +49,17 @@ function SwipeCard({
         x: resolvedExit === "left" ? -350 : 350,
         opacity: 0,
         rotate: resolvedExit === "left" ? -15 : 15,
-        transition: { duration: 0.3 }
-      }}>
-      
+        transition: { duration: 0.3 },
+      }}
+    >
       <div className="h-full rounded-2xl bg-card border border-border overflow-hidden flex flex-col shadow-lg">
         {/* Profile photo */}
         <div className="relative h-48 flex-shrink-0">
           <img
             src={profile.photo}
             alt={profile.name}
-            className="w-full h-full object-cover" />
-          
+            className="w-full h-full object-cover"
+          />
           <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-card to-transparent h-16" />
         </div>
 
@@ -95,14 +95,14 @@ function SwipeCard({
           <div>
             <p className="text-xs font-semibold text-foreground mb-1.5">Skills</p>
             <div className="flex flex-wrap gap-1.5">
-              {profile.skills.map((skill) =>
-              <span
-                key={skill}
-                className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                
+              {profile.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20"
+                >
                   {skill}
                 </span>
-              )}
+              ))}
             </div>
           </div>
 
@@ -110,20 +110,20 @@ function SwipeCard({
           <div>
             <p className="text-xs font-semibold text-foreground mb-1.5">Interested in</p>
             <div className="flex flex-wrap gap-1.5">
-              {profile.interests.map((interest) =>
-              <span
-                key={interest}
-                className="text-xs px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
-                
+              {profile.interests.map((interest) => (
+                <span
+                  key={interest}
+                  className="text-xs px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20"
+                >
                   {interest}
                 </span>
-              )}
+              ))}
             </div>
           </div>
         </div>
       </div>
-    </motion.div>);
-
+    </motion.div>
+  );
 }
 
 export function PlaygroundSection() {
@@ -152,7 +152,7 @@ export function PlaygroundSection() {
     setCardStack((prev) => prev.slice(1));
     setStats((prev) => ({
       connected: dir === "right" ? prev.connected + 1 : prev.connected,
-      skipped: dir === "left" ? prev.skipped + 1 : prev.skipped
+      skipped: dir === "left" ? prev.skipped + 1 : prev.skipped,
     }));
     setButtonSwipeDir(null);
   };
@@ -169,17 +169,17 @@ export function PlaygroundSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12">
-          
+          className="text-center mb-12"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-medium mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            Interactive Demo
+            Try the App
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            ConnectX <span className="gradient-text-accent">Playground</span>
+            Swipe. Match. <span className="gradient-text-accent">Build Together.</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
-            Simulate the matching experience. Set your preferences and swipe to connect.
+            Experience how ConnectX helps you discover co-founders and teammates — try the interactive demo below or jump into the full app.
           </p>
         </motion.div>
 
@@ -189,12 +189,12 @@ export function PlaygroundSection() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="w-full lg:w-80 flex-shrink-0">
-            
+            className="w-full lg:w-80 flex-shrink-0"
+          >
             <div className="glass-card rounded-2xl p-6">
               <p className="text-xs text-primary font-medium mb-2">Welcome to our app's Playground</p>
               <h3 className="font-display text-xl font-bold text-foreground mb-6">
-                What are you looking for ?
+                What are you looking for in a co-founder?
               </h3>
 
               <p className="text-sm text-muted-foreground mb-4">Basic preferences</p>
@@ -250,8 +250,8 @@ export function PlaygroundSection() {
 
               <Button
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary"
-                onClick={generateMatches}>
-                
+                onClick={generateMatches}
+              >
                 Generate Candidates
               </Button>
             </div>
@@ -262,8 +262,8 @@ export function PlaygroundSection() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center">
-            
+            className="flex flex-col items-center"
+          >
             {/* Phone frame */}
             <div className="relative w-[320px] h-[620px] rounded-[40px] border-[6px] border-foreground/20 bg-background shadow-2xl overflow-hidden">
               {/* Status bar */}
@@ -286,8 +286,8 @@ export function PlaygroundSection() {
 
               {/* Card area */}
               <div className="relative flex-1 h-[460px] p-3">
-                {!started ?
-                <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                {!started ? (
+                  <div className="h-full flex flex-col items-center justify-center text-center px-4">
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                       <Sparkles className="w-8 h-8 text-primary" />
                     </div>
@@ -296,9 +296,9 @@ export function PlaygroundSection() {
                       Set your preferences and tap "Generate Candidates" to start swiping.
                     </p>
                     <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce" />
-                  </div> :
-                cardStack.length === 0 ?
-                <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                  </div>
+                ) : cardStack.length === 0 ? (
+                  <div className="h-full flex flex-col items-center justify-center text-center px-4">
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                       <Check className="w-8 h-8 text-primary" />
                     </div>
@@ -308,56 +308,65 @@ export function PlaygroundSection() {
                     </p>
                     <p className="text-xs text-muted-foreground mb-4">Adjust filters and generate again.</p>
                     <Button
-                    size="sm"
-                    className="bg-primary text-primary-foreground hover:bg-primary/90"
-                    onClick={generateMatches}>
-                    
+                      size="sm"
+                      className="bg-primary text-primary-foreground hover:bg-primary/90"
+                      onClick={generateMatches}
+                    >
                       Try Again
                     </Button>
-                  </div> :
-
-                <div className="relative h-full">
+                  </div>
+                ) : (
+                  <div className="relative h-full">
                     <AnimatePresence>
-                      {cardStack.slice(0, 2).map((profile, i) =>
-                    <SwipeCard
-                      key={profile.id}
-                      profile={profile}
-                      onSwipe={handleSwipe}
-                      isTop={i === 0}
-                      triggerExit={i === 0 ? buttonSwipeDir : null} />
-
-                    )}
+                      {cardStack.slice(0, 2).map((profile, i) => (
+                        <SwipeCard
+                          key={profile.id}
+                          profile={profile}
+                          onSwipe={handleSwipe}
+                          isTop={i === 0}
+                          triggerExit={i === 0 ? buttonSwipeDir : null}
+                        />
+                      ))}
                     </AnimatePresence>
                   </div>
-                }
+                )}
               </div>
 
               {/* Action buttons */}
-              {started && cardStack.length > 0 &&
-              <div className="absolute bottom-4 inset-x-0 flex items-center justify-center gap-6 z-20">
+              {started && cardStack.length > 0 && (
+                <div className="absolute bottom-4 inset-x-0 flex items-center justify-center gap-6 z-20">
                   <button
-                  onClick={() => handleButtonSwipe("left")}
-                  className="w-14 h-14 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95">
-                  
+                    onClick={() => handleButtonSwipe("left")}
+                    className="w-14 h-14 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
+                  >
                     <X className="w-6 h-6 text-destructive" />
                   </button>
                   <button
-                  onClick={() => handleButtonSwipe("right")}
-                  className="w-14 h-14 rounded-full border-2 border-primary/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95">
-                  
+                    onClick={() => handleButtonSwipe("right")}
+                    className="w-14 h-14 rounded-full border-2 border-primary/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-95"
+                  >
                     <Check className="w-6 h-6 text-primary" />
                   </button>
                 </div>
-              }
+              )}
             </div>
 
-            {/* Disclaimer */}
-            <p className="text-[10px] text-muted-foreground text-center mt-4 max-w-[320px]">
-              This playground simulates the ConnectX mobile app experience. All profiles displayed are fictional but representative of users on the platform.
-            </p>
+            {/* CTA to full app */}
+            <div className="text-center mt-4 space-y-2">
+              <a
+                href="/app"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors glow-primary"
+              >
+                <Rocket className="w-4 h-4" />
+                Open Full App Demo
+              </a>
+              <p className="text-[10px] text-muted-foreground max-w-[320px]">
+                Explore all features — swipe modes, team builder, chat & more.
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
