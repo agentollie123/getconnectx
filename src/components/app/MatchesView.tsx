@@ -1,56 +1,75 @@
-import { Heart, MessageCircle, Eye } from "lucide-react";
+import { Heart, MessageCircle, Eye, Clock, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { profiles, type Profile } from "@/lib/profileData";
+import { LikedYouSection } from "./LikedYouSection";
 
 interface MatchesViewProps {
   connectedProfiles: Profile[];
   onViewReport: (profile: Profile) => void;
   onChat: (profile: Profile) => void;
+  onAcceptLike: (profile: Profile) => void;
 }
 
-export function MatchesView({ connectedProfiles, onViewReport, onChat }: MatchesViewProps) {
+function getExpiry() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+export function MatchesView({ connectedProfiles, onViewReport, onChat, onAcceptLike }: MatchesViewProps) {
   const matched = connectedProfiles.length > 0 ? connectedProfiles : profiles.slice(0, 3);
 
   return (
     <ScrollArea className="h-full">
-      <div className="p-6 max-w-lg mx-auto space-y-6">
-        <div>
-          <h2 className="font-display text-xl font-bold text-foreground">Your Matches</h2>
-          <p className="text-sm text-muted-foreground mt-1">People who want to build with you</p>
-        </div>
+      <div className="p-4 space-y-5">
+        {/* Liked You */}
+        <LikedYouSection onAccept={onAcceptLike} />
 
-        {matched.length === 0 ? (
-          <div className="text-center py-12">
-            <Heart className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
-            <p className="text-sm text-muted-foreground">No matches yet. Keep swiping!</p>
+        {/* Matches */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-display font-bold text-foreground">Your Matches</h3>
+            <span className="text-[10px] text-muted-foreground">{matched.length} matches</span>
           </div>
-        ) : (
-          <div className="space-y-3">
-            {matched.map((p) => (
-              <div key={p.id} className="rounded-xl bg-card border border-border p-4 flex items-center gap-3">
-                <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20" />
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-display font-semibold text-foreground text-sm">{p.name}</h4>
-                  <p className="text-xs text-muted-foreground truncate">{p.role} · {p.location}</p>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {p.skills.slice(0, 2).map((s) => (
-                      <span key={s} className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary">{s}</span>
-                    ))}
+
+          {matched.length === 0 ? (
+            <div className="text-center py-10">
+              <Heart className="w-10 h-10 text-muted-foreground/20 mx-auto mb-2" />
+              <p className="text-xs text-muted-foreground">No matches yet. Keep swiping!</p>
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              {matched.map((p) => {
+                const daysLeft = getExpiry();
+                return (
+                  <div key={p.id} className="rounded-xl bg-card border border-border p-3 flex items-center gap-3">
+                    <div className="relative">
+                      <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20" />
+                      <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-green-400 border-2 border-card" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <h4 className="font-display font-semibold text-foreground text-sm">{p.name}</h4>
+                      </div>
+                      <p className="text-[10px] text-muted-foreground truncate">{p.role} · {p.location}</p>
+                      <div className="flex items-center gap-1 mt-0.5">
+                        <Clock className="w-2.5 h-2.5 text-accent" />
+                        <span className="text-[9px] text-accent font-medium">Expires in {daysLeft} days</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-1">
+                      <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-primary" onClick={() => onChat(p)}>
+                        <MessageCircle className="w-4 h-4" />
+                      </Button>
+                      <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-muted-foreground" onClick={() => onViewReport(p)}>
+                        <Eye className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <Button size="sm" variant="ghost" className="h-8 px-2 text-primary" onClick={() => onChat(p)}>
-                    <MessageCircle className="w-3.5 h-3.5" />
-                  </Button>
-                  <Button size="sm" variant="ghost" className="h-8 px-2 text-muted-foreground" onClick={() => onViewReport(p)}>
-                    <Eye className="w-3.5 h-3.5" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </ScrollArea>
   );
