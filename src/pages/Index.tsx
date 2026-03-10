@@ -3,7 +3,7 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { FounderProblem } from "@/components/landing/FounderProblem";
 import { EcosystemMatchmaking } from "@/components/landing/EcosystemMatchmaking";
 import { StartupPipeline } from "@/components/landing/StartupPipeline";
-import { NetworkMap } from "@/components/landing/NetworkMap";
+
 import { SocialDiscovery } from "@/components/landing/SocialDiscovery";
 import { IdeaMarketplace } from "@/components/landing/IdeaMarketplace";
 import { PlaygroundSection } from "@/components/landing/PlaygroundSection";
