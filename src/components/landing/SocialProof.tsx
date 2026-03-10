@@ -14,11 +14,11 @@ const stats = [
 ];
 
 const partners = [
-  { src: logoNvidia, alt: "NVIDIA Inception Program", height: 48 },
-  { src: logoTechInAsia, alt: "Tech in Asia", height: 28 },
-  { src: logoGoogleStartups, alt: "Google for Startups", height: 36 },
-  { src: logoBisnis, alt: "Bisnis.com", height: 32 },
-  { src: logoAlibabaCloud, alt: "Alibaba Cloud", height: 28 },
+  { src: logoNvidia, alt: "NVIDIA Inception Program" },
+  { src: logoGoogleStartups, alt: "Google for Startups" },
+  { src: logoAlibabaCloud, alt: "Alibaba Cloud" },
+  { src: logoTechInAsia, alt: "Tech in Asia" },
+  { src: logoBisnis, alt: "Bisnis.com" },
 ];
 
 export function SocialProof() {
@@ -70,8 +70,7 @@ export function SocialProof() {
                 key={p.alt}
                 src={p.src}
                 alt={p.alt}
-                style={{ height: p.height }}
-                className="object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 dark:brightness-0 dark:invert dark:opacity-50 dark:hover:brightness-100 dark:hover:invert-0 dark:hover:opacity-100"
+                className="object-contain h-8 max-w-[140px] brightness-0 invert opacity-50 hover:opacity-80 transition-all duration-300"
               />
             ))}
           </div>
