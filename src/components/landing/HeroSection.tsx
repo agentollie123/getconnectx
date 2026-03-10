@@ -4,16 +4,18 @@ import { ArrowRight, Play } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const roles = [
-{ label: "Founders", emoji: "🚀", x: 15, y: 20 },
-{ label: "Engineers", emoji: "⚡", x: 75, y: 15 },
-{ label: "Designers", emoji: "🎨", x: 25, y: 70 },
-{ label: "Operators", emoji: "📊", x: 80, y: 65 },
-{ label: "Growth", emoji: "📈", x: 50, y: 40 },
-{ label: "AI/ML", emoji: "🤖", x: 60, y: 80 }];
-
+  { label: "Founders", emoji: "🚀", x: 50, y: 10 },
+  { label: "Co-Founders", emoji: "🤝", x: 15, y: 30 },
+  { label: "Engineers", emoji: "⚡", x: 85, y: 30 },
+  { label: "Investors", emoji: "💰", x: 20, y: 65 },
+  { label: "Advisors", emoji: "🧠", x: 80, y: 65 },
+  { label: "Partners", emoji: "🔗", x: 35, y: 85 },
+  { label: "Operators", emoji: "📊", x: 65, y: 85 },
+];
 
 const connections = [
-[0, 4], [1, 4], [2, 4], [3, 4], [0, 1], [2, 3], [4, 5], [1, 5], [0, 2]];
+  [0, 1], [0, 2], [0, 3], [0, 4], [1, 2], [1, 5], [2, 6], [3, 5], [4, 6], [5, 6], [3, 4],
+];
 
 
 function NetworkGraph() {
