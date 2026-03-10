@@ -108,10 +108,6 @@ export default function AppDemo() {
   };
 
   const handleButtonSwipe = (dir: "left" | "right") => {
-    if (swipeCount >= DAILY_SWIPE_LIMIT) {
-      setShowUpgrade(true);
-      return;
-    }
     setButtonSwipeDir(dir);
     setTimeout(() => handleSwipe(dir), 50);
   };
