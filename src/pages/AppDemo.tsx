@@ -84,10 +84,6 @@ export default function AppDemo() {
   }, []);
 
   const handleSwipe = (dir: "left" | "right") => {
-    if (swipeCount >= DAILY_SWIPE_LIMIT) {
-      setShowUpgrade(true);
-      return;
-    }
 
     const current = cardStack[0];
     setCardStack((prev) => prev.slice(1));
