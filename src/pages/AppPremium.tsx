@@ -26,7 +26,7 @@ import { ProfileView } from "@/components/app/ProfileView";
 import { SpotlightModal } from "@/components/app/SpotlightModal";
 import { AddToTeamModal } from "@/components/app/AddToTeamModal";
 import { PremiumLikedYouSection } from "@/components/app/PremiumLikedYouSection";
-import { VersionBadge, MatchingModeSelector, SwipeLimitBar } from "@/components/app/VersionBadge";
+import { VersionBadge, SwipeLimitBar } from "@/components/app/VersionBadge";
 import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 
