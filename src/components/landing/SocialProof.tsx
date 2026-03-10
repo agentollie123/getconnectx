@@ -43,27 +43,16 @@ export function SocialProof() {
           ))}
         </div>
 
-        {/* As Seen In */}
-        <div className="text-center mb-12">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-6">As Seen In</p>
-          <div className="flex items-center justify-center gap-8 flex-wrap">
-            {["Tech in Asia", "Bisnis.com", "e27", "DealStreetAsia"].map((name) => (
-              <div key={name} className="glass-card px-6 py-3 rounded-lg">
-                <span className="font-display font-semibold text-muted-foreground text-lg">{name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Powered By */}
+        {/* Partners & Backers */}
         <div className="text-center">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-6">Powered By</p>
-          <div className="flex items-center justify-center gap-8 flex-wrap">
-            {["Google Cloud", "NVIDIA", "Alibaba Cloud"].map((name) => (
-              <div key={name} className="glass-card px-6 py-3 rounded-lg">
-                <span className="font-display font-semibold text-muted-foreground text-lg">{name}</span>
-              </div>
-            ))}
+          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8">Backed & Supported By</p>
+          <div className="flex items-center justify-center">
+            <img 
+              src={partnersBanner} 
+              alt="NVIDIA Inception Program, Tech in Asia, Google for Startups, Bisnis Indonesia" 
+              className="max-w-full h-auto opacity-70 dark:invert dark:opacity-60"
+              style={{ maxHeight: '60px' }}
+            />
           </div>
         </div>
       </div>
