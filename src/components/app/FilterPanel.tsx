@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -13,6 +14,7 @@ interface FilterPanelProps {
 
 export interface FilterState {
   location: string;
+  distance: number;
   lookingFor: string[];
   stage: string[];
   commitment: string[];
@@ -23,7 +25,6 @@ export interface FilterState {
 }
 
 const LOCATIONS = ["Anywhere", "Same City", "Same Country", "Remote Friendly"];
-const DISTANCES = ["10 km", "25 km", "50 km", "100 km", "Remote"];
 const LOOKING_FOR = [
   "Founder → Co-Founder", "Founder → Team", "Co-Founder → Startup",
   "Team Member → Startup",
@@ -111,6 +112,7 @@ function Radio({ options, selected, onChange }: {
 export function FilterPanel({ onGenerate }: FilterPanelProps) {
   const [filters, setFilters] = useState<FilterState>({
     location: "",
+    distance: 50,
     lookingFor: [],
     stage: [],
     commitment: [],
@@ -133,12 +135,31 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
       <ScrollArea className="flex-1 -mx-1 px-1">
         <div className="space-y-0.5 pr-1">
           <Section title="Location" icon={MapPin} defaultOpen>
-            <Radio options={LOCATIONS} selected={filters.location} onChange={(v) => update("location", v)} />
-            <div className="flex flex-wrap gap-1 mt-1">
-              {DISTANCES.map((d) => (
-                <span key={d} className="text-[9px] px-1.5 py-0.5 rounded-full border border-border text-muted-foreground">{d}</span>
-              ))}
+            <Input
+              placeholder="Enter city or country..."
+              value={filters.location}
+              onChange={(e) => update("location", e.target.value)}
+              className="h-7 text-[11px] bg-card border-border placeholder:text-muted-foreground/50"
+            />
+            <div className="pt-1">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] text-muted-foreground">Distance</span>
+                <span className="text-[10px] font-bold text-primary">{filters.distance} km</span>
+              </div>
+              <Slider
+                value={[filters.distance]}
+                onValueChange={([v]) => update("distance", v)}
+                min={0}
+                max={100}
+                step={5}
+                className="w-full"
+              />
+              <div className="flex justify-between mt-0.5">
+                <span className="text-[9px] text-muted-foreground">0 km</span>
+                <span className="text-[9px] text-muted-foreground">100 km</span>
+              </div>
             </div>
+            <Radio options={LOCATIONS} selected={filters.teamPref} onChange={(v) => update("teamPref", v)} />
           </Section>
 
           <Section title="Looking For" icon={Search} defaultOpen>
