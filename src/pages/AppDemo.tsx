@@ -82,6 +82,7 @@ export default function AppDemo() {
   const [teamMembers, setTeamMembers] = useState(INITIAL_TEAM);
   const [startupDetail, setStartupDetail] = useState<Startup | null>(null);
   const [matchedStartup, setMatchedStartup] = useState<Startup | null>(null);
+  const [chatStartupTarget, setChatStartupTarget] = useState<Startup | null>(null);
 
   const generateMatches = useCallback((filters: FilterState) => {
     // Check if any startup modes are selected in "Looking For"
