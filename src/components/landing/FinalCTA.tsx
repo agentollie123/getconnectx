@@ -4,14 +4,6 @@ import { ArrowRight, Rocket } from "lucide-react";
 
 export function FinalCTA() {
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubmitted(true);
-      setEmail("");
-    }
-  };
-
   return (
     <section className="py-32 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
