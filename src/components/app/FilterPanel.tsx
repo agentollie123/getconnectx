@@ -112,6 +112,7 @@ function Radio({ options, selected, onChange }: {
 export function FilterPanel({ onGenerate }: FilterPanelProps) {
   const [filters, setFilters] = useState<FilterState>({
     location: "",
+    distance: 50,
     lookingFor: [],
     stage: [],
     commitment: [],
