@@ -39,8 +39,8 @@ export function FinalCTA() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-4 mb-4">
-            <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-secondary">
-              <a href="#playground">Try the Playground</a>
+            <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-secondary" asChild>
+              <a href="/app">Try the Playground</a>
             </Button>
           </div>
 
