@@ -82,6 +82,7 @@ export default function AppPremium() {
   const [teamMembers, setTeamMembers] = useState(INITIAL_TEAM);
   const [startupDetail, setStartupDetail] = useState<Startup | null>(null);
   const [matchedStartup, setMatchedStartup] = useState<Startup | null>(null);
+  const [chatStartupTarget, setChatStartupTarget] = useState<Startup | null>(null);
 
   const generateMatches = useCallback((filters: any) => {
     const filtered = profiles.filter((p) => {
@@ -205,15 +206,33 @@ export default function AppPremium() {
         return (
           <MatchesView
             connectedProfiles={connectedProfiles}
+            connectedStartups={connectedStartups}
+            isStartupMode={isStartupMode(matchingMode)}
             onViewReport={(p) => setReportProfile(p)}
             onChat={(p) => { setChatTarget(p); setActiveNav("Chat"); }}
+            onChatStartup={(s) => { setChatStartupTarget(s); setActiveNav("Chat"); }}
             onAcceptLike={(p) => setConnectedProfiles((prev) => [...prev, p])}
           />
         );
       case "Chat":
-        return <ChatView activeChat={chatTarget} onAddToTeam={(p) => setAddToTeamTarget(p)} />;
+        return (
+          <ChatView
+            activeChat={chatTarget}
+            activeChatStartup={chatStartupTarget}
+            isStartupMode={isStartupMode(matchingMode)}
+            connectedStartups={connectedStartups}
+            onAddToTeam={(p) => setAddToTeamTarget(p)}
+          />
+        );
       case "Team":
-        return <TeamBuilderView teamMembers={teamMembers} onFindMembers={() => setActiveNav("Home")} />;
+        return (
+          <TeamBuilderView
+            teamMembers={teamMembers}
+            onFindMembers={() => setActiveNav("Home")}
+            isStartupMode={isStartupMode(matchingMode)}
+            connectedStartups={connectedStartups}
+          />
+        );
       case "Profile":
         return (
           <ScrollArea className="h-full">
