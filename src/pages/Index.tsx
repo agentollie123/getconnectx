@@ -21,6 +21,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <FounderProblem />
+      <FomoScale />
       <EcosystemMatchmaking />
       <StartupPipeline />
       <NetworkMap />
