@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { profiles } from "@/lib/profileData";
-import { MapPin, Briefcase, Star } from "lucide-react";
+import { MapPin, Briefcase, Star, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 function MatchScore() {
   const score = Math.floor(Math.random() * 20) + 78;
@@ -72,6 +73,20 @@ export function SocialDiscovery() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mt-8"
+        >
+          <Button asChild variant="outline" className="border-primary/20 text-primary hover:bg-primary/10">
+            <a href="/app">
+              Try Swiping in the App
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
+          </Button>
+        </motion.div>
       </div>
     </section>
   );
