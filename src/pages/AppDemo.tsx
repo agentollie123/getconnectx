@@ -37,7 +37,6 @@ const navItems = [
   { icon: MessageCircle, label: "Chat" },
   { icon: Users, label: "Team" },
   { icon: User, label: "Profile" },
-  { icon: Map, label: "Roadmap" },
 ];
 
 const INITIAL_TEAM = [
