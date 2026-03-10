@@ -84,12 +84,30 @@ export default function AppDemo() {
   const [matchedStartup, setMatchedStartup] = useState<Startup | null>(null);
 
   const generateMatches = useCallback((filters: FilterState) => {
-    const filtered = profiles.filter((p) => {
-      if (filters.stage.length > 0 && !filters.stage.some((s) => p.stage.includes(s.replace(" Stage", "")))) return false;
-      return true;
-    });
-    setCardStack(filtered.length > 0 ? [...filtered] : [...profiles]);
+    // Check if any startup modes are selected in "Looking For"
+    const hasCofounderStartup = filters.lookingFor.includes("Co-Founder → Startup");
+    const hasTeamStartup = filters.lookingFor.includes("Team Member → Startup");
+
+    if (hasCofounderStartup || hasTeamStartup) {
+      const mode: MatchingMode = hasCofounderStartup ? "cofounder-startup" : "team-startup";
+      setMatchingMode(mode);
+      const filtered = hasCofounderStartup
+        ? allStartups.filter(s => s.lookingFor === "co-founder" || s.lookingFor === "both")
+        : allStartups.filter(s => s.lookingFor === "team" || s.lookingFor === "both");
+      setStartupStack([...filtered]);
+    } else {
+      // Determine people mode from filters
+      const hasFounderTeam = filters.lookingFor.includes("Founder → Team");
+      setMatchingMode(hasFounderTeam ? "founder-team" : "founder-cofounder");
+
+      const filtered = profiles.filter((p) => {
+        if (filters.stage.length > 0 && !filters.stage.some((s) => p.stage.includes(s.replace(" Stage", "")))) return false;
+        return true;
+      });
+      setCardStack(filtered.length > 0 ? [...filtered] : [...profiles]);
+    }
     setStats({ connected: 0, skipped: 0 });
+    setSwipeCount(0);
     setShowFilters(false);
   }, []);
 
