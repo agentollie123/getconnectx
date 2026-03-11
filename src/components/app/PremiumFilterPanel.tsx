@@ -129,6 +129,45 @@ function Tags({ options, selected, onChange }: {
   );
 }
 
+function CheckboxList({ options, selected, onChange }: {
+  options: string[]; selected: string[]; onChange: (v: string[]) => void;
+}) {
+  const [search, setSearch] = useState("");
+  const filtered = options.filter((o) => o.toLowerCase().includes(search.toLowerCase()));
+  const toggle = (v: string) => {
+    onChange(selected.includes(v) ? selected.filter((s) => s !== v) : [...selected, v]);
+  };
+  return (
+    <div className="space-y-1.5">
+      <Input
+        placeholder="Search..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="h-6 text-[10px] bg-card border-border placeholder:text-muted-foreground/50"
+      />
+      <div className="max-h-28 overflow-y-auto space-y-0.5 pr-1">
+        {filtered.map((o) => (
+          <label
+            key={o}
+            className="flex items-center gap-1.5 py-0.5 px-1 rounded hover:bg-muted/30 cursor-pointer transition-colors"
+          >
+            <input
+              type="checkbox"
+              checked={selected.includes(o)}
+              onChange={() => toggle(o)}
+              className="h-3 w-3 rounded border-border text-primary accent-primary"
+            />
+            <span className="text-[10px] text-foreground">{o}</span>
+          </label>
+        ))}
+        {filtered.length === 0 && (
+          <p className="text-[9px] text-muted-foreground py-1">No results</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function PremiumTags({ options, selected, onChange }: {
   options: string[]; selected: string[]; onChange: (v: string[]) => void;
 }) {
@@ -276,11 +315,11 @@ export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
           </Section>
 
           <Section title="Skills" icon={Code}>
-            <Tags options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} />
+            <CheckboxList options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} />
           </Section>
 
           <Section title="Industry" icon={Briefcase}>
-            <Tags options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
+            <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
           </Section>
 
           {/* Premium filters - unlocked */}
