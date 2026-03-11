@@ -34,10 +34,23 @@ const COMMITMENTS = ["Side Project", "Part-time", "Full-time", "Open to discussi
 const SKILLS = [
   "AI / ML", "Full-Stack", "Mobile Dev", "Product Mgmt",
   "UI / UX", "Growth", "Sales", "Blockchain", "DevOps",
+  "Frontend", "Backend", "Data Science", "Cloud / Infra",
+  "Cybersecurity", "QA / Testing", "Technical Writing",
+  "Project Mgmt", "Marketing", "Finance", "Legal",
+  "HR / Recruiting", "Operations", "Customer Success",
+  "Business Dev", "Content Creation", "SEO / SEM",
+  "Community Mgmt", "Hardware", "Embedded Systems",
+  "Game Dev", "AR / VR", "Robotics", "NLP",
 ];
 const INDUSTRIES = [
   "AI", "Fintech", "Healthtech", "EdTech", "Web3",
   "SaaS", "Marketplace", "Gaming", "Climate Tech",
+  "AgriTech", "LegalTech", "InsurTech", "PropTech",
+  "FoodTech", "Logistics", "E-Commerce", "Media",
+  "Entertainment", "Travel", "Social", "HRTech",
+  "Cybersecurity", "IoT", "Robotics", "Biotech",
+  "SpaceTech", "Fashion", "Sports", "Automotive",
+  "Energy", "Construction", "Telecom", "GovTech",
 ];
 const PREMIUM_FILTERS = ["Age Range", "Startup Experience", "Education", "Investor Network", "Previous Exit"];
 
