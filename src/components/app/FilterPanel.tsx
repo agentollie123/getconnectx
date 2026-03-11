@@ -32,15 +32,32 @@ const LOOKING_FOR = [
 const STAGES = ["Idea", "MVP", "Beta", "Early Traction", "Scaling"];
 const COMMITMENTS = ["Side Project", "Part-time", "Full-time", "Open to discussion"];
 const SKILLS = [
-  "AI / ML", "Full-Stack", "Mobile Dev", "Product Mgmt",
-  "UI / UX", "Growth", "Sales", "Blockchain", "DevOps",
-  "Frontend", "Backend", "Data Science", "Cloud / Infra",
-  "Cybersecurity", "QA / Testing", "Technical Writing",
-  "Project Mgmt", "Marketing", "Finance", "Legal",
-  "HR / Recruiting", "Operations", "Customer Success",
-  "Business Dev", "Content Creation", "SEO / SEM",
-  "Community Mgmt", "Hardware", "Embedded Systems",
-  "Game Dev", "AR / VR", "Robotics", "NLP",
+  // Technical
+  "AI / ML", "Full-Stack", "Frontend", "Backend", "Mobile Dev",
+  "Data Science", "Cloud / Infra", "DevOps", "Blockchain",
+  "Cybersecurity", "QA / Testing", "Embedded Systems",
+  "Game Dev", "AR / VR", "Robotics", "NLP", "Hardware",
+  // Product & Design
+  "Product Mgmt", "UI / UX", "Graphic Design", "UX Research",
+  // Marketing & Growth
+  "Growth", "Digital Marketing", "SEO / SEM", "Social Media",
+  "Content Creation", "Copywriting", "Brand Strategy",
+  "Email Marketing", "Influencer Marketing", "PR / Comms",
+  // Sales & Business
+  "Sales", "Business Dev", "Partnerships", "Account Mgmt",
+  "Customer Success", "Lead Generation",
+  // Operations & Strategy
+  "Operations", "Supply Chain", "Project Mgmt", "Strategy",
+  "Process Optimization", "Logistics",
+  // Finance & Accounting
+  "Finance", "Accounting", "Financial Modeling", "Fundraising",
+  "Investor Relations", "Tax / Compliance", "Bookkeeping",
+  // Legal & HR
+  "Legal", "HR / Recruiting", "Talent Acquisition", "People Ops",
+  "Compensation & Benefits",
+  // Other
+  "Technical Writing", "Community Mgmt", "Data Analytics",
+  "Market Research", "Public Speaking", "Consulting",
 ];
 const INDUSTRIES = [
   "AI", "Fintech", "Healthtech", "EdTech", "Web3",
