@@ -34,10 +34,23 @@ const COMMITMENTS = ["Side Project", "Part-time", "Full-time", "Open to discussi
 const SKILLS = [
   "AI / ML", "Full-Stack", "Mobile Dev", "Product Mgmt",
   "UI / UX", "Growth", "Sales", "Blockchain", "DevOps",
+  "Frontend", "Backend", "Data Science", "Cloud / Infra",
+  "Cybersecurity", "QA / Testing", "Technical Writing",
+  "Project Mgmt", "Marketing", "Finance", "Legal",
+  "HR / Recruiting", "Operations", "Customer Success",
+  "Business Dev", "Content Creation", "SEO / SEM",
+  "Community Mgmt", "Hardware", "Embedded Systems",
+  "Game Dev", "AR / VR", "Robotics", "NLP",
 ];
 const INDUSTRIES = [
   "AI", "Fintech", "Healthtech", "EdTech", "Web3",
   "SaaS", "Marketplace", "Gaming", "Climate Tech",
+  "AgriTech", "LegalTech", "InsurTech", "PropTech",
+  "FoodTech", "Logistics", "E-Commerce", "Media",
+  "Entertainment", "Travel", "Social", "HRTech",
+  "Cybersecurity", "IoT", "Robotics", "Biotech",
+  "SpaceTech", "Fashion", "Sports", "Automotive",
+  "Energy", "Construction", "Telecom", "GovTech",
 ];
 const PREMIUM_FILTERS = ["Age Range", "Startup Experience", "Education", "Investor Network", "Previous Exit"];
 
@@ -83,6 +96,45 @@ function Tags({ options, selected, onChange }: {
           {o}
         </button>
       ))}
+    </div>
+  );
+}
+
+function CheckboxList({ options, selected, onChange }: {
+  options: string[]; selected: string[]; onChange: (v: string[]) => void;
+}) {
+  const [search, setSearch] = useState("");
+  const filtered = options.filter((o) => o.toLowerCase().includes(search.toLowerCase()));
+  const toggle = (v: string) => {
+    onChange(selected.includes(v) ? selected.filter((s) => s !== v) : [...selected, v]);
+  };
+  return (
+    <div className="space-y-1.5">
+      <Input
+        placeholder="Search..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="h-6 text-[10px] bg-card border-border placeholder:text-muted-foreground/50"
+      />
+      <div className="max-h-28 overflow-y-auto space-y-0.5 pr-1">
+        {filtered.map((o) => (
+          <label
+            key={o}
+            className="flex items-center gap-1.5 py-0.5 px-1 rounded hover:bg-muted/30 cursor-pointer transition-colors"
+          >
+            <input
+              type="checkbox"
+              checked={selected.includes(o)}
+              onChange={() => toggle(o)}
+              className="h-3 w-3 rounded border-border text-primary accent-primary"
+            />
+            <span className="text-[10px] text-foreground">{o}</span>
+          </label>
+        ))}
+        {filtered.length === 0 && (
+          <p className="text-[9px] text-muted-foreground py-1">No results</p>
+        )}
+      </div>
     </div>
   );
 }
@@ -175,11 +227,11 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
           </Section>
 
           <Section title="Skills" icon={Code}>
-            <Tags options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} />
+            <CheckboxList options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} />
           </Section>
 
           <Section title="Industry" icon={Briefcase}>
-            <Tags options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
+            <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
           </Section>
 
           {/* Premium filters */}
