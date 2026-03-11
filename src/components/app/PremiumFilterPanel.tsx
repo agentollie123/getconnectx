@@ -315,11 +315,11 @@ export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
           </Section>
 
           <Section title="Skills" icon={Code}>
-            <Tags options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} />
+            <CheckboxList options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} />
           </Section>
 
           <Section title="Industry" icon={Briefcase}>
-            <Tags options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
+            <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
           </Section>
 
           {/* Premium filters - unlocked */}
