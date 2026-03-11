@@ -38,12 +38,42 @@ const LOOKING_FOR = [
 const STAGES = ["Idea", "MVP", "Beta", "Early Traction", "Scaling"];
 const COMMITMENTS = ["Side Project", "Part-time", "Full-time", "Open to discussion"];
 const SKILLS = [
-  "AI / ML", "Full-Stack", "Mobile Dev", "Product Mgmt",
-  "UI / UX", "Growth", "Sales", "Blockchain", "DevOps", "Cybersecurity",
+  // Technical
+  "AI / ML", "Full-Stack", "Frontend", "Backend", "Mobile Dev",
+  "Data Science", "Cloud / Infra", "DevOps", "Blockchain",
+  "Cybersecurity", "QA / Testing", "Embedded Systems",
+  "Game Dev", "AR / VR", "Robotics", "NLP", "Hardware",
+  // Product & Design
+  "Product Mgmt", "UI / UX", "Graphic Design", "UX Research",
+  // Marketing & Growth
+  "Growth", "Digital Marketing", "SEO / SEM", "Social Media",
+  "Content Creation", "Copywriting", "Brand Strategy",
+  "Email Marketing", "Influencer Marketing", "PR / Comms",
+  // Sales & Business
+  "Sales", "Business Dev", "Partnerships", "Account Mgmt",
+  "Customer Success", "Lead Generation",
+  // Operations & Strategy
+  "Operations", "Supply Chain", "Project Mgmt", "Strategy",
+  "Process Optimization", "Logistics",
+  // Finance & Accounting
+  "Finance", "Accounting", "Financial Modeling", "Fundraising",
+  "Investor Relations", "Tax / Compliance", "Bookkeeping",
+  // Legal & HR
+  "Legal", "HR / Recruiting", "Talent Acquisition", "People Ops",
+  "Compensation & Benefits",
+  // Other
+  "Technical Writing", "Community Mgmt", "Data Analytics",
+  "Market Research", "Public Speaking", "Consulting",
 ];
 const INDUSTRIES = [
   "AI", "Fintech", "Healthtech", "EdTech", "Web3",
   "SaaS", "Marketplace", "Gaming", "Climate Tech",
+  "AgriTech", "LegalTech", "InsurTech", "PropTech",
+  "FoodTech", "Logistics", "E-Commerce", "Media",
+  "Entertainment", "Travel", "Social", "HRTech",
+  "Cybersecurity", "IoT", "Robotics", "Biotech",
+  "SpaceTech", "Fashion", "Sports", "Automotive",
+  "Energy", "Construction", "Telecom", "GovTech",
 ];
 const EXPERIENCE_LEVELS = ["First-time Founder", "1 Startup", "2-3 Startups", "Serial Entrepreneur", "Corporate → Startup"];
 const EDUCATION_OPTIONS = ["Any", "Top 50 University", "MBA", "PhD / Research", "Self-taught", "Bootcamp Graduate"];
