@@ -253,7 +253,7 @@ export default function AppPremium() {
       case "Profile":
         return (
           <ScrollArea className="h-full">
-            <ProfileView />
+            <ProfileView matchingMode={matchingMode} />
             <div className="px-4 pb-4"><V2ComingSoonGrid showPremium /></div>
           </ScrollArea>
         );
