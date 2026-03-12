@@ -1,8 +1,8 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import {
-  MapPin, Lightbulb, Search, Rocket, Star, Shield, Settings,
-  Briefcase, Globe, GraduationCap, Clock,
+  MapPin, Lightbulb, Rocket, Star, Shield, Settings,
+  Briefcase, Globe, GraduationCap, Clock, Zap,
 } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
 
