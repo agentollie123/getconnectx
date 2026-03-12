@@ -83,7 +83,7 @@ export function ProfileView() {
           <div className="rounded-xl bg-card border border-border p-3">
             <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Skills</p>
             <div className="flex flex-wrap gap-1">
-              {["Strategy", "BD", "Fundraising", "Product", "GTM"].map((s) => (
+              {["Node.js", "Go", "System Design", "Team Lead", "DevOps"].map((s) => (
                 <span key={s} className="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">{s}</span>
               ))}
             </div>
