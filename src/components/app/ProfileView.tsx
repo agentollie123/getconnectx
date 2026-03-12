@@ -102,11 +102,11 @@ export function ProfileView() {
         <div className="rounded-xl bg-card border border-border p-3 space-y-2">
           <div className="flex items-center gap-2 text-xs">
             <Briefcase className="w-3.5 h-3.5 text-primary" />
-            <span className="text-foreground">5+ years startup experience</span>
+            <span className="text-foreground">Ex-CTO at PayKecil (acquired 2021)</span>
           </div>
           <div className="flex items-center gap-2 text-xs">
             <GraduationCap className="w-3.5 h-3.5 text-primary" />
-            <span className="text-foreground">MBA, London Business School</span>
+            <span className="text-foreground">B.S. Computer Science, Universitas Indonesia</span>
           </div>
           <div className="flex items-center gap-2 text-xs">
             <Globe className="w-3.5 h-3.5 text-primary" />
