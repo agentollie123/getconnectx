@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -6,6 +6,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   MapPin, Search, Rocket, Clock, Code, Briefcase,
   Lock, ChevronDown, ChevronUp, Zap, TrendingUp, Users,
+  Heart, Shield, DollarSign, Target, Building2, Calendar,
+  Sparkles, Banknote, GraduationCap, Languages,
 } from "lucide-react";
 
 interface FilterPanelProps {
@@ -32,30 +34,22 @@ const LOOKING_FOR = [
 const STAGES = ["Idea", "MVP", "Beta", "Early Traction", "Scaling"];
 const COMMITMENTS = ["Side Project", "Part-time", "Full-time", "Open to discussion"];
 const SKILLS = [
-  // Technical
   "AI / ML", "Full-Stack", "Frontend", "Backend", "Mobile Dev",
   "Data Science", "Cloud / Infra", "DevOps", "Blockchain",
   "Cybersecurity", "QA / Testing", "Embedded Systems",
   "Game Dev", "AR / VR", "Robotics", "NLP", "Hardware",
-  // Product & Design
   "Product Mgmt", "UI / UX", "Graphic Design", "UX Research",
-  // Marketing & Growth
   "Growth", "Digital Marketing", "SEO / SEM", "Social Media",
   "Content Creation", "Copywriting", "Brand Strategy",
   "Email Marketing", "Influencer Marketing", "PR / Comms",
-  // Sales & Business
   "Sales", "Business Dev", "Partnerships", "Account Mgmt",
   "Customer Success", "Lead Generation",
-  // Operations & Strategy
   "Operations", "Supply Chain", "Project Mgmt", "Strategy",
   "Process Optimization", "Logistics",
-  // Finance & Accounting
   "Finance", "Accounting", "Financial Modeling", "Fundraising",
   "Investor Relations", "Tax / Compliance", "Bookkeeping",
-  // Legal & HR
   "Legal", "HR / Recruiting", "Talent Acquisition", "People Ops",
   "Compensation & Benefits",
-  // Other
   "Technical Writing", "Community Mgmt", "Data Analytics",
   "Market Research", "Public Speaking", "Consulting",
 ];
@@ -69,7 +63,45 @@ const INDUSTRIES = [
   "SpaceTech", "Fashion", "Sports", "Automotive",
   "Energy", "Construction", "Telecom", "GovTech",
 ];
-const PREMIUM_FILTERS = ["Age Range", "Startup Experience", "Education", "Investor Network", "Previous Exit"];
+
+// Mode-specific locked premium filters
+const FOUNDER_PREMIUM = [
+  { label: "Personality Match", icon: Heart },
+  { label: "Leadership Style", icon: Shield },
+  { label: "Age Range", icon: Calendar },
+  { label: "Startup Experience", icon: Rocket },
+  { label: "Education", icon: GraduationCap },
+  { label: "Languages", icon: Languages },
+];
+
+const COFOUNDER_PREMIUM = [
+  { label: "Funding Stage", icon: DollarSign },
+  { label: "Revenue", icon: TrendingUp },
+  { label: "Team Size", icon: Users },
+  { label: "Equity Offered", icon: Sparkles },
+  { label: "Investor Network", icon: Banknote },
+  { label: "Previous Exit", icon: TrendingUp },
+  { label: "Age Range", icon: Calendar },
+  { label: "Languages", icon: Languages },
+];
+
+const TEAM_PREMIUM = [
+  { label: "Role Type", icon: Target },
+  { label: "Salary Expectation", icon: DollarSign },
+  { label: "Equity Offered", icon: Sparkles },
+  { label: "Funding Stage", icon: Building2 },
+  { label: "Team Size", icon: Users },
+  { label: "Availability", icon: Calendar },
+  { label: "Languages", icon: Languages },
+];
+
+const DEFAULT_PREMIUM = [
+  { label: "Age Range", icon: Calendar },
+  { label: "Startup Experience", icon: Rocket },
+  { label: "Education", icon: GraduationCap },
+  { label: "Investor Network", icon: Banknote },
+  { label: "Previous Exit", icon: TrendingUp },
+];
 
 function Section({ title, icon: Icon, children, defaultOpen = false }: {
   title: string; icon: any; children: React.ReactNode; defaultOpen?: boolean;
@@ -195,6 +227,27 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
     setFilters((prev) => ({ ...prev, [key]: val }));
   };
 
+  // Determine which premium filters to show based on mode
+  const premiumFilters = useMemo(() => {
+    const lf = filters.lookingFor;
+    const isFounder = lf.some(l => l.startsWith("Founder"));
+    const isCofounder = lf.includes("Co-Founder → Startup");
+    const isTeam = lf.includes("Team Member → Startup");
+
+    if (isCofounder) return COFOUNDER_PREMIUM;
+    if (isTeam) return TEAM_PREMIUM;
+    if (isFounder) return FOUNDER_PREMIUM;
+    return DEFAULT_PREMIUM;
+  }, [filters.lookingFor]);
+
+  const premiumLabel = useMemo(() => {
+    const lf = filters.lookingFor;
+    if (lf.includes("Co-Founder → Startup")) return "Co-Founder Premium Filters";
+    if (lf.includes("Team Member → Startup")) return "Team Member Premium Filters";
+    if (lf.some(l => l.startsWith("Founder"))) return "Founder Premium Filters";
+    return "Premium Filters";
+  }, [filters.lookingFor]);
+
   return (
     <div className="h-full flex flex-col">
       <h2 className="font-display text-sm font-bold text-foreground mb-3">
@@ -203,6 +256,10 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
 
       <ScrollArea className="flex-1 -mx-1 px-1">
         <div className="space-y-0.5 pr-1">
+          <Section title="Looking For" icon={Search} defaultOpen>
+            <Tags options={LOOKING_FOR} selected={filters.lookingFor} onChange={(v) => update("lookingFor", v)} />
+          </Section>
+
           <Section title="Location" icon={MapPin} defaultOpen>
             <Input
               placeholder="Enter city or country..."
@@ -231,10 +288,6 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
             <Radio options={LOCATIONS} selected={filters.teamPref} onChange={(v) => update("teamPref", v)} />
           </Section>
 
-          <Section title="Looking For" icon={Search} defaultOpen>
-            <Tags options={LOOKING_FOR} selected={filters.lookingFor} onChange={(v) => update("lookingFor", v)} />
-          </Section>
-
           <Section title="Startup Stage" icon={Rocket}>
             <Tags options={STAGES} selected={filters.stage} onChange={(v) => update("stage", v)} />
           </Section>
@@ -251,17 +304,29 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
             <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
           </Section>
 
-          {/* Premium filters */}
-          <Section title="Premium Filters" icon={Lock}>
-            <div className="flex flex-wrap gap-1">
-              {PREMIUM_FILTERS.map((f) => (
-                <span key={f} className="text-[9px] px-2 py-0.5 rounded-full border border-border text-muted-foreground/40 flex items-center gap-0.5">
-                  <Lock className="w-2.5 h-2.5" /> {f}
+          {/* Premium filters - locked, mode-responsive */}
+          <div className="border-b border-border/30 pb-3 pt-1">
+            <div className="flex items-center gap-1.5 mb-2">
+              <Lock className="w-3.5 h-3.5 text-accent" />
+              <span className="text-xs font-medium text-foreground">{premiumLabel}</span>
+              <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-accent/20 text-accent font-bold uppercase tracking-wider">Pro</span>
+            </div>
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {premiumFilters.map((f) => (
+                <span
+                  key={f.label}
+                  className="text-[9px] px-2 py-1 rounded-full border border-border bg-muted/20 text-muted-foreground/50 flex items-center gap-1 cursor-not-allowed"
+                >
+                  <f.icon className="w-2.5 h-2.5" />
+                  {f.label}
+                  <Lock className="w-2 h-2 ml-0.5" />
                 </span>
               ))}
             </div>
-            <p className="text-[9px] text-primary mt-1 cursor-pointer hover:underline">Upgrade to ConnectX Premium →</p>
-          </Section>
+            <p className="text-[10px] text-primary cursor-pointer hover:underline font-medium">
+              🔓 Upgrade to ConnectX Premium →
+            </p>
+          </div>
 
           {/* Match score */}
           <div className="pt-2">
