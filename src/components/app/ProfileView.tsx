@@ -7,9 +7,9 @@ import {
 import logoIcon from "@/assets/logo-icon.png";
 
 const BADGES = [
-  { label: "Startup Founder", icon: Rocket },
+  { label: "1x Exit (CTO)", icon: Rocket },
   { label: "Top Builder", icon: Star },
-  { label: "Open Source", icon: Shield },
+  { label: "Ex-Gojek", icon: Shield },
 ];
 
 const STATS = [
@@ -27,8 +27,8 @@ export function ProfileView() {
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-2 ring-4 ring-primary/20">
             <img src={logoIcon} alt="Profile" className="w-14 h-14 rounded-full" />
           </div>
-          <h2 className="font-display text-lg font-bold text-foreground">John Carter</h2>
-          <p className="text-xs text-muted-foreground">Startup Founder</p>
+          <h2 className="font-display text-lg font-bold text-foreground">Andi Prasetyo</h2>
+          <p className="text-xs text-muted-foreground">Senior Software Engineer</p>
           <p className="text-[10px] text-primary flex items-center justify-center gap-1 mt-0.5">
             <MapPin className="w-2.5 h-2.5" /> Jakarta, Indonesia
           </p>
@@ -58,10 +58,10 @@ export function ProfileView() {
         <div className="rounded-xl bg-primary/5 border border-primary/20 p-3">
           <div className="flex items-center gap-1.5 mb-1.5">
             <Lightbulb className="w-3.5 h-3.5 text-primary" />
-            <p className="text-xs font-semibold text-foreground">Startup Idea</p>
+            <p className="text-xs font-semibold text-foreground">What I Bring</p>
           </div>
           <p className="text-[11px] text-foreground/80 leading-relaxed">
-            AI-powered supply chain platform that optimizes logistics for SMEs across Southeast Asia.
+            Ex-CTO with a successful exit. 8+ years building scalable backends & leading engineering teams. Looking to co-found or join an early-stage startup as a technical co-founder.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export function ProfileView() {
             <p className="text-xs font-semibold text-foreground">Looking For</p>
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {["Founder → Co-Founder", "Founder → Team", "Co-Founder → Startup", "Team Member → Startup"].map((r) => (
+            {["Co-Founder → Startup", "CTO → Early-Stage", "Team Lead → Venture"].map((r) => (
               <span key={r} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">{r}</span>
             ))}
           </div>
@@ -83,7 +83,7 @@ export function ProfileView() {
           <div className="rounded-xl bg-card border border-border p-3">
             <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Skills</p>
             <div className="flex flex-wrap gap-1">
-              {["Strategy", "BD", "Fundraising", "Product", "GTM"].map((s) => (
+              {["Node.js", "Go", "System Design", "Team Lead", "DevOps"].map((s) => (
                 <span key={s} className="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">{s}</span>
               ))}
             </div>
@@ -102,11 +102,11 @@ export function ProfileView() {
         <div className="rounded-xl bg-card border border-border p-3 space-y-2">
           <div className="flex items-center gap-2 text-xs">
             <Briefcase className="w-3.5 h-3.5 text-primary" />
-            <span className="text-foreground">5+ years startup experience</span>
+            <span className="text-foreground">Ex-CTO at PayKecil (acquired 2021)</span>
           </div>
           <div className="flex items-center gap-2 text-xs">
             <GraduationCap className="w-3.5 h-3.5 text-primary" />
-            <span className="text-foreground">MBA, London Business School</span>
+            <span className="text-foreground">B.S. Computer Science, Universitas Indonesia</span>
           </div>
           <div className="flex items-center gap-2 text-xs">
             <Globe className="w-3.5 h-3.5 text-primary" />
