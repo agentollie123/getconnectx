@@ -278,8 +278,10 @@ export default function AppDemo() {
 
   const renderHomeView = () => (
     <div className="flex-1 flex flex-col items-center p-3 relative">
+      {/* Mode selector */}
+      <MatchingModeSelector mode={matchingMode} onModeChange={handleModeChange} />
 
-      <div className="relative w-full max-w-[360px] h-[420px]">
+      <div className="relative w-full max-w-[360px] h-[400px]">
         {isEmpty ? (
           <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
             <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
