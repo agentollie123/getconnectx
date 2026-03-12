@@ -27,8 +27,8 @@ export function ProfileView() {
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-2 ring-4 ring-primary/20">
             <img src={logoIcon} alt="Profile" className="w-14 h-14 rounded-full" />
           </div>
-          <h2 className="font-display text-lg font-bold text-foreground">John Carter</h2>
-          <p className="text-xs text-muted-foreground">Startup Founder</p>
+          <h2 className="font-display text-lg font-bold text-foreground">Andi Prasetyo</h2>
+          <p className="text-xs text-muted-foreground">Senior Software Engineer</p>
           <p className="text-[10px] text-primary flex items-center justify-center gap-1 mt-0.5">
             <MapPin className="w-2.5 h-2.5" /> Jakarta, Indonesia
           </p>
