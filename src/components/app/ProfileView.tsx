@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import {
@@ -5,6 +6,7 @@ import {
   Briefcase, Globe, GraduationCap, Clock, Zap, TrendingUp, DollarSign, Users, Target,
 } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
+import { EditProfileModal } from "./EditProfileModal";
 
 type MatchingMode = "founder-cofounder" | "founder-team" | "cofounder-startup" | "team-startup";
 
