@@ -72,7 +72,7 @@ export function ProfileView() {
             <p className="text-xs font-semibold text-foreground">Looking For</p>
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {["Founder → Co-Founder", "Founder → Team", "Co-Founder → Startup", "Team Member → Startup"].map((r) => (
+            {["Co-Founder → Startup", "CTO → Early-Stage", "Team Lead → Venture"].map((r) => (
               <span key={r} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">{r}</span>
             ))}
           </div>
