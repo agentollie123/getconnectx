@@ -7,9 +7,9 @@ import {
 import logoIcon from "@/assets/logo-icon.png";
 
 const BADGES = [
-  { label: "Startup Founder", icon: Rocket },
+  { label: "1x Exit (CTO)", icon: Rocket },
   { label: "Top Builder", icon: Star },
-  { label: "Open Source", icon: Shield },
+  { label: "Ex-Gojek", icon: Shield },
 ];
 
 const STATS = [
