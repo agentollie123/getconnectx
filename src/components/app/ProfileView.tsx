@@ -58,10 +58,10 @@ export function ProfileView() {
         <div className="rounded-xl bg-primary/5 border border-primary/20 p-3">
           <div className="flex items-center gap-1.5 mb-1.5">
             <Lightbulb className="w-3.5 h-3.5 text-primary" />
-            <p className="text-xs font-semibold text-foreground">Startup Idea</p>
+            <p className="text-xs font-semibold text-foreground">What I Bring</p>
           </div>
           <p className="text-[11px] text-foreground/80 leading-relaxed">
-            AI-powered supply chain platform that optimizes logistics for SMEs across Southeast Asia.
+            Ex-CTO with a successful exit. 8+ years building scalable backends & leading engineering teams. Looking to co-found or join an early-stage startup as a technical co-founder.
           </p>
         </div>
 
