@@ -131,113 +131,133 @@ interface ProfileViewProps {
 }
 
 export function ProfileView({ matchingMode = "founder-cofounder" }: ProfileViewProps) {
-  const p = PROFILES[matchingMode];
+  const defaultProfile = PROFILES[matchingMode];
+  const [profileData, setProfileData] = useState<ProfileData>(defaultProfile);
+  const [editing, setEditing] = useState(false);
+  const [lastMode, setLastMode] = useState(matchingMode);
+
+  // Sync when mode changes
+  if (matchingMode !== lastMode) {
+    setProfileData(PROFILES[matchingMode]);
+    setLastMode(matchingMode);
+  }
+
+  const p = profileData;
 
   return (
-    <ScrollArea className="h-full">
-      <div className="p-4 space-y-4">
-        {/* Profile header */}
-        <div className="text-center">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-2 ring-4 ring-primary/20">
-            <span className="text-2xl font-display font-bold text-primary-foreground">
-              {p.name.split(" ").map(w => w[0]).join("")}
-            </span>
-          </div>
-          <h2 className="font-display text-lg font-bold text-foreground">{p.name}</h2>
-          <p className="text-xs text-muted-foreground">{p.title}</p>
-          <p className="text-[10px] text-primary flex items-center justify-center gap-1 mt-0.5">
-            <MapPin className="w-2.5 h-2.5" /> {p.location}
-          </p>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-2">
-          {p.stats.map((s) => (
-            <div key={s.label} className="text-center rounded-xl bg-card border border-border p-2.5">
-              <p className="text-lg font-display font-bold text-foreground">{s.value}</p>
-              <p className="text-[9px] text-muted-foreground">{s.label}</p>
+    <>
+      <ScrollArea className="h-full">
+        <div className="p-4 space-y-4">
+          {/* Profile header */}
+          <div className="text-center">
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-2 ring-4 ring-primary/20">
+              <span className="text-2xl font-display font-bold text-primary-foreground">
+                {p.name.split(" ").map(w => w[0]).join("")}
+              </span>
             </div>
-          ))}
-        </div>
-
-        {/* Badges */}
-        <div className="flex flex-wrap justify-center gap-1.5">
-          {p.badges.map((b) => (
-            <div key={b.label} className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20">
-              <b.icon className="w-3 h-3 text-primary" />
-              <span className="text-[9px] font-semibold text-primary">{b.label}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Idea / What I Bring */}
-        <div className="rounded-xl bg-primary/5 border border-primary/20 p-3">
-          <div className="flex items-center gap-1.5 mb-1.5">
-            <Lightbulb className="w-3.5 h-3.5 text-primary" />
-            <p className="text-xs font-semibold text-foreground">{p.ideaTitle}</p>
+            <h2 className="font-display text-lg font-bold text-foreground">{p.name}</h2>
+            <p className="text-xs text-muted-foreground">{p.title}</p>
+            <p className="text-[10px] text-primary flex items-center justify-center gap-1 mt-0.5">
+              <MapPin className="w-2.5 h-2.5" /> {p.location}
+            </p>
           </div>
-          <p className="text-[11px] text-foreground/80 leading-relaxed">{p.ideaDesc}</p>
-        </div>
 
-        {/* Personality & Hobbies */}
-        <div className="rounded-xl bg-card border border-border p-3">
-          <div className="flex items-center gap-1.5 mb-2">
-            <Zap className="w-3.5 h-3.5 text-primary" />
-            <p className="text-xs font-semibold text-foreground">Personality & Hobbies</p>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {p.personality.map((t) => (
-              <span key={t} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">{t}</span>
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-2">
+            {p.stats.map((s) => (
+              <div key={s.label} className="text-center rounded-xl bg-card border border-border p-2.5">
+                <p className="text-lg font-display font-bold text-foreground">{s.value}</p>
+                <p className="text-[9px] text-muted-foreground">{s.label}</p>
+              </div>
             ))}
           </div>
-        </div>
 
-        {/* Skills & Interests */}
-        <div className="grid grid-cols-2 gap-2">
+          {/* Badges */}
+          <div className="flex flex-wrap justify-center gap-1.5">
+            {p.badges.map((b) => (
+              <div key={b.label} className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20">
+                <b.icon className="w-3 h-3 text-primary" />
+                <span className="text-[9px] font-semibold text-primary">{b.label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Idea / What I Bring */}
+          <div className="rounded-xl bg-primary/5 border border-primary/20 p-3">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <Lightbulb className="w-3.5 h-3.5 text-primary" />
+              <p className="text-xs font-semibold text-foreground">{p.ideaTitle}</p>
+            </div>
+            <p className="text-[11px] text-foreground/80 leading-relaxed">{p.ideaDesc}</p>
+          </div>
+
+          {/* Personality & Hobbies */}
           <div className="rounded-xl bg-card border border-border p-3">
-            <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Skills</p>
-            <div className="flex flex-wrap gap-1">
-              {p.skills.map((s) => (
-                <span key={s} className="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">{s}</span>
+            <div className="flex items-center gap-1.5 mb-2">
+              <Zap className="w-3.5 h-3.5 text-primary" />
+              <p className="text-xs font-semibold text-foreground">Personality & Hobbies</p>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {p.personality.map((t) => (
+                <span key={t} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">{t}</span>
               ))}
             </div>
           </div>
-          <div className="rounded-xl bg-card border border-border p-3">
-            <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Interests</p>
-            <div className="flex flex-wrap gap-1">
-              {p.interests.map((i) => (
-                <span key={i} className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">{i}</span>
-              ))}
+
+          {/* Skills & Interests */}
+          <div className="grid grid-cols-2 gap-2">
+            <div className="rounded-xl bg-card border border-border p-3">
+              <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Skills</p>
+              <div className="flex flex-wrap gap-1">
+                {p.skills.map((s) => (
+                  <span key={s} className="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">{s}</span>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-xl bg-card border border-border p-3">
+              <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Interests</p>
+              <div className="flex flex-wrap gap-1">
+                {p.interests.map((i) => (
+                  <span key={i} className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">{i}</span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Details */}
-        <div className="rounded-xl bg-card border border-border p-3 space-y-2">
-          <div className="flex items-center gap-2 text-xs">
-            <Briefcase className="w-3.5 h-3.5 text-primary" />
-            <span className="text-foreground">{p.experience}</span>
+          {/* Details */}
+          <div className="rounded-xl bg-card border border-border p-3 space-y-2">
+            <div className="flex items-center gap-2 text-xs">
+              <Briefcase className="w-3.5 h-3.5 text-primary" />
+              <span className="text-foreground">{p.experience}</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <GraduationCap className="w-3.5 h-3.5 text-primary" />
+              <span className="text-foreground">{p.education}</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <Globe className="w-3.5 h-3.5 text-primary" />
+              <span className="text-foreground">{p.languages}</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <Clock className="w-3.5 h-3.5 text-primary" />
+              <span className="text-foreground">{p.commitment}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-xs">
-            <GraduationCap className="w-3.5 h-3.5 text-primary" />
-            <span className="text-foreground">{p.education}</span>
-          </div>
-          <div className="flex items-center gap-2 text-xs">
-            <Globe className="w-3.5 h-3.5 text-primary" />
-            <span className="text-foreground">{p.languages}</span>
-          </div>
-          <div className="flex items-center gap-2 text-xs">
-            <Clock className="w-3.5 h-3.5 text-primary" />
-            <span className="text-foreground">{p.commitment}</span>
-          </div>
-        </div>
 
-        {/* Edit profile */}
-        <Button variant="outline" className="w-full text-xs border-border">
-          <Settings className="w-3.5 h-3.5 mr-1.5" />
-          Edit Profile
-        </Button>
-      </div>
-    </ScrollArea>
+          {/* Edit profile */}
+          <Button variant="outline" className="w-full text-xs border-border" onClick={() => setEditing(true)}>
+            <Settings className="w-3.5 h-3.5 mr-1.5" />
+            Edit Profile
+          </Button>
+        </div>
+      </ScrollArea>
+
+      <EditProfileModal
+        open={editing}
+        onClose={() => setEditing(false)}
+        profile={profileData}
+        onSave={(updated) => setProfileData(updated)}
+      />
+    </>
   );
 }
