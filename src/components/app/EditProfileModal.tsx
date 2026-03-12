@@ -11,6 +11,8 @@ interface ProfileData {
   name: string;
   title: string;
   location: string;
+  badges: { label: string; icon: React.ComponentType<{ className?: string }> }[];
+  stats: { label: string; value: string }[];
   ideaDesc: string;
   ideaTitle: string;
   personality: string[];
