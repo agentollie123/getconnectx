@@ -277,6 +277,7 @@ export function FilterPanel({ onGenerate, activeMode, onModeChange }: FilterPane
   const [filters, setFilters] = useState<FilterState>({
     location: "",
     distance: 50,
+    workArrangement: [],
     lookingFor: [],
     stage: [],
     commitment: [],
