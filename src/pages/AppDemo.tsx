@@ -61,6 +61,7 @@ const FEED_TITLES: Record<MatchingMode, string> = {
 
 export default function AppDemo() {
   const navigate = useNavigate();
+  const [onboarded, setOnboarded] = useState(false);
   const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
