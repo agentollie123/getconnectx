@@ -217,6 +217,7 @@ export default function AppPremium() {
             connectedProfiles={connectedProfiles}
             connectedStartups={connectedStartups}
             isStartupMode={isStartupMode(matchingMode)}
+            isPremium
             onViewReport={(p) => setReportProfile(p)}
             onChat={(p) => { setChatTarget(p); setActiveNav("Chat"); }}
             onChatStartup={(s) => { setChatStartupTarget(s); setActiveNav("Chat"); }}
