@@ -352,15 +352,33 @@ export function FilterPanel({ onGenerate, activeMode, onModeChange }: FilterPane
             />
           </div>
 
-          {/* Premium Upsell */}
-          <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-3">
-            <div className="flex items-center gap-2 mb-1.5">
-              <Crown className="w-4 h-4 text-primary" />
-              <span className="text-xs font-bold text-foreground">Upgrade to Premium</span>
+          {/* Premium Upsell — Value Props */}
+          <div className="mt-4 rounded-xl border border-accent/30 bg-gradient-to-br from-accent/5 to-primary/5 p-3.5 space-y-2.5">
+            <div className="flex items-center gap-2 mb-1">
+              <Crown className="w-4 h-4 text-accent" />
+              <span className="text-xs font-bold text-foreground">Premium Advantage</span>
             </div>
-            <p className="text-[10px] text-muted-foreground leading-relaxed">
-              Upgrade for smarter matching and stronger startup opportunities.
+            <p className="text-[10px] text-muted-foreground leading-relaxed mb-2">
+              Meet stronger people, faster.
             </p>
+            <div className="space-y-1.5">
+              {[
+                { icon: "👀", label: "See who's already interested in you", sub: "Blurred for free users" },
+                { icon: "⚡", label: "Stronger profiles shown first", sub: "Priority feed placement" },
+                { icon: "🧠", label: "AI explains why you match", sub: "Match intelligence on every card" },
+                { icon: "↩️", label: "Undo last swipe", sub: "Never lose a great connection" },
+                { icon: "📅", label: "30-day match window", sub: "vs 7 days for free" },
+                { icon: "✨", label: "2 GetConnect Spotlights / month", sub: "Boost your visibility" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-2 py-1 px-2 rounded-lg bg-background/30">
+                  <span className="text-sm mt-0.5">{item.icon}</span>
+                  <div>
+                    <p className="text-[10px] font-semibold text-foreground">{item.label}</p>
+                    <p className="text-[8px] text-muted-foreground">{item.sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </ScrollArea>
