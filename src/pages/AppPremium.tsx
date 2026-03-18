@@ -265,7 +265,7 @@ export default function AppPremium() {
       <div className="flex-1 flex flex-col items-center justify-center p-3 lg:p-6 relative">
         {showFilters && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute inset-0 z-30 bg-background/95 backdrop-blur-sm p-4 overflow-auto lg:hidden">
-            <PremiumFilterPanel onGenerate={generateMatches} />
+            <PremiumFilterPanel onGenerate={generateMatches} activeMode={matchingMode} onModeChange={handleModeChange} />
           </motion.div>
         )}
 
