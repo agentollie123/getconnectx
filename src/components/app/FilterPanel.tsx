@@ -296,6 +296,7 @@ export function FilterPanel({ onGenerate, activeMode, onModeChange }: FilterPane
     setFilters({
       location: filters.location,
       distance: filters.distance,
+      workArrangement: filters.workArrangement,
       lookingFor: [],
       stage: [],
       commitment: [],
