@@ -14,6 +14,7 @@ import logoIcon from "@/assets/logo-icon.png";
 
 import { PremiumFilterPanel, type PremiumFilterState } from "@/components/app/PremiumFilterPanel";
 import { startups as allStartups } from "@/lib/startupData";
+import { OnboardingFlow } from "@/components/app/OnboardingFlow";
 import { SwipeCard } from "@/components/app/SwipeCard";
 import { StartupSwipeCard } from "@/components/app/StartupSwipeCard";
 import { StartupDetailModal } from "@/components/app/StartupDetailModal";
