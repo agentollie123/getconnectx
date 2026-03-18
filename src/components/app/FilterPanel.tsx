@@ -28,6 +28,7 @@ interface FilterPanelProps {
 export interface FilterState {
   location: string;
   distance: number;
+  workArrangement: string[];
   lookingFor: string[];
   stage: string[];
   commitment: string[];
