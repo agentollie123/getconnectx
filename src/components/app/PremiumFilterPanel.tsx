@@ -75,8 +75,38 @@ function LocationSection({ filters, update }: {
   filters: PremiumFilterState;
   update: (key: string, val: any) => void;
 }) {
+  const isRemote = (filters.workArrangement || []).includes("Remote");
   return (
-    <CoreSection title="Location" icon={MapPin}>
+    <CoreSection title="Location & Availability" icon={MapPin}>
+      {/* Work Arrangement */}
+      <div className="mb-2">
+        <span className="text-[10px] text-muted-foreground mb-1 block">Work Arrangement</span>
+        <div className="flex gap-1.5">
+          {WORK_ARRANGEMENTS.map((opt) => {
+            const active = (filters.workArrangement || []).includes(opt);
+            return (
+              <button
+                key={opt}
+                onClick={() => {
+                  const curr = filters.workArrangement || [];
+                  const next = active ? curr.filter((s: string) => s !== opt) : [...curr, opt];
+                  update("workArrangement", next);
+                }}
+                className={`flex-1 text-[10px] py-1.5 rounded-lg border font-medium transition-all ${
+                  active
+                    ? "bg-primary/20 text-primary border-primary/50"
+                    : "bg-background/50 border-border/50 text-muted-foreground hover:border-primary/30"
+                }`}
+              >
+                {opt}
+              </button>
+            );
+          })}
+        </div>
+        {isRemote && (
+          <p className="text-[9px] text-primary mt-1 font-medium">✓ Available for remote work</p>
+        )}
+      </div>
       <Input
         placeholder="Enter city or country..."
         value={filters.location}
