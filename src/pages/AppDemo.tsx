@@ -154,10 +154,6 @@ export default function AppDemo() {
         setTimeout(() => setMatchProfile(current), 400);
       }
     }
-
-    if (newCount === 5) {
-      setTimeout(() => setShowDemoLimit(true), 500);
-    }
   };
 
   const handleButtonSwipe = (dir: "left" | "right") => {
