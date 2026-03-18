@@ -206,7 +206,7 @@ export default function AppDemo() {
     if (showFilters && activeNav === "Home") {
       return (
         <div className="h-full p-4">
-          <FilterPanel onGenerate={generateMatches} />
+          <FilterPanel onGenerate={generateMatches} activeMode={matchingMode} onModeChange={handleModeChange} />
         </div>
       );
     }
