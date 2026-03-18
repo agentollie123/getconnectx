@@ -9,17 +9,19 @@ interface MatchesViewProps {
   connectedProfiles: Profile[];
   connectedStartups?: Startup[];
   isStartupMode?: boolean;
+  isPremium?: boolean;
   onViewReport: (profile: Profile) => void;
   onChat: (profile: Profile) => void;
   onChatStartup?: (startup: Startup) => void;
   onAcceptLike: (profile: Profile) => void;
 }
 
-function getExpiry() {
-  return Math.floor(Math.random() * 6) + 1;
+function getExpiry(isPremium?: boolean) {
+  const base = Math.floor(Math.random() * 6) + 1;
+  return isPremium ? base + 23 : base; // 30 days premium vs ~7 free
 }
 
-export function MatchesView({ connectedProfiles, connectedStartups = [], isStartupMode, onViewReport, onChat, onChatStartup, onAcceptLike }: MatchesViewProps) {
+export function MatchesView({ connectedProfiles, connectedStartups = [], isStartupMode, isPremium, onViewReport, onChat, onChatStartup, onAcceptLike }: MatchesViewProps) {
   const matched = connectedProfiles.length > 0 ? connectedProfiles : profiles.slice(0, 3);
 
   if (isStartupMode) {
@@ -44,7 +46,7 @@ export function MatchesView({ connectedProfiles, connectedStartups = [], isStart
             ) : (
               <div className="space-y-2.5">
                 {connectedStartups.map((s) => {
-                  const daysLeft = getExpiry();
+                  const daysLeft = getExpiry(isPremium);
                   const initials = s.name.split(" ").map(w => w[0]).join("").slice(0, 2);
                   return (
                     <div key={s.id} className="rounded-xl bg-card border border-border p-3 flex items-center gap-3">
@@ -95,7 +97,7 @@ export function MatchesView({ connectedProfiles, connectedStartups = [], isStart
           ) : (
             <div className="space-y-2.5">
               {matched.map((p) => {
-                const daysLeft = getExpiry();
+                const daysLeft = getExpiry(isPremium);
                 return (
                   <div key={p.id} className="rounded-xl bg-card border border-border p-3 flex items-center gap-3">
                     <div className="relative">

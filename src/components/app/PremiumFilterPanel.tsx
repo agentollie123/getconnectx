@@ -324,8 +324,24 @@ export function PremiumFilterPanel({ onGenerate, activeMode, onModeChange }: Pre
         </div>
       </ScrollArea>
 
-      {/* Generate button */}
-      <div className="pt-3">
+      {/* Premium Active Benefits */}
+      <div className="pt-2 pb-1">
+        <div className="rounded-xl bg-accent/5 border border-accent/20 p-2.5 mb-2">
+          <div className="flex flex-wrap gap-1.5">
+            {[
+              { icon: "👀", text: "Full Liked You" },
+              { icon: "⚡", text: "Priority Feed" },
+              { icon: "🧠", text: "AI Explanations" },
+              { icon: "↩️", text: "Undo Swipe" },
+              { icon: "📅", text: "30-Day Window" },
+              { icon: "✨", text: "2 Spotlights/mo" },
+            ].map((b) => (
+              <span key={b.text} className="text-[8px] px-1.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20 font-medium flex items-center gap-0.5">
+                <span>{b.icon}</span>{b.text}
+              </span>
+            ))}
+          </div>
+        </div>
         <Button
           className="w-full h-10 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold text-xs shadow-lg shadow-primary/15"
           onClick={() => onGenerate(filters)}
