@@ -321,6 +321,16 @@ export default function AppPremium() {
     </div>
   );
 
+  if (!onboarded) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center dark">
+        <div className="w-full max-w-[430px] h-[92vh] max-h-[850px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
+          <OnboardingFlow onComplete={(mode) => { handleModeChange(mode); setOnboarded(true); }} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="flex-shrink-0 px-4 sm:px-6 py-2.5 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
