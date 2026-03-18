@@ -52,6 +52,8 @@ export const STARTUP_ROLES_NEEDED = ["Engineer", "Designer", "Marketing", "Sales
 export const FOUNDER_TYPES = ["Technical Founder", "Business Founder", "Solo Founder"];
 
 // Shared
+export const WORK_ARRANGEMENTS = ["Onsite", "Hybrid", "Remote"];
+
 export const INDUSTRIES = [
   "AI", "Fintech", "Healthtech", "EdTech", "Web3",
   "SaaS", "Marketplace", "Gaming", "Climate Tech",

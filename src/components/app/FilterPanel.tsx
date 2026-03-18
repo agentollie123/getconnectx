@@ -12,6 +12,7 @@ import { ModeSelector } from "./ModeSelector";
 import {
   type MatchingMode,
   INDUSTRIES,
+  WORK_ARRANGEMENTS,
   COFOUNDER_SKILL_STRENGTHS, COFOUNDER_COMMITMENTS,
   TEAM_ROLES_NEEDED, TEAM_SKILL_STACK, TEAM_COMMITMENTS,
   STARTUP_STAGES, STARTUP_ROLES_NEEDED,
@@ -28,6 +29,7 @@ interface FilterPanelProps {
 export interface FilterState {
   location: string;
   distance: number;
+  workArrangement: string[];
   lookingFor: string[];
   stage: string[];
   commitment: string[];
@@ -129,8 +131,39 @@ function LocationSection({ filters, update }: {
   filters: FilterState;
   update: <K extends keyof FilterState>(key: K, val: FilterState[K]) => void;
 }) {
+  const isRemote = filters.workArrangement.includes("Remote");
   return (
-    <Section title="Location" icon={MapPin} defaultOpen>
+    <Section title="Location & Availability" icon={MapPin} defaultOpen>
+      {/* Work Arrangement */}
+      <div className="mb-2">
+        <span className="text-[10px] text-muted-foreground mb-1 block">Work Arrangement</span>
+        <div className="flex gap-1.5">
+          {WORK_ARRANGEMENTS.map((opt) => {
+            const active = filters.workArrangement.includes(opt);
+            return (
+              <button
+                key={opt}
+                onClick={() => {
+                  const next = active
+                    ? filters.workArrangement.filter((s) => s !== opt)
+                    : [...filters.workArrangement, opt];
+                  update("workArrangement", next);
+                }}
+                className={`flex-1 text-[10px] py-1.5 rounded-lg border font-medium transition-all ${
+                  active
+                    ? "bg-primary/20 text-primary border-primary/50"
+                    : "bg-card border-border text-muted-foreground hover:border-primary/30"
+                }`}
+              >
+                {opt}
+              </button>
+            );
+          })}
+        </div>
+        {isRemote && (
+          <p className="text-[9px] text-primary mt-1 font-medium">✓ Available for remote work</p>
+        )}
+      </div>
       <Input
         placeholder="Enter city or country..."
         value={filters.location}
@@ -244,6 +277,7 @@ export function FilterPanel({ onGenerate, activeMode, onModeChange }: FilterPane
   const [filters, setFilters] = useState<FilterState>({
     location: "",
     distance: 50,
+    workArrangement: [],
     lookingFor: [],
     stage: [],
     commitment: [],
@@ -262,6 +296,7 @@ export function FilterPanel({ onGenerate, activeMode, onModeChange }: FilterPane
     setFilters({
       location: filters.location,
       distance: filters.distance,
+      workArrangement: filters.workArrangement,
       lookingFor: [],
       stage: [],
       commitment: [],
