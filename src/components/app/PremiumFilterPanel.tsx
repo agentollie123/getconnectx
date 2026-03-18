@@ -212,11 +212,11 @@ export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
                 <Slider
                   value={[filters.minMatch]}
                   onValueChange={([v]) => update("minMatch", v)}
-                  min={50} max={95} step={5}
+                  min={70} max={99} step={1}
                 />
                 <div className="flex justify-between mt-0.5">
-                  <span className="text-[9px] text-muted-foreground/50">50%</span>
-                  <span className="text-[9px] text-muted-foreground/50">95%</span>
+                  <span className="text-[9px] text-muted-foreground/50">70%</span>
+                  <span className="text-[9px] text-muted-foreground/50">99%</span>
                 </div>
               </div>
 
