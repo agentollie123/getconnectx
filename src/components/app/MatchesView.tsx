@@ -46,7 +46,7 @@ export function MatchesView({ connectedProfiles, connectedStartups = [], isStart
             ) : (
               <div className="space-y-2.5">
                 {connectedStartups.map((s) => {
-                  const daysLeft = getExpiry();
+                  const daysLeft = getExpiry(isPremium);
                   const initials = s.name.split(" ").map(w => w[0]).join("").slice(0, 2);
                   return (
                     <div key={s.id} className="rounded-xl bg-card border border-border p-3 flex items-center gap-3">
