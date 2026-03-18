@@ -14,6 +14,7 @@ import logoIcon from "@/assets/logo-icon.png";
 
 import { PremiumFilterPanel, type PremiumFilterState } from "@/components/app/PremiumFilterPanel";
 import { startups as allStartups } from "@/lib/startupData";
+import { OnboardingFlow } from "@/components/app/OnboardingFlow";
 import { SwipeCard } from "@/components/app/SwipeCard";
 import { StartupSwipeCard } from "@/components/app/StartupSwipeCard";
 import { StartupDetailModal } from "@/components/app/StartupDetailModal";
@@ -62,6 +63,7 @@ const FEED_TITLES: Record<MatchingMode, string> = {
 };
 
 export default function AppPremium() {
+  const [onboarded, setOnboarded] = useState(false);
   const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
@@ -318,6 +320,16 @@ export default function AppPremium() {
       </aside>
     </div>
   );
+
+  if (!onboarded) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center dark">
+        <div className="w-full max-w-[430px] h-[92vh] max-h-[850px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
+          <OnboardingFlow onComplete={(mode) => { handleModeChange(mode); setOnboarded(true); }} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">

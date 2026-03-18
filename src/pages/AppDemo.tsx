@@ -13,6 +13,7 @@ import logoIcon from "@/assets/logo-icon.png";
 
 import { FilterPanel, type FilterState } from "@/components/app/FilterPanel";
 import { startups as allStartups } from "@/lib/startupData";
+import { OnboardingFlow } from "@/components/app/OnboardingFlow";
 import { SwipeCard } from "@/components/app/SwipeCard";
 import { StartupSwipeCard } from "@/components/app/StartupSwipeCard";
 import { StartupDetailModal } from "@/components/app/StartupDetailModal";
@@ -60,6 +61,7 @@ const FEED_TITLES: Record<MatchingMode, string> = {
 
 export default function AppDemo() {
   const navigate = useNavigate();
+  const [onboarded, setOnboarded] = useState(false);
   const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
@@ -343,6 +345,16 @@ export default function AppDemo() {
       )}
     </div>
   );
+
+  if (!onboarded) {
+    return (
+      <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
+        <div className="w-full max-w-[430px] h-[92vh] max-h-[850px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative dark">
+          <OnboardingFlow onComplete={(mode) => { handleModeChange(mode); setOnboarded(true); }} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
