@@ -259,7 +259,7 @@ export default function AppPremium() {
   const renderHomeDesktop = () => (
     <div className="flex-1 flex overflow-hidden">
       <motion.aside initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="hidden lg:flex flex-col w-[300px] border-r border-border/30 bg-card/30 p-4 overflow-hidden">
-        <PremiumFilterPanel onGenerate={generateMatches} />
+        <PremiumFilterPanel onGenerate={generateMatches} activeMode={matchingMode} onModeChange={handleModeChange} />
       </motion.aside>
 
       <div className="flex-1 flex flex-col items-center justify-center p-3 lg:p-6 relative">
