@@ -86,20 +86,12 @@ export default function AppPremium() {
   const [chatStartupTarget, setChatStartupTarget] = useState<Startup | null>(null);
 
   const generateMatches = useCallback((filters: PremiumFilterState) => {
-    const hasCofounderStartup = filters.lookingFor.includes("Co-Founder → Startup");
-    const hasTeamStartup = filters.lookingFor.includes("Team Member → Startup");
-
-    if (hasCofounderStartup || hasTeamStartup) {
-      const mode: MatchingMode = hasCofounderStartup ? "cofounder-startup" : "team-startup";
-      setMatchingMode(mode);
-      const filtered = hasCofounderStartup
+    if (isStartupMode(matchingMode)) {
+      const filtered = matchingMode === "cofounder-startup"
         ? allStartups.filter(s => s.lookingFor === "co-founder" || s.lookingFor === "both")
         : allStartups.filter(s => s.lookingFor === "team" || s.lookingFor === "both");
       setStartupStack([...filtered]);
     } else {
-      const hasFounderTeam = filters.lookingFor.includes("Founder → Team");
-      setMatchingMode(hasFounderTeam ? "founder-team" : "founder-cofounder");
-
       const filtered = profiles.filter((p) => {
         if (filters.stage.length > 0 && !filters.stage.some((s) => p.stage.includes(s.replace(" Stage", "")))) return false;
         return true;
@@ -109,7 +101,7 @@ export default function AppPremium() {
     setStats({ connected: 0, skipped: 0 });
     setSwipeCount(0);
     setShowFilters(false);
-  }, []);
+  }, [matchingMode]);
 
   const handleModeChange = (mode: string) => {
     const m = mode as MatchingMode;
@@ -267,13 +259,13 @@ export default function AppPremium() {
   const renderHomeDesktop = () => (
     <div className="flex-1 flex overflow-hidden">
       <motion.aside initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="hidden lg:flex flex-col w-[300px] border-r border-border/30 bg-card/30 p-4 overflow-hidden">
-        <PremiumFilterPanel onGenerate={generateMatches} />
+        <PremiumFilterPanel onGenerate={generateMatches} activeMode={matchingMode} onModeChange={handleModeChange} />
       </motion.aside>
 
       <div className="flex-1 flex flex-col items-center justify-center p-3 lg:p-6 relative">
         {showFilters && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute inset-0 z-30 bg-background/95 backdrop-blur-sm p-4 overflow-auto lg:hidden">
-            <PremiumFilterPanel onGenerate={generateMatches} />
+            <PremiumFilterPanel onGenerate={generateMatches} activeMode={matchingMode} onModeChange={handleModeChange} />
           </motion.div>
         )}
 
