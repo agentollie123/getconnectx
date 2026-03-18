@@ -122,7 +122,7 @@ export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
     skills: [],
     industry: [],
     teamPref: "",
-    minMatch: 60,
+    minMatch: 70,
     aiPriority: [],
     aiExplainMatch: false,
     startupExperience: [],
