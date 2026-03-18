@@ -336,7 +336,7 @@ export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
         </Button>
       </div>
 
-      <PremiumBenefitsModal open={showBenefits} onClose={() => setShowBenefits(false)} onUpgrade={() => setShowBenefits(false)} />
+      
     </div>
   );
 }
