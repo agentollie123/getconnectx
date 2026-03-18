@@ -1,17 +1,28 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-  MapPin, Search, Rocket, Clock, Code, Briefcase,
-  Lock, ChevronDown, ChevronUp, Zap, TrendingUp, Users,
-  Heart, Shield, DollarSign, Target, Building2, Calendar,
-  Sparkles, Banknote, GraduationCap, Languages,
+  MapPin, Rocket, Clock, Code, Briefcase,
+  Lock, ChevronDown, ChevronUp, Zap, TrendingUp,
+  Crown, Users,
 } from "lucide-react";
+import { ModeSelector } from "./ModeSelector";
+import {
+  type MatchingMode,
+  INDUSTRIES,
+  COFOUNDER_SKILL_STRENGTHS, COFOUNDER_COMMITMENTS,
+  TEAM_ROLES_NEEDED, TEAM_SKILL_STACK, TEAM_COMMITMENTS,
+  STARTUP_STAGES, STARTUP_ROLES_NEEDED,
+  FOUNDER_TYPES,
+  PREMIUM_CONFIGS,
+} from "./ModeConfig";
 
 interface FilterPanelProps {
   onGenerate: (filters: FilterState) => void;
+  activeMode: MatchingMode;
+  onModeChange: (mode: MatchingMode) => void;
 }
 
 export interface FilterState {
@@ -26,82 +37,7 @@ export interface FilterState {
   minMatch: number;
 }
 
-const LOCATIONS = ["Anywhere", "Same City", "Same Country", "Remote Friendly"];
-const LOOKING_FOR = [
-  "Founder → Co-Founder", "Founder → Team", "Co-Founder → Startup",
-  "Team Member → Startup",
-];
-const STAGES = ["Idea", "MVP", "Beta", "Early Traction", "Scaling"];
-const COMMITMENTS = ["Side Project", "Part-time", "Full-time", "Open to discussion"];
-const SKILLS = [
-  "AI / ML", "Full-Stack", "Frontend", "Backend", "Mobile Dev",
-  "Data Science", "Cloud / Infra", "DevOps", "Blockchain",
-  "Cybersecurity", "QA / Testing", "Embedded Systems",
-  "Game Dev", "AR / VR", "Robotics", "NLP", "Hardware",
-  "Product Mgmt", "UI / UX", "Graphic Design", "UX Research",
-  "Growth", "Digital Marketing", "SEO / SEM", "Social Media",
-  "Content Creation", "Copywriting", "Brand Strategy",
-  "Email Marketing", "Influencer Marketing", "PR / Comms",
-  "Sales", "Business Dev", "Partnerships", "Account Mgmt",
-  "Customer Success", "Lead Generation",
-  "Operations", "Supply Chain", "Project Mgmt", "Strategy",
-  "Process Optimization", "Logistics",
-  "Finance", "Accounting", "Financial Modeling", "Fundraising",
-  "Investor Relations", "Tax / Compliance", "Bookkeeping",
-  "Legal", "HR / Recruiting", "Talent Acquisition", "People Ops",
-  "Compensation & Benefits",
-  "Technical Writing", "Community Mgmt", "Data Analytics",
-  "Market Research", "Public Speaking", "Consulting",
-];
-const INDUSTRIES = [
-  "AI", "Fintech", "Healthtech", "EdTech", "Web3",
-  "SaaS", "Marketplace", "Gaming", "Climate Tech",
-  "AgriTech", "LegalTech", "InsurTech", "PropTech",
-  "FoodTech", "Logistics", "E-Commerce", "Media",
-  "Entertainment", "Travel", "Social", "HRTech",
-  "Cybersecurity", "IoT", "Robotics", "Biotech",
-  "SpaceTech", "Fashion", "Sports", "Automotive",
-  "Energy", "Construction", "Telecom", "GovTech",
-];
-
-// Mode-specific locked premium filters
-const FOUNDER_PREMIUM = [
-  { label: "Personality Match", icon: Heart },
-  { label: "Leadership Style", icon: Shield },
-  { label: "Age Range", icon: Calendar },
-  { label: "Startup Experience", icon: Rocket },
-  { label: "Education", icon: GraduationCap },
-  { label: "Languages", icon: Languages },
-];
-
-const COFOUNDER_PREMIUM = [
-  { label: "Funding Stage", icon: DollarSign },
-  { label: "Revenue", icon: TrendingUp },
-  { label: "Team Size", icon: Users },
-  { label: "Equity Offered", icon: Sparkles },
-  { label: "Investor Network", icon: Banknote },
-  { label: "Previous Exit", icon: TrendingUp },
-  { label: "Age Range", icon: Calendar },
-  { label: "Languages", icon: Languages },
-];
-
-const TEAM_PREMIUM = [
-  { label: "Role Type", icon: Target },
-  { label: "Salary Expectation", icon: DollarSign },
-  { label: "Equity Offered", icon: Sparkles },
-  { label: "Funding Stage", icon: Building2 },
-  { label: "Team Size", icon: Users },
-  { label: "Availability", icon: Calendar },
-  { label: "Languages", icon: Languages },
-];
-
-const DEFAULT_PREMIUM = [
-  { label: "Age Range", icon: Calendar },
-  { label: "Startup Experience", icon: Rocket },
-  { label: "Education", icon: GraduationCap },
-  { label: "Investor Network", icon: Banknote },
-  { label: "Previous Exit", icon: TrendingUp },
-];
+// ===== Reusable sub-components =====
 
 function Section({ title, icon: Icon, children, defaultOpen = false }: {
   title: string; icon: any; children: React.ReactNode; defaultOpen?: boolean;
@@ -188,29 +124,123 @@ function CheckboxList({ options, selected, onChange }: {
   );
 }
 
-function Radio({ options, selected, onChange }: {
-  options: string[]; selected: string; onChange: (v: string) => void;
+// ===== Location Section (shared across all modes) =====
+function LocationSection({ filters, update }: {
+  filters: FilterState;
+  update: <K extends keyof FilterState>(key: K, val: FilterState[K]) => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-1">
-      {options.map((o) => (
-        <button
-          key={o}
-          onClick={() => onChange(selected === o ? "" : o)}
-          className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors ${
-            selected === o
-              ? "bg-primary/20 text-primary border-primary/40"
-              : "bg-card border-border text-muted-foreground hover:border-primary/30"
-          }`}
-        >
-          {o}
-        </button>
-      ))}
-    </div>
+    <Section title="Location" icon={MapPin} defaultOpen>
+      <Input
+        placeholder="Enter city or country..."
+        value={filters.location}
+        onChange={(e) => update("location", e.target.value)}
+        className="h-7 text-[11px] bg-card border-border placeholder:text-muted-foreground/50"
+      />
+      <div className="pt-1">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[10px] text-muted-foreground">Distance</span>
+          <span className="text-[10px] font-bold text-primary">{filters.distance} km</span>
+        </div>
+        <Slider
+          value={[filters.distance]}
+          onValueChange={([v]) => update("distance", v)}
+          min={0} max={100} step={5}
+          className="w-full"
+        />
+        <div className="flex justify-between mt-0.5">
+          <span className="text-[9px] text-muted-foreground">0 km</span>
+          <span className="text-[9px] text-muted-foreground">100 km</span>
+        </div>
+      </div>
+    </Section>
   );
 }
 
-export function FilterPanel({ onGenerate }: FilterPanelProps) {
+// ===== Mode-specific free filters =====
+
+function FounderCofounderFilters({ filters, update }: {
+  filters: FilterState;
+  update: <K extends keyof FilterState>(key: K, val: FilterState[K]) => void;
+}) {
+  return (
+    <>
+      <LocationSection filters={filters} update={update} />
+      <Section title="Industry" icon={Briefcase}>
+        <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
+      </Section>
+      <Section title="Skill Strength" icon={Code}>
+        <Tags options={COFOUNDER_SKILL_STRENGTHS} selected={filters.skills} onChange={(v) => update("skills", v)} />
+      </Section>
+      <Section title="Commitment" icon={Clock}>
+        <Tags options={COFOUNDER_COMMITMENTS} selected={filters.commitment} onChange={(v) => update("commitment", v)} />
+      </Section>
+    </>
+  );
+}
+
+function FounderTeamFilters({ filters, update }: {
+  filters: FilterState;
+  update: <K extends keyof FilterState>(key: K, val: FilterState[K]) => void;
+}) {
+  return (
+    <>
+      <LocationSection filters={filters} update={update} />
+      <Section title="Role Needed" icon={Users} defaultOpen>
+        <Tags options={TEAM_ROLES_NEEDED} selected={filters.skills} onChange={(v) => update("skills", v)} />
+      </Section>
+      <Section title="Skill Stack" icon={Code}>
+        <CheckboxList options={TEAM_SKILL_STACK} selected={filters.industry} onChange={(v) => update("industry", v)} />
+      </Section>
+      <Section title="Commitment" icon={Clock}>
+        <Tags options={TEAM_COMMITMENTS} selected={filters.commitment} onChange={(v) => update("commitment", v)} />
+      </Section>
+    </>
+  );
+}
+
+function TeamStartupFilters({ filters, update }: {
+  filters: FilterState;
+  update: <K extends keyof FilterState>(key: K, val: FilterState[K]) => void;
+}) {
+  return (
+    <>
+      <Section title="Startup Stage" icon={Rocket} defaultOpen>
+        <Tags options={STARTUP_STAGES} selected={filters.stage} onChange={(v) => update("stage", v)} />
+      </Section>
+      <Section title="Industry" icon={Briefcase}>
+        <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
+      </Section>
+      <LocationSection filters={filters} update={update} />
+      <Section title="Role Needed" icon={Users}>
+        <Tags options={STARTUP_ROLES_NEEDED} selected={filters.skills} onChange={(v) => update("skills", v)} />
+      </Section>
+    </>
+  );
+}
+
+function CofounderStartupFilters({ filters, update }: {
+  filters: FilterState;
+  update: <K extends keyof FilterState>(key: K, val: FilterState[K]) => void;
+}) {
+  return (
+    <>
+      <Section title="Startup Stage" icon={Rocket} defaultOpen>
+        <Tags options={STARTUP_STAGES} selected={filters.stage} onChange={(v) => update("stage", v)} />
+      </Section>
+      <Section title="Industry" icon={Briefcase}>
+        <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
+      </Section>
+      <Section title="Founder Type" icon={Users}>
+        <Tags options={FOUNDER_TYPES} selected={filters.skills} onChange={(v) => update("skills", v)} />
+      </Section>
+      <LocationSection filters={filters} update={update} />
+    </>
+  );
+}
+
+// ===== Main FilterPanel =====
+export function FilterPanel({ onGenerate, activeMode, onModeChange }: FilterPanelProps) {
   const [filters, setFilters] = useState<FilterState>({
     location: "",
     distance: 50,
@@ -227,26 +257,36 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
     setFilters((prev) => ({ ...prev, [key]: val }));
   };
 
-  // Determine which premium filters to show based on mode
-  const premiumFilters = useMemo(() => {
-    const lf = filters.lookingFor;
-    const isFounder = lf.some(l => l.startsWith("Founder"));
-    const isCofounder = lf.includes("Co-Founder → Startup");
-    const isTeam = lf.includes("Team Member → Startup");
+  // Reset filters when mode changes
+  const handleModeChange = (mode: MatchingMode) => {
+    setFilters({
+      location: filters.location,
+      distance: filters.distance,
+      lookingFor: [],
+      stage: [],
+      commitment: [],
+      skills: [],
+      industry: [],
+      teamPref: "",
+      minMatch: 50,
+    });
+    onModeChange(mode);
+  };
 
-    if (isCofounder) return COFOUNDER_PREMIUM;
-    if (isTeam) return TEAM_PREMIUM;
-    if (isFounder) return FOUNDER_PREMIUM;
-    return DEFAULT_PREMIUM;
-  }, [filters.lookingFor]);
+  const premiumCards = PREMIUM_CONFIGS[activeMode];
 
-  const premiumLabel = useMemo(() => {
-    const lf = filters.lookingFor;
-    if (lf.includes("Co-Founder → Startup")) return "Co-Founder Premium Filters";
-    if (lf.includes("Team Member → Startup")) return "Team Member Premium Filters";
-    if (lf.some(l => l.startsWith("Founder"))) return "Founder Premium Filters";
-    return "Premium Filters";
-  }, [filters.lookingFor]);
+  const renderFreeFilters = () => {
+    switch (activeMode) {
+      case "founder-cofounder":
+        return <FounderCofounderFilters filters={filters} update={update} />;
+      case "founder-team":
+        return <FounderTeamFilters filters={filters} update={update} />;
+      case "team-startup":
+        return <TeamStartupFilters filters={filters} update={update} />;
+      case "cofounder-startup":
+        return <CofounderStartupFilters filters={filters} update={update} />;
+    }
+  };
 
   return (
     <div className="h-full flex flex-col">
@@ -256,79 +296,46 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
 
       <ScrollArea className="flex-1 -mx-1 px-1">
         <div className="space-y-0.5 pr-1">
-          <Section title="Looking For" icon={Search} defaultOpen>
-            <Tags options={LOOKING_FOR} selected={filters.lookingFor} onChange={(v) => update("lookingFor", v)} />
-          </Section>
+          {/* Mode Selector */}
+          <ModeSelector activeMode={activeMode} onModeChange={handleModeChange} />
 
-          <Section title="Location" icon={MapPin} defaultOpen>
-            <Input
-              placeholder="Enter city or country..."
-              value={filters.location}
-              onChange={(e) => update("location", e.target.value)}
-              className="h-7 text-[11px] bg-card border-border placeholder:text-muted-foreground/50"
-            />
-            <div className="pt-1">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] text-muted-foreground">Distance</span>
-                <span className="text-[10px] font-bold text-primary">{filters.distance} km</span>
-              </div>
-              <Slider
-                value={[filters.distance]}
-                onValueChange={([v]) => update("distance", v)}
-                min={0}
-                max={100}
-                step={5}
-                className="w-full"
-              />
-              <div className="flex justify-between mt-0.5">
-                <span className="text-[9px] text-muted-foreground">0 km</span>
-                <span className="text-[9px] text-muted-foreground">100 km</span>
-              </div>
-            </div>
-            <Radio options={LOCATIONS} selected={filters.teamPref} onChange={(v) => update("teamPref", v)} />
-          </Section>
+          {/* Mode-specific free filters */}
+          {renderFreeFilters()}
 
-          <Section title="Startup Stage" icon={Rocket}>
-            <Tags options={STAGES} selected={filters.stage} onChange={(v) => update("stage", v)} />
-          </Section>
-
-          <Section title="Commitment" icon={Clock}>
-            <Tags options={COMMITMENTS} selected={filters.commitment} onChange={(v) => update("commitment", v)} />
-          </Section>
-
-          <Section title="Skills" icon={Code}>
-            <CheckboxList options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} />
-          </Section>
-
-          <Section title="Industry" icon={Briefcase}>
-            <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
-          </Section>
-
-          {/* Premium filters - locked, mode-responsive */}
-          <div className="border-b border-border/30 pb-3 pt-1">
-            <div className="flex items-center gap-1.5 mb-2">
-              <Lock className="w-3.5 h-3.5 text-accent" />
-              <span className="text-xs font-medium text-foreground">{premiumLabel}</span>
-              <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-accent/20 text-accent font-bold uppercase tracking-wider">Pro</span>
-            </div>
-            <div className="flex flex-wrap gap-1.5 mb-2">
-              {premiumFilters.map((f) => (
-                <span
-                  key={f.label}
-                  className="text-[9px] px-2 py-1 rounded-full border border-border bg-muted/20 text-muted-foreground/50 flex items-center gap-1 cursor-not-allowed"
-                >
-                  <f.icon className="w-2.5 h-2.5" />
-                  {f.label}
-                  <Lock className="w-2 h-2 ml-0.5" />
-                </span>
-              ))}
-            </div>
-            <p className="text-[10px] text-primary cursor-pointer hover:underline font-medium">
-              🔓 Upgrade to ConnectX Premium →
-            </p>
+          {/* Locked Premium Filters */}
+          <div className="pt-3 pb-1">
+            <p className="text-[9px] font-bold text-primary/60 uppercase tracking-widest mb-2">Premium Intelligence</p>
           </div>
 
-          {/* Match score */}
+          {premiumCards.map((card) => (
+            <div key={card.id} className="rounded-xl bg-muted/20 border border-border/30 p-3 mb-1.5">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <card.icon className="w-3 h-3 text-primary/50" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-semibold text-foreground/50">{card.title}</span>
+                    <Lock className="w-2.5 h-2.5 text-muted-foreground/40" />
+                  </div>
+                  <p className="text-[9px] text-muted-foreground/40">{card.subtitle}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {card.fields.map((field) => (
+                  <span
+                    key={field.key}
+                    className="text-[9px] px-2 py-0.5 rounded-full border border-border/30 bg-muted/10 text-muted-foreground/30 flex items-center gap-1 cursor-not-allowed"
+                  >
+                    {field.label}
+                    <Lock className="w-2 h-2" />
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {/* Min Match */}
           <div className="pt-2">
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs font-medium text-foreground flex items-center gap-1.5">
@@ -340,11 +347,20 @@ export function FilterPanel({ onGenerate }: FilterPanelProps) {
             <Slider
               value={[filters.minMatch]}
               onValueChange={([v]) => update("minMatch", v)}
-              min={50}
-              max={100}
-              step={5}
+              min={50} max={100} step={5}
               className="w-full"
             />
+          </div>
+
+          {/* Premium Upsell */}
+          <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-3">
+            <div className="flex items-center gap-2 mb-1.5">
+              <Crown className="w-4 h-4 text-primary" />
+              <span className="text-xs font-bold text-foreground">Upgrade to Premium</span>
+            </div>
+            <p className="text-[10px] text-muted-foreground leading-relaxed">
+              Upgrade for smarter matching and stronger startup opportunities.
+            </p>
           </div>
         </div>
       </ScrollArea>
