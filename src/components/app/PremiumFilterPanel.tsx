@@ -1,57 +1,31 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   MapPin, Search, Rocket, Clock, Code, Briefcase,
-  ChevronDown, ChevronUp, Zap, TrendingUp, Crown,
-  GraduationCap, Banknote, Users, Calendar,
-  Globe, Heart, Target, DollarSign, Building2, Handshake,
-  Languages, Sparkles, Shield,
+  Zap, TrendingUp, Crown, Globe, Target,
 } from "lucide-react";
 
-interface PremiumFilterPanelProps {
-  onGenerate: (filters: PremiumFilterState) => void;
-}
+import { PremiumCard } from "./premium/PremiumCard";
+import { FilterCheckboxList, FilterChips, FilterLabel, FilterDropdown } from "./premium/PremiumFilterInputs";
+import { PremiumBenefitsModal } from "./premium/PremiumBenefitsModal";
+import {
+  AI_PRIORITY_OPTIONS,
+  STARTUP_EXPERIENCE, LEADERSHIP_BACKGROUND, FUNCTIONAL_SENIORITY,
+  LANGUAGES, DEGREE_LEVELS, INSTITUTION_QUALITY, STUDY_BACKGROUND,
+  STARTUP_READINESS, COMMITMENT_PRECISION, EQUITY_PREFERENCE,
+} from "./premium/PremiumFilterData";
 
-export interface PremiumFilterState {
-  location: string;
-  distance: number;
-  lookingFor: string[];
-  stage: string[];
-  commitment: string[];
-  skills: string[];
-  industry: string[];
-  teamPref: string;
-  minMatch: number;
-  ageRange: [number, number];
-  startupExperience: string[];
-  education: string[];
-  investorNetwork: string[];
-  previousExit: string;
-  // New filters
-  fundingStage: string[];
-  teamSize: string[];
-  revenueRange: string;
-  roleType: string[];
-  equityRange: string;
-  salaryExpectation: string;
-  relocation: boolean;
-  languages: string[];
-  personality: string[];
-  leadershipStyle: string[];
-  availability: string;
-}
-
-const LOCATIONS = ["Anywhere", "Same City", "Same Country", "Remote Friendly"];
+// ===== Core filter data =====
 const LOOKING_FOR = [
-  "Founder → Co-Founder", "Founder → Team", "Co-Founder → Startup",
-  "Team Member → Startup",
+  "Founder → Co-Founder", "Founder → Team", "Co-Founder → Startup", "Team Member → Startup",
 ];
 const STAGES = ["Idea", "MVP", "Beta", "Early Traction", "Scaling"];
 const COMMITMENTS = ["Side Project", "Part-time", "Full-time", "Open to discussion"];
+const LOCATIONS = ["Anywhere", "Same City", "Same Country", "Remote Friendly"];
 const SKILLS = [
   "AI / ML", "Full-Stack", "Frontend", "Backend", "Mobile Dev",
   "Data Science", "Cloud / Infra", "DevOps", "Blockchain",
@@ -82,138 +56,63 @@ const INDUSTRIES = [
   "SpaceTech", "Fashion", "Sports", "Automotive",
   "Energy", "Construction", "Telecom", "GovTech",
 ];
-const EXPERIENCE_LEVELS = ["First-time Founder", "1 Startup", "2-3 Startups", "Serial Entrepreneur", "Corporate → Startup"];
-const EDUCATION_OPTIONS = ["Any", "Top 50 University", "MBA", "PhD / Research", "Self-taught", "Bootcamp Graduate"];
-const INVESTOR_NETWORK = ["None", "Angel Investors", "VC Connected", "Accelerator Alumni", "YC / Techstars"];
-const EXIT_OPTIONS = ["Any", "No Exit Yet", "Small Exit (<$1M)", "Medium Exit ($1M-$10M)", "Large Exit ($10M+)"];
 
-// New filter options
-const FUNDING_STAGES = ["Bootstrapped", "Pre-Seed", "Seed", "Series A", "Series B+"];
-const TEAM_SIZES = ["Solo", "2-5", "6-15", "16-50", "50+"];
-const REVENUE_OPTIONS = ["Pre-Revenue", "<$10K MRR", "$10K-$50K MRR", "$50K-$100K MRR", "$100K+ MRR"];
-const ROLE_TYPES = ["CTO", "CPO", "CMO", "COO", "CFO", "VP Engineering", "VP Sales", "VP Marketing", "Head of Growth", "Head of Product", "Lead Designer", "Full-Stack Dev", "Data Engineer"];
-const EQUITY_OPTIONS = ["No Equity", "0.1-1%", "1-5%", "5-15%", "15-30%", "30%+"];
-const SALARY_OPTIONS = ["Equity Only", "<$50K", "$50K-$100K", "$100K-$150K", "$150K+"];
-const LANGUAGE_OPTIONS = ["English", "Spanish", "Mandarin", "Hindi", "French", "Arabic", "Portuguese", "Japanese", "Korean", "German", "Bahasa Indonesia", "Thai", "Vietnamese"];
-const PERSONALITY_OPTIONS = ["Visionary", "Executor", "Analytical", "Creative", "People-Oriented", "Detail-Focused", "Risk Taker", "Methodical"];
-const LEADERSHIP_OPTIONS = ["Hands-on Builder", "Strategic Planner", "People Manager", "Technical Lead", "Sales-Driven", "Product-Driven"];
-const AVAILABILITY_OPTIONS = ["Immediate", "Within 1 month", "Within 3 months", "Flexible"];
+export interface PremiumFilterState {
+  location: string;
+  distance: number;
+  lookingFor: string[];
+  stage: string[];
+  commitment: string[];
+  skills: string[];
+  industry: string[];
+  teamPref: string;
+  minMatch: number;
+  // Premium
+  aiPriority: string[];
+  aiExplainMatch: boolean;
+  startupExperience: string[];
+  leadershipBackground: string[];
+  functionalSeniority: string[];
+  languages: string[];
+  degreeLevel: string[];
+  institutionQuality: string[];
+  studyBackground: string[];
+  startupReadiness: string[];
+  commitmentPrecision: string[];
+  equityPreference: string;
+}
 
-function Section({ title, icon: Icon, children, defaultOpen = false, premium = false }: {
-  title: string; icon: any; children: React.ReactNode; defaultOpen?: boolean; premium?: boolean;
+interface PremiumFilterPanelProps {
+  onGenerate: (filters: PremiumFilterState) => void;
+}
+
+// ===== Collapsible core section =====
+function CoreSection({ title, icon: Icon, children, defaultOpen = false }: {
+  title: string; icon: any; children: React.ReactNode; defaultOpen?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border-b border-border/30 pb-2">
+    <div className="border-b border-border/20 pb-2">
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-1.5 text-xs font-medium text-foreground hover:text-primary transition-colors"
       >
         <span className="flex items-center gap-1.5">
-          <Icon className={`w-3.5 h-3.5 ${premium ? "text-accent" : "text-primary"}`} />
+          <Icon className="w-3.5 h-3.5 text-primary" />
           {title}
-          {premium && (
-            <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-accent/20 text-accent font-bold uppercase tracking-wider">Pro</span>
-          )}
         </span>
-        {open ? <ChevronUp className="w-3 h-3 text-muted-foreground" /> : <ChevronDown className="w-3 h-3 text-muted-foreground" />}
+        <svg className={`w-3 h-3 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 12 12" fill="none">
+          <path d="M3 5l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </button>
       {open && <div className="pt-1.5 space-y-1.5">{children}</div>}
     </div>
   );
 }
 
-function Tags({ options, selected, onChange, accent = false }: {
-  options: string[]; selected: string[]; onChange: (v: string[]) => void; accent?: boolean;
-}) {
-  const toggle = (v: string) => {
-    onChange(selected.includes(v) ? selected.filter((s) => s !== v) : [...selected, v]);
-  };
-  const activeClass = accent
-    ? "bg-accent/20 text-accent border-accent/40"
-    : "bg-primary/20 text-primary border-primary/40";
-  const hoverClass = accent ? "hover:border-accent/30" : "hover:border-primary/30";
-  return (
-    <div className="flex flex-wrap gap-1">
-      {options.map((o) => (
-        <button
-          key={o}
-          onClick={() => toggle(o)}
-          className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors ${
-            selected.includes(o) ? activeClass : `bg-card border-border text-muted-foreground ${hoverClass}`
-          }`}
-        >
-          {o}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function CheckboxList({ options, selected, onChange }: {
-  options: string[]; selected: string[]; onChange: (v: string[]) => void;
-}) {
-  const [search, setSearch] = useState("");
-  const filtered = options.filter((o) => o.toLowerCase().includes(search.toLowerCase()));
-  const toggle = (v: string) => {
-    onChange(selected.includes(v) ? selected.filter((s) => s !== v) : [...selected, v]);
-  };
-  return (
-    <div className="space-y-1.5">
-      <Input
-        placeholder="Search..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="h-6 text-[10px] bg-card border-border placeholder:text-muted-foreground/50"
-      />
-      <div className="max-h-28 overflow-y-auto space-y-0.5 pr-1">
-        {filtered.map((o) => (
-          <label
-            key={o}
-            className="flex items-center gap-1.5 py-0.5 px-1 rounded hover:bg-muted/30 cursor-pointer transition-colors"
-          >
-            <input
-              type="checkbox"
-              checked={selected.includes(o)}
-              onChange={() => toggle(o)}
-              className="h-3 w-3 rounded border-border text-primary accent-primary"
-            />
-            <span className="text-[10px] text-foreground">{o}</span>
-          </label>
-        ))}
-        {filtered.length === 0 && (
-          <p className="text-[9px] text-muted-foreground py-1">No results</p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function Radio({ options, selected, onChange, accent = false }: {
-  options: string[]; selected: string; onChange: (v: string) => void; accent?: boolean;
-}) {
-  const activeClass = accent
-    ? "bg-accent/20 text-accent border-accent/40"
-    : "bg-primary/20 text-primary border-primary/40";
-  const hoverClass = accent ? "hover:border-accent/30" : "hover:border-primary/30";
-  return (
-    <div className="flex flex-wrap gap-1">
-      {options.map((o) => (
-        <button
-          key={o}
-          onClick={() => onChange(selected === o ? "" : o)}
-          className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors ${
-            selected === o ? activeClass : `bg-card border-border text-muted-foreground ${hoverClass}`
-          }`}
-        >
-          {o}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
+  const [showBenefits, setShowBenefits] = useState(false);
+
   const [filters, setFilters] = useState<PremiumFilterState>({
     location: "",
     distance: 50,
@@ -223,231 +122,265 @@ export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
     skills: [],
     industry: [],
     teamPref: "",
-    minMatch: 50,
-    ageRange: [20, 45],
+    minMatch: 60,
+    aiPriority: [],
+    aiExplainMatch: false,
     startupExperience: [],
-    education: [],
-    investorNetwork: [],
-    previousExit: "",
-    fundingStage: [],
-    teamSize: [],
-    revenueRange: "",
-    roleType: [],
-    equityRange: "",
-    salaryExpectation: "",
-    relocation: false,
+    leadershipBackground: [],
+    functionalSeniority: [],
     languages: [],
-    personality: [],
-    leadershipStyle: [],
-    availability: "",
+    degreeLevel: [],
+    institutionQuality: [],
+    studyBackground: [],
+    startupReadiness: [],
+    commitmentPrecision: [],
+    equityPreference: "",
   });
 
   const update = <K extends keyof PremiumFilterState>(key: K, val: PremiumFilterState[K]) => {
     setFilters((prev) => ({ ...prev, [key]: val }));
   };
 
-  // Determine active modes
-  const mode = useMemo(() => {
-    const lf = filters.lookingFor;
-    const isFounder = lf.some(l => l.startsWith("Founder"));
-    const isCofounder = lf.includes("Co-Founder → Startup");
-    const isTeam = lf.includes("Team Member → Startup");
-    const isStartupMode = isCofounder || isTeam;
-    return { isFounder, isCofounder, isTeam, isStartupMode };
-  }, [filters.lookingFor]);
-
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center gap-2 mb-3">
-        <Crown className="w-4 h-4 text-accent" />
-        <h2 className="font-display text-sm font-bold text-foreground">
-          Premium Filters
-        </h2>
-        <span className="text-[8px] px-2 py-0.5 rounded-full bg-gradient-to-r from-accent/20 to-primary/20 text-accent font-bold uppercase tracking-wider border border-accent/30">
-          All Unlocked
-        </span>
+      {/* Header */}
+      <div className="mb-4">
+        <div className="flex items-center gap-2 mb-1">
+          <Crown className="w-4 h-4 text-primary" />
+          <h2 className="font-display text-sm font-bold text-foreground">Premium Filters</h2>
+        </div>
+        <p className="text-[10px] text-muted-foreground leading-relaxed">
+          Advanced match intelligence for better startup connections
+        </p>
+        <p className="text-[9px] text-muted-foreground/60 mt-0.5">
+          Filter stronger founders, better startup opportunities, and higher-fit builders.
+        </p>
       </div>
 
       <ScrollArea className="flex-1 -mx-1 px-1">
-        <div className="space-y-0.5 pr-1">
+        <div className="space-y-2 pr-1">
           {/* ===== CORE FILTERS ===== */}
-          <Section title="Looking For" icon={Search} defaultOpen>
-            <Tags options={LOOKING_FOR} selected={filters.lookingFor} onChange={(v) => update("lookingFor", v)} />
-          </Section>
+          <CoreSection title="Looking For" icon={Search} defaultOpen>
+            <FilterChips options={LOOKING_FOR} selected={filters.lookingFor} onChange={(v) => update("lookingFor", v)} />
+          </CoreSection>
 
-          <Section title="Location" icon={MapPin} defaultOpen>
+          <CoreSection title="Location" icon={MapPin}>
             <Input
               placeholder="Enter city or country..."
               value={filters.location}
               onChange={(e) => update("location", e.target.value)}
-              className="h-7 text-[11px] bg-card border-border placeholder:text-muted-foreground/50"
+              className="h-7 text-[11px] bg-background/50 border-border/50 placeholder:text-muted-foreground/40 rounded-lg"
             />
             <div className="pt-1">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] text-muted-foreground">Distance</span>
-                <span className="text-[10px] font-bold text-primary">{filters.distance} km</span>
+                <span className="text-[10px] font-semibold text-primary">{filters.distance} km</span>
               </div>
-              <Slider
-                value={[filters.distance]}
-                onValueChange={([v]) => update("distance", v)}
-                min={0} max={100} step={5}
-                className="w-full"
-              />
+              <Slider value={[filters.distance]} onValueChange={([v]) => update("distance", v)} min={0} max={100} step={5} />
             </div>
-            <Radio options={LOCATIONS} selected={filters.teamPref} onChange={(v) => update("teamPref", v)} />
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-[10px] text-muted-foreground">Open to Relocation</span>
-              <Switch checked={filters.relocation} onCheckedChange={(v) => update("relocation", v)} className="scale-75" />
-            </div>
-          </Section>
+            <FilterChips options={LOCATIONS} selected={filters.teamPref ? [filters.teamPref] : []} onChange={(v) => update("teamPref", v[v.length - 1] || "")} />
+          </CoreSection>
 
-          <Section title="Industry" icon={Briefcase}>
-            <CheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} />
-          </Section>
+          <CoreSection title="Startup Stage" icon={Rocket}>
+            <FilterChips options={STAGES} selected={filters.stage} onChange={(v) => update("stage", v)} />
+          </CoreSection>
 
-          <Section title="Skills" icon={Code}>
-            <CheckboxList options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} />
-          </Section>
+          <CoreSection title="Commitment" icon={Clock}>
+            <FilterChips options={COMMITMENTS} selected={filters.commitment} onChange={(v) => update("commitment", v)} />
+          </CoreSection>
 
-          <Section title="Commitment" icon={Clock}>
-            <Tags options={COMMITMENTS} selected={filters.commitment} onChange={(v) => update("commitment", v)} />
-          </Section>
+          <CoreSection title="Skills" icon={Code}>
+            <FilterCheckboxList options={SKILLS} selected={filters.skills} onChange={(v) => update("skills", v)} searchable placeholder="Search skills..." />
+          </CoreSection>
 
-          {/* ===== FOUNDER-SPECIFIC FILTERS ===== */}
-          {mode.isFounder && (
-            <>
-              <Section title="Startup Stage" icon={Rocket}>
-                <Tags options={STAGES} selected={filters.stage} onChange={(v) => update("stage", v)} />
-              </Section>
+          <CoreSection title="Industry" icon={Briefcase}>
+            <FilterCheckboxList options={INDUSTRIES} selected={filters.industry} onChange={(v) => update("industry", v)} searchable placeholder="Search industries..." />
+          </CoreSection>
 
-              <Section title="Personality Match" icon={Heart} premium>
-                <Tags options={PERSONALITY_OPTIONS} selected={filters.personality} onChange={(v) => update("personality", v)} accent />
-              </Section>
+          {/* ===== PREMIUM CARDS ===== */}
+          <div className="pt-3 pb-1">
+            <p className="text-[9px] font-bold text-primary/60 uppercase tracking-widest mb-2">Premium Intelligence</p>
+          </div>
 
-              <Section title="Leadership Style" icon={Shield} premium>
-                <Tags options={LEADERSHIP_OPTIONS} selected={filters.leadershipStyle} onChange={(v) => update("leadershipStyle", v)} accent />
-              </Section>
-            </>
-          )}
-
-          {/* ===== CO-FOUNDER → STARTUP FILTERS ===== */}
-          {mode.isCofounder && (
-            <>
-              <Section title="Funding Stage" icon={DollarSign} premium>
-                <Tags options={FUNDING_STAGES} selected={filters.fundingStage} onChange={(v) => update("fundingStage", v)} accent />
-              </Section>
-
-              <Section title="Revenue" icon={TrendingUp} premium>
-                <Radio options={REVENUE_OPTIONS} selected={filters.revenueRange} onChange={(v) => update("revenueRange", v)} accent />
-              </Section>
-
-              <Section title="Team Size" icon={Users} premium>
-                <Tags options={TEAM_SIZES} selected={filters.teamSize} onChange={(v) => update("teamSize", v)} accent />
-              </Section>
-
-              <Section title="Equity Offered" icon={Sparkles} premium>
-                <Radio options={EQUITY_OPTIONS} selected={filters.equityRange} onChange={(v) => update("equityRange", v)} accent />
-              </Section>
-
-              <Section title="Previous Exit" icon={TrendingUp} premium>
-                <Radio options={EXIT_OPTIONS} selected={filters.previousExit} onChange={(v) => update("previousExit", v)} accent />
-              </Section>
-
-              <Section title="Investor Network" icon={Banknote} premium>
-                <Tags options={INVESTOR_NETWORK} selected={filters.investorNetwork} onChange={(v) => update("investorNetwork", v)} accent />
-              </Section>
-            </>
-          )}
-
-          {/* ===== TEAM MEMBER → STARTUP FILTERS ===== */}
-          {mode.isTeam && (
-            <>
-              <Section title="Role Type" icon={Target} premium>
-                <CheckboxList options={ROLE_TYPES} selected={filters.roleType} onChange={(v) => update("roleType", v)} />
-              </Section>
-
-              <Section title="Salary Expectation" icon={DollarSign} premium>
-                <Radio options={SALARY_OPTIONS} selected={filters.salaryExpectation} onChange={(v) => update("salaryExpectation", v)} accent />
-              </Section>
-
-              <Section title="Equity Offered" icon={Sparkles} premium>
-                <Radio options={EQUITY_OPTIONS} selected={filters.equityRange} onChange={(v) => update("equityRange", v)} accent />
-              </Section>
-
-              <Section title="Funding Stage" icon={Building2} premium>
-                <Tags options={FUNDING_STAGES} selected={filters.fundingStage} onChange={(v) => update("fundingStage", v)} accent />
-              </Section>
-
-              <Section title="Team Size" icon={Users} premium>
-                <Tags options={TEAM_SIZES} selected={filters.teamSize} onChange={(v) => update("teamSize", v)} accent />
-              </Section>
-
-              <Section title="Availability" icon={Calendar} premium>
-                <Radio options={AVAILABILITY_OPTIONS} selected={filters.availability} onChange={(v) => update("availability", v)} accent />
-              </Section>
-            </>
-          )}
-
-          {/* ===== SHARED PREMIUM FILTERS ===== */}
-          <Section title="Startup Experience" icon={Rocket} premium>
-            <Tags options={EXPERIENCE_LEVELS} selected={filters.startupExperience} onChange={(v) => update("startupExperience", v)} accent />
-          </Section>
-
-          <Section title="Education" icon={GraduationCap} premium>
-            <Tags options={EDUCATION_OPTIONS} selected={filters.education} onChange={(v) => update("education", v)} accent />
-          </Section>
-
-          <Section title="Languages" icon={Languages} premium>
-            <Tags options={LANGUAGE_OPTIONS} selected={filters.languages} onChange={(v) => update("languages", v)} accent />
-          </Section>
-
-          <Section title="Age Range" icon={Calendar} premium>
-            <div className="pt-1">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] text-muted-foreground">Age</span>
-                <span className="text-[10px] font-bold text-accent">{filters.ageRange[0]} - {filters.ageRange[1]} years</span>
+          {/* Card 1: AI Match Precision */}
+          <PremiumCard icon={Zap} title="AI Match Precision" subtitle="Improve who appears in your feed" defaultOpen>
+            <div className="space-y-3">
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <FilterLabel>Minimum Match Score</FilterLabel>
+                  <span className="text-xs font-bold text-primary">{filters.minMatch}%</span>
+                </div>
+                <Slider
+                  value={[filters.minMatch]}
+                  onValueChange={([v]) => update("minMatch", v)}
+                  min={50} max={95} step={5}
+                />
+                <div className="flex justify-between mt-0.5">
+                  <span className="text-[9px] text-muted-foreground/50">50%</span>
+                  <span className="text-[9px] text-muted-foreground/50">95%</span>
+                </div>
               </div>
-              <Slider
-                value={filters.ageRange}
-                onValueChange={(v) => update("ageRange", v as [number, number])}
-                min={18} max={65} step={1}
-                className="w-full"
-              />
-              <div className="flex justify-between mt-0.5">
-                <span className="text-[9px] text-muted-foreground">18</span>
-                <span className="text-[9px] text-muted-foreground">65</span>
+
+              <div>
+                <FilterLabel>AI Priority Preferences</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterCheckboxList options={AI_PRIORITY_OPTIONS} selected={filters.aiPriority} onChange={(v) => update("aiPriority", v)} />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between py-1.5 px-2 rounded-lg bg-background/30">
+                <div>
+                  <p className="text-[11px] font-medium text-foreground">AI Explain Why Match</p>
+                  <p className="text-[9px] text-muted-foreground">Show AI reasoning on profile cards</p>
+                </div>
+                <Switch checked={filters.aiExplainMatch} onCheckedChange={(v) => update("aiExplainMatch", v)} className="scale-75" />
               </div>
             </div>
-          </Section>
+          </PremiumCard>
 
-          {/* Match score */}
-          <div className="pt-2">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-medium text-foreground flex items-center gap-1.5">
-                <TrendingUp className="w-3.5 h-3.5 text-primary" />
-                Min Match
-              </span>
-              <span className="text-xs font-bold text-primary">{filters.minMatch}%</span>
+          {/* Card 2: Founder & Builder Quality */}
+          <PremiumCard icon={Target} title="Founder & Builder Quality" subtitle="Filter stronger startup profiles">
+            <div className="space-y-3">
+              <div>
+                <FilterLabel>Startup Experience</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterCheckboxList options={STARTUP_EXPERIENCE} selected={filters.startupExperience} onChange={(v) => update("startupExperience", v)} maxVisible={8} />
+                </div>
+              </div>
+
+              <div>
+                <FilterLabel>Leadership Background</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterCheckboxList options={LEADERSHIP_BACKGROUND} selected={filters.leadershipBackground} onChange={(v) => update("leadershipBackground", v)} maxVisible={8} />
+                </div>
+              </div>
+
+              <div>
+                <FilterLabel>Functional Seniority</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterChips options={FUNCTIONAL_SENIORITY} selected={filters.functionalSeniority} onChange={(v) => update("functionalSeniority", v)} />
+                </div>
+              </div>
             </div>
-            <Slider
-              value={[filters.minMatch]}
-              onValueChange={([v]) => update("minMatch", v)}
-              min={50} max={100} step={5}
-              className="w-full"
-            />
+          </PremiumCard>
+
+          {/* Card 3: Global Compatibility */}
+          <PremiumCard icon={Globe} title="Global Compatibility" subtitle="Improve cross-border startup matching">
+            <div className="space-y-3">
+              <div>
+                <FilterLabel>Languages</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterCheckboxList options={LANGUAGES} selected={filters.languages} onChange={(v) => update("languages", v)} searchable placeholder="Type language..." maxVisible={10} />
+                </div>
+              </div>
+
+              <div>
+                <FilterLabel>Degree Level</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterCheckboxList options={DEGREE_LEVELS} selected={filters.degreeLevel} onChange={(v) => update("degreeLevel", v)} />
+                </div>
+              </div>
+
+              <div>
+                <FilterLabel>Institution Quality</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterCheckboxList options={INSTITUTION_QUALITY} selected={filters.institutionQuality} onChange={(v) => update("institutionQuality", v)} />
+                </div>
+              </div>
+
+              <div>
+                <FilterLabel>Study Background</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterCheckboxList options={STUDY_BACKGROUND} selected={filters.studyBackground} onChange={(v) => update("studyBackground", v)} maxVisible={8} />
+                </div>
+              </div>
+            </div>
+          </PremiumCard>
+
+          {/* Card 4: Startup Readiness */}
+          <PremiumCard icon={Rocket} title="Startup Readiness" subtitle="Find people ready to build now">
+            <div className="space-y-3">
+              <div>
+                <FilterLabel>Readiness Level</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterCheckboxList options={STARTUP_READINESS} selected={filters.startupReadiness} onChange={(v) => update("startupReadiness", v)} maxVisible={8} />
+                </div>
+              </div>
+
+              <div>
+                <FilterLabel>Commitment Precision</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterChips options={COMMITMENT_PRECISION} selected={filters.commitmentPrecision} onChange={(v) => update("commitmentPrecision", v)} />
+                </div>
+              </div>
+
+              <div>
+                <FilterLabel>Equity Preference</FilterLabel>
+                <div className="mt-1.5">
+                  <FilterDropdown options={EQUITY_PREFERENCE} value={filters.equityPreference} onChange={(v) => update("equityPreference", v)} placeholder="Any" />
+                </div>
+              </div>
+            </div>
+          </PremiumCard>
+
+          {/* ===== PREMIUM UPSELL (for free users) ===== */}
+          <div className="mt-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent to-primary flex items-center justify-center">
+                <Crown className="w-4 h-4 text-primary-foreground" />
+              </div>
+              <div>
+                <h3 className="text-xs font-bold text-foreground">Upgrade to Premium</h3>
+                <p className="text-[9px] text-muted-foreground">Smarter filters. Better visibility. Stronger matches.</p>
+              </div>
+            </div>
+
+            <div className="space-y-1.5 mb-3">
+              {["AI match precision", "Higher-quality profiles", "Stronger startup opportunities", "Priority visibility", "Included GetConnect spotlight credits"].map((b) => (
+                <div key={b} className="flex items-center gap-2">
+                  <div className="w-3.5 h-3.5 rounded-full bg-primary/15 flex items-center justify-center">
+                    <svg className="w-2 h-2 text-primary" viewBox="0 0 12 12" fill="none">
+                      <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <span className="text-[10px] text-foreground/80">{b}</span>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-[9px] text-primary/70 mb-3 italic">
+              Premium users are matched earlier with higher-fit profiles.
+            </p>
+
+            <Button
+              className="w-full h-9 rounded-xl bg-gradient-to-r from-accent to-primary text-primary-foreground font-semibold text-xs shadow-md shadow-primary/15"
+              onClick={() => setShowBenefits(true)}
+            >
+              <Crown className="w-3.5 h-3.5 mr-1.5" />
+              Upgrade to Premium
+            </Button>
+            <button
+              onClick={() => setShowBenefits(true)}
+              className="w-full text-center text-[10px] text-primary hover:text-primary/80 font-medium mt-2 transition-colors"
+            >
+              See Premium Benefits →
+            </button>
           </div>
         </div>
       </ScrollArea>
 
+      {/* Generate button */}
       <div className="pt-3">
         <Button
-          className="w-full bg-gradient-to-r from-accent to-primary text-primary-foreground font-semibold text-xs"
-          onClick={() => onGenerate(filters as any)}
+          className="w-full h-10 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold text-xs shadow-lg shadow-primary/15"
+          onClick={() => onGenerate(filters)}
         >
           <Zap className="w-3.5 h-3.5 mr-1.5" />
-          Generate Premium Matches
+          Generate Candidates
         </Button>
       </div>
+
+      <PremiumBenefitsModal open={showBenefits} onClose={() => setShowBenefits(false)} onUpgrade={() => setShowBenefits(false)} />
     </div>
   );
 }
