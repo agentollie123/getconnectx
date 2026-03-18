@@ -6,12 +6,11 @@ import { Switch } from "@/components/ui/switch";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   MapPin, Search, Rocket, Clock, Code, Briefcase,
-  Zap, TrendingUp, Crown, Globe, Target,
+  Zap, Crown, Globe, Target,
 } from "lucide-react";
 
 import { PremiumCard } from "./premium/PremiumCard";
 import { FilterCheckboxList, FilterChips, FilterLabel, FilterDropdown } from "./premium/PremiumFilterInputs";
-import { PremiumBenefitsModal } from "./premium/PremiumBenefitsModal";
 import {
   AI_PRIORITY_OPTIONS,
   STARTUP_EXPERIENCE, LEADERSHIP_BACKGROUND, FUNCTIONAL_SENIORITY,
@@ -111,7 +110,7 @@ function CoreSection({ title, icon: Icon, children, defaultOpen = false }: {
 }
 
 export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
-  const [showBenefits, setShowBenefits] = useState(false);
+  
 
   const [filters, setFilters] = useState<PremiumFilterState>({
     location: "",
@@ -323,49 +322,6 @@ export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
             </div>
           </PremiumCard>
 
-          {/* ===== PREMIUM UPSELL (for free users) ===== */}
-          <div className="mt-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent to-primary flex items-center justify-center">
-                <Crown className="w-4 h-4 text-primary-foreground" />
-              </div>
-              <div>
-                <h3 className="text-xs font-bold text-foreground">Upgrade to Premium</h3>
-                <p className="text-[9px] text-muted-foreground">Smarter filters. Better visibility. Stronger matches.</p>
-              </div>
-            </div>
-
-            <div className="space-y-1.5 mb-3">
-              {["AI match precision", "Higher-quality profiles", "Stronger startup opportunities", "Priority visibility", "Included GetConnect spotlight credits"].map((b) => (
-                <div key={b} className="flex items-center gap-2">
-                  <div className="w-3.5 h-3.5 rounded-full bg-primary/15 flex items-center justify-center">
-                    <svg className="w-2 h-2 text-primary" viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <span className="text-[10px] text-foreground/80">{b}</span>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-[9px] text-primary/70 mb-3 italic">
-              Premium users are matched earlier with higher-fit profiles.
-            </p>
-
-            <Button
-              className="w-full h-9 rounded-xl bg-gradient-to-r from-accent to-primary text-primary-foreground font-semibold text-xs shadow-md shadow-primary/15"
-              onClick={() => setShowBenefits(true)}
-            >
-              <Crown className="w-3.5 h-3.5 mr-1.5" />
-              Upgrade to Premium
-            </Button>
-            <button
-              onClick={() => setShowBenefits(true)}
-              className="w-full text-center text-[10px] text-primary hover:text-primary/80 font-medium mt-2 transition-colors"
-            >
-              See Premium Benefits →
-            </button>
-          </div>
         </div>
       </ScrollArea>
 
@@ -380,7 +336,7 @@ export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
         </Button>
       </div>
 
-      <PremiumBenefitsModal open={showBenefits} onClose={() => setShowBenefits(false)} onUpgrade={() => setShowBenefits(false)} />
+      
     </div>
   );
 }
