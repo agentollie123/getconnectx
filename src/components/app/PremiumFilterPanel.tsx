@@ -110,7 +110,7 @@ function CoreSection({ title, icon: Icon, children, defaultOpen = false }: {
 }
 
 export function PremiumFilterPanel({ onGenerate }: PremiumFilterPanelProps) {
-  const [showBenefits, setShowBenefits] = useState(false);
+  
 
   const [filters, setFilters] = useState<PremiumFilterState>({
     location: "",
