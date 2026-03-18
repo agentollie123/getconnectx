@@ -6,12 +6,11 @@ import { Switch } from "@/components/ui/switch";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   MapPin, Search, Rocket, Clock, Code, Briefcase,
-  Zap, TrendingUp, Crown, Globe, Target,
+  Zap, Crown, Globe, Target,
 } from "lucide-react";
 
 import { PremiumCard } from "./premium/PremiumCard";
 import { FilterCheckboxList, FilterChips, FilterLabel, FilterDropdown } from "./premium/PremiumFilterInputs";
-import { PremiumBenefitsModal } from "./premium/PremiumBenefitsModal";
 import {
   AI_PRIORITY_OPTIONS,
   STARTUP_EXPERIENCE, LEADERSHIP_BACKGROUND, FUNCTIONAL_SENIORITY,
