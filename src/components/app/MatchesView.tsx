@@ -9,6 +9,7 @@ interface MatchesViewProps {
   connectedProfiles: Profile[];
   connectedStartups?: Startup[];
   isStartupMode?: boolean;
+  isPremium?: boolean;
   onViewReport: (profile: Profile) => void;
   onChat: (profile: Profile) => void;
   onChatStartup?: (startup: Startup) => void;
