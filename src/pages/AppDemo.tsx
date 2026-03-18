@@ -346,6 +346,16 @@ export default function AppDemo() {
     </div>
   );
 
+  if (!onboarded) {
+    return (
+      <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
+        <div className="w-full max-w-[430px] h-[92vh] max-h-[850px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative dark">
+          <OnboardingFlow onComplete={(mode) => { handleModeChange(mode); setOnboarded(true); }} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
       {/* Mobile frame */}
