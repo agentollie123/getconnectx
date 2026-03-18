@@ -16,11 +16,12 @@ interface MatchesViewProps {
   onAcceptLike: (profile: Profile) => void;
 }
 
-function getExpiry() {
-  return Math.floor(Math.random() * 6) + 1;
+function getExpiry(isPremium?: boolean) {
+  const base = Math.floor(Math.random() * 6) + 1;
+  return isPremium ? base + 23 : base; // 30 days premium vs ~7 free
 }
 
-export function MatchesView({ connectedProfiles, connectedStartups = [], isStartupMode, onViewReport, onChat, onChatStartup, onAcceptLike }: MatchesViewProps) {
+export function MatchesView({ connectedProfiles, connectedStartups = [], isStartupMode, isPremium, onViewReport, onChat, onChatStartup, onAcceptLike }: MatchesViewProps) {
   const matched = connectedProfiles.length > 0 ? connectedProfiles : profiles.slice(0, 3);
 
   if (isStartupMode) {
