@@ -207,6 +207,7 @@ export function PremiumFilterPanel({ onGenerate, activeMode, onModeChange }: Pre
   const [filters, setFilters] = useState<PremiumFilterState>({
     location: "",
     distance: 50,
+    workArrangement: [],
     lookingFor: [],
     stage: [],
     commitment: [],
