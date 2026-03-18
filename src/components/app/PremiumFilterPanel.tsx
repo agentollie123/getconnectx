@@ -26,6 +26,7 @@ import {
 export interface PremiumFilterState {
   location: string;
   distance: number;
+  workArrangement: string[];
   lookingFor: string[];
   stage: string[];
   commitment: string[];
