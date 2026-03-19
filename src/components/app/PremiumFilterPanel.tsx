@@ -343,10 +343,20 @@ export function PremiumFilterPanel({ onGenerate, activeMode, onModeChange }: Pre
 
                 {/* AI Explain toggle only on first card with AI in name */}
                 {idx === 0 && card.title.includes("AI") && (
-                  <div className="flex items-center justify-between py-1.5 px-2 rounded-lg bg-background/30">
+                  <div className={`flex items-center justify-between py-1.5 px-2 rounded-lg transition-all duration-300 ${
+                    filters.aiExplainMatch
+                      ? "bg-primary/10 border border-primary/30"
+                      : "bg-background/30 border border-transparent"
+                  }`}>
                     <div>
-                      <p className="text-[11px] font-medium text-foreground">AI Explain Why Match</p>
-                      <p className="text-[9px] text-muted-foreground">Show AI reasoning on cards</p>
+                      <p className={`text-[11px] font-medium transition-colors duration-300 ${
+                        filters.aiExplainMatch ? "text-primary" : "text-foreground"
+                      }`}>AI Explain Why Match</p>
+                      <p className={`text-[9px] transition-colors duration-300 ${
+                        filters.aiExplainMatch ? "text-primary/70" : "text-muted-foreground"
+                      }`}>
+                        {filters.aiExplainMatch ? "✓ AI reasoning visible on cards" : "Show AI reasoning on cards"}
+                      </p>
                     </div>
                     <Switch checked={filters.aiExplainMatch} onCheckedChange={(v) => update("aiExplainMatch", v)} className="scale-75" />
                   </div>
