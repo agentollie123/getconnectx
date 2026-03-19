@@ -44,6 +44,7 @@ interface PremiumFilterPanelProps {
   onGenerate: (filters: PremiumFilterState) => void;
   activeMode: MatchingMode;
   onModeChange: (mode: MatchingMode) => void;
+  onAiExplainChange?: (enabled: boolean) => void;
 }
 
 // ===== Collapsible core section =====

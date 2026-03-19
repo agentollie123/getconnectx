@@ -263,13 +263,23 @@ export default function AppPremium() {
   const renderHomeDesktop = () => (
     <div className="flex-1 flex overflow-hidden">
       <motion.aside initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="hidden lg:flex flex-col w-[300px] border-r border-border/30 bg-card/30 p-4 overflow-hidden">
-        <PremiumFilterPanel onGenerate={generateMatches} activeMode={matchingMode} onModeChange={handleModeChange} />
+        <PremiumFilterPanel
+          onGenerate={generateMatches}
+          activeMode={matchingMode}
+          onModeChange={handleModeChange}
+          onAiExplainChange={setShowAiExplanation}
+        />
       </motion.aside>
 
       <div className="flex-1 flex flex-col items-center justify-center p-3 lg:p-6 relative">
         {showFilters && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute inset-0 z-30 bg-background/95 backdrop-blur-sm p-4 overflow-auto lg:hidden">
-            <PremiumFilterPanel onGenerate={generateMatches} activeMode={matchingMode} onModeChange={handleModeChange} />
+            <PremiumFilterPanel
+              onGenerate={generateMatches}
+              activeMode={matchingMode}
+              onModeChange={handleModeChange}
+              onAiExplainChange={setShowAiExplanation}
+            />
           </motion.div>
         )}
 
@@ -287,13 +297,27 @@ export default function AppPremium() {
           ) : isStartupMode(matchingMode) ? (
             <AnimatePresence>
               {startupStack.slice(0, 2).map((startup, i) => (
-                <StartupSwipeCard key={startup.id} startup={startup} onSwipe={handleSwipe} isTop={i === 0} triggerExit={i === 0 ? buttonSwipeDir : null} />
+                <StartupSwipeCard
+                  key={startup.id}
+                  startup={startup}
+                  onSwipe={handleSwipe}
+                  isTop={i === 0}
+                  triggerExit={i === 0 ? buttonSwipeDir : null}
+                  showAiExplanation={showAiExplanation}
+                />
               ))}
             </AnimatePresence>
           ) : (
             <AnimatePresence>
               {cardStack.slice(0, 2).map((profile, i) => (
-                <SwipeCard key={profile.id} profile={profile} onSwipe={handleSwipe} isTop={i === 0} triggerExit={i === 0 ? buttonSwipeDir : null} />
+                <SwipeCard
+                  key={profile.id}
+                  profile={profile}
+                  onSwipe={handleSwipe}
+                  isTop={i === 0}
+                  triggerExit={i === 0 ? buttonSwipeDir : null}
+                  showAiExplanation={showAiExplanation}
+                />
               ))}
             </AnimatePresence>
           )}
