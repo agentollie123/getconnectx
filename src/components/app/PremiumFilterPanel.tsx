@@ -44,6 +44,7 @@ interface PremiumFilterPanelProps {
   onGenerate: (filters: PremiumFilterState) => void;
   activeMode: MatchingMode;
   onModeChange: (mode: MatchingMode) => void;
+  onAiExplainChange?: (enabled: boolean) => void;
 }
 
 // ===== Collapsible core section =====
@@ -203,7 +204,7 @@ function CofounderStartupFreeFilters({ filters, update }: {
 }
 
 // ===== Main PremiumFilterPanel =====
-export function PremiumFilterPanel({ onGenerate, activeMode, onModeChange }: PremiumFilterPanelProps) {
+export function PremiumFilterPanel({ onGenerate, activeMode, onModeChange, onAiExplainChange }: PremiumFilterPanelProps & { onAiExplainChange?: (enabled: boolean) => void }) {
   const [filters, setFilters] = useState<PremiumFilterState>({
     location: "",
     distance: 50,
@@ -220,7 +221,11 @@ export function PremiumFilterPanel({ onGenerate, activeMode, onModeChange }: Pre
   });
 
   const update = (key: string, val: any) => {
-    setFilters((prev) => ({ ...prev, [key]: val }));
+    setFilters((prev) => {
+      const next = { ...prev, [key]: val };
+      if (key === "aiExplainMatch") onAiExplainChange?.(Boolean(val));
+      return next;
+    });
   };
 
   const handleModeChange = (mode: MatchingMode) => {

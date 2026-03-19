@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, useMotionValue, useTransform, type PanInfo } from "framer-motion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-  MapPin, Lightbulb, Rocket, Clock, Search, Globe,
+  MapPin, Lightbulb, Rocket, Clock, Globe,
   Building2, GraduationCap, Star, Zap,
 } from "lucide-react";
 import type { Profile } from "@/lib/profileData";
@@ -12,6 +12,21 @@ function getMatchScore(profile: Profile): number {
   const skillBonus = profile.skills.length * 3;
   const expBonus = profile.workExperience ? profile.workExperience.length * 4 : 0;
   return Math.min(99, base + skillBonus + expBonus + (profile.id * 7) % 15);
+}
+
+function getAiReasons(profile: Profile): string[] {
+  const primaryInterest = profile.interests[0] || "startup";
+  const mainSkills = profile.skills.slice(0, 2).join(" + ");
+  const experienceSignal = profile.workExperience?.[0]?.company;
+
+  return [
+    `${profile.stage} stage alignment fits early startup momentum`,
+    mainSkills ? `Relevant execution stack: ${mainSkills}` : `Relevant skill overlap for execution`,
+    experienceSignal
+      ? `Extra confidence from ${experienceSignal} execution background`
+      : `${profile.commitment} commitment supports faster execution`,
+    `${primaryInterest} focus increases match relevance`,
+  ].slice(0, 3);
 }
 
 function MatchBadge({ score }: { score: number }) {
@@ -32,9 +47,10 @@ interface SwipeCardProps {
   onSwipe: (dir: "left" | "right") => void;
   isTop: boolean;
   triggerExit?: "left" | "right" | null;
+  showAiExplanation?: boolean;
 }
 
-export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardProps) {
+export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanation = false }: SwipeCardProps) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const likeOpacity = useTransform(x, [0, 80], [0, 1]);
@@ -42,6 +58,7 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
   const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
   const resolvedExit = triggerExit || exitDir;
   const matchScore = getMatchScore(profile);
+  const aiReasons = getAiReasons(profile);
 
   const handleDragEnd = (_: any, info: PanInfo) => {
     if (info.offset.x > 80) {
@@ -83,7 +100,6 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
       )}
 
       <div className="h-full rounded-2xl bg-card border border-border overflow-hidden flex flex-col shadow-2xl">
-        {/* Hero photo section */}
         <div className="relative h-48 flex-shrink-0">
           <img src={profile.photo} alt={profile.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
@@ -104,7 +120,6 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
           </div>
         </div>
 
-        {/* Match score bar */}
         <div className="px-3 py-2 bg-muted/30 flex items-center gap-2.5 border-b border-border/50">
           <div className="relative w-9 h-9 flex-shrink-0">
             <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
@@ -127,15 +142,28 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
           </div>
         </div>
 
-        {/* Scrollable content */}
         <ScrollArea className="flex-1">
           <div className="p-3.5 space-y-3">
-            {/* Bio */}
             <p className="text-xs text-foreground/90 leading-relaxed">
               {profile.bio || "Open to exciting startup opportunities."}
             </p>
 
-            {/* Startup idea */}
+            {showAiExplanation && (
+              <div className="rounded-xl border border-primary/20 bg-primary/5 p-3">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Zap className="w-3.5 h-3.5 text-primary" />
+                  <p className="text-[10px] font-semibold text-primary uppercase tracking-wider">Why this match</p>
+                </div>
+                <div className="space-y-1.5">
+                  {aiReasons.map((reason) => (
+                    <p key={reason} className="text-[11px] text-foreground/90 leading-relaxed">
+                      • {reason}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {profile.startupIdea && (
               <div className="rounded-xl bg-primary/5 border border-primary/20 p-3 flex items-start gap-2.5">
                 <Lightbulb className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
@@ -146,7 +174,6 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
               </div>
             )}
 
-            {/* Tags row */}
             <div className="flex flex-wrap gap-1.5">
               {profile.interests.map((i) => (
                 <span key={i} className="text-[10px] px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20 font-medium">{i}</span>
@@ -156,7 +183,6 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
               </span>
             </div>
 
-            {/* Skills */}
             <div>
               <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Skills</p>
               <div className="flex flex-wrap gap-1">
@@ -166,7 +192,6 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
               </div>
             </div>
 
-            {/* Languages */}
             {profile.languages && (
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Globe className="w-3.5 h-3.5 text-primary" />
@@ -174,7 +199,6 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
               </div>
             )}
 
-            {/* Experience */}
             {profile.workExperience && profile.workExperience.length > 0 && (
               <div>
                 <div className="flex items-center gap-1.5 mb-1.5">
@@ -190,7 +214,6 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit }: SwipeCardPro
               </div>
             )}
 
-            {/* Education */}
             {profile.education && profile.education.length > 0 && (
               <div className="flex items-center gap-2.5 rounded-lg bg-muted/30 p-2">
                 <GraduationCap className="w-4 h-4 text-accent flex-shrink-0" />

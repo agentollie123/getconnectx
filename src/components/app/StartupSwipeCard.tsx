@@ -1,9 +1,18 @@
 import { useState } from "react";
 import { motion, useMotionValue, useTransform, type PanInfo } from "framer-motion";
 import {
-  Rocket, Users, Briefcase, Star, Building2, Sparkles,
+  Rocket, Users, Briefcase, Star, Building2, Sparkles, Zap,
 } from "lucide-react";
 import type { Startup } from "@/lib/startupData";
+
+function getStartupAiReasons(startup: Startup): string[] {
+  return [
+    `${startup.stage} stage startup shows active build momentum`,
+    `High-value opportunity in ${startup.industry}`,
+    `${startup.openRoles[0] || "Core role"} need creates a clear fit path`,
+    `${startup.teamSize}-person team suggests stronger execution readiness`,
+  ].slice(0, 3);
+}
 
 function StageBadge({ stage }: { stage: string }) {
   const colors: Record<string, string> = {
@@ -40,15 +49,17 @@ interface StartupSwipeCardProps {
   onSwipe: (dir: "left" | "right") => void;
   isTop: boolean;
   triggerExit?: "left" | "right" | null;
+  showAiExplanation?: boolean;
 }
 
-export function StartupSwipeCard({ startup, onSwipe, isTop, triggerExit }: StartupSwipeCardProps) {
+export function StartupSwipeCard({ startup, onSwipe, isTop, triggerExit, showAiExplanation = false }: StartupSwipeCardProps) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const likeOpacity = useTransform(x, [0, 80], [0, 1]);
   const nopeOpacity = useTransform(x, [-80, 0], [1, 0]);
   const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
   const resolvedExit = triggerExit || exitDir;
+  const aiReasons = getStartupAiReasons(startup);
 
   const handleDragEnd = (_: any, info: PanInfo) => {
     if (info.offset.x > 80) { setExitDir("right"); onSwipe("right"); }
@@ -87,7 +98,6 @@ export function StartupSwipeCard({ startup, onSwipe, isTop, triggerExit }: Start
       )}
 
       <div className="h-full rounded-2xl bg-card border border-border overflow-hidden flex flex-col shadow-2xl">
-        {/* Startup header with gradient */}
         <div className="relative h-36 flex-shrink-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5 flex items-center justify-center">
           <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-xl">
             <span className="text-2xl font-display font-bold text-primary-foreground">{initials}</span>
@@ -103,7 +113,6 @@ export function StartupSwipeCard({ startup, onSwipe, isTop, triggerExit }: Start
           </div>
         </div>
 
-        {/* Match score + industry bar */}
         <div className="px-3 py-2.5 bg-muted/30 flex items-center gap-3 border-b border-border/50">
           <MatchScoreRing score={startup.matchScore} />
           <div className="flex-1 min-w-0">
@@ -116,11 +125,25 @@ export function StartupSwipeCard({ startup, onSwipe, isTop, triggerExit }: Start
           </div>
         </div>
 
-        {/* Content */}
         <div className="flex-1 p-3.5 space-y-3 overflow-auto">
           <p className="text-xs text-foreground/90 leading-relaxed">{startup.description}</p>
 
-          {/* Open Roles */}
+          {showAiExplanation && (
+            <div className="rounded-xl border border-primary/20 bg-primary/5 p-3">
+              <div className="flex items-center gap-1.5 mb-2">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                <p className="text-[10px] font-semibold text-primary uppercase tracking-wider">Why this match</p>
+              </div>
+              <div className="space-y-1.5">
+                {aiReasons.map((reason) => (
+                  <p key={reason} className="text-[11px] text-foreground/90 leading-relaxed">
+                    • {reason}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div>
             <div className="flex items-center gap-1.5 mb-1.5">
               <Briefcase className="w-3.5 h-3.5 text-primary" />
@@ -135,7 +158,6 @@ export function StartupSwipeCard({ startup, onSwipe, isTop, triggerExit }: Start
             </div>
           </div>
 
-          {/* Team info */}
           <div className="rounded-xl bg-accent/5 border border-accent/20 p-3 flex items-center gap-3">
             <Sparkles className="w-4 h-4 text-accent flex-shrink-0" />
             <div>
