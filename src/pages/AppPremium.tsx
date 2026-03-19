@@ -71,6 +71,7 @@ export default function AppPremium() {
   const [buttonSwipeDir, setButtonSwipeDir] = useState<"left" | "right" | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [matchingMode, setMatchingMode] = useState<MatchingMode>("founder-cofounder");
+  const [showAiExplanation, setShowAiExplanation] = useState(false);
   const [lastSwiped, setLastSwiped] = useState<Profile | null>(null);
   const [lastSwipedStartup, setLastSwipedStartup] = useState<Startup | null>(null);
 
@@ -86,6 +87,8 @@ export default function AppPremium() {
   const [chatStartupTarget, setChatStartupTarget] = useState<Startup | null>(null);
 
   const generateMatches = useCallback((filters: PremiumFilterState) => {
+    setShowAiExplanation(filters.aiExplainMatch);
+
     if (isStartupMode(matchingMode)) {
       const filtered = matchingMode === "cofounder-startup"
         ? allStartups.filter(s => s.lookingFor === "co-founder" || s.lookingFor === "both")
