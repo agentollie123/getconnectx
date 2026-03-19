@@ -342,7 +342,7 @@ export function PremiumFilterPanel({ onGenerate, activeMode, onModeChange }: Pre
                 {card.fields.map(renderPremiumField)}
 
                 {/* AI Explain toggle only on first card with AI in name */}
-                {idx === 0 && card.title.includes("AI") && (
+                {card.title.includes("AI") && (
                   <div className={`flex items-center justify-between py-1.5 px-2 rounded-lg transition-all duration-300 ${
                     filters.aiExplainMatch
                       ? "bg-primary/10 border border-primary/30"
