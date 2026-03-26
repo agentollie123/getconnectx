@@ -68,10 +68,10 @@ export function FounderProblem() {
           className="text-center mb-12"
         >
           <h2 className="font-display font-bold max-w-3xl mx-auto">
-            <span className="block" style={{ fontSize: "clamp(30px, 4.5vw, 44px)", lineHeight: 1.15, color: "#FFFFFF" }}>
+            <span className="block whitespace-nowrap" style={{ fontSize: "clamp(24px, 3.2vw, 40px)", lineHeight: 1.15, color: "#FFFFFF" }}>
               The hardest part of building a startup
             </span>
-            <span className="block mt-1" style={{ fontSize: "clamp(30px, 4.5vw, 44px)", lineHeight: 1.15, color: "#FF8A3D" }}>
+            <span className="block mt-1" style={{ fontSize: "clamp(24px, 3.2vw, 40px)", lineHeight: 1.15, color: "#FF8A3D" }}>
               isn't the idea — it's the people
             </span>
           </h2>
