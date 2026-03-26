@@ -6,19 +6,19 @@ const steps = [
     icon: ToggleLeft,
     step: "01",
     title: "Choose How You Use ConnectX",
-    description: "Are you a Builder looking for opportunities, or a Startup looking for people? Pick your side — like Airbnb for users and hosts.",
+    description: "Are you a Builder looking for opportunities, or a Startup looking for people? Pick your side.",
   },
   {
     icon: Settings,
     step: "02",
-    title: "Define Your Role or Hiring Needs",
+    title: "Define Your Role or What You're Looking For",
     description: "Builders choose their role — founder, co-founder, or team member. Startups define the roles they're hiring for.",
   },
   {
     icon: Compass,
     step: "03",
-    title: "Discover the Right People or Startups",
-    description: "Swipe through curated profiles matched to your skills, industry, and goals. No noise — only relevant connections.",
+    title: "Discover Relevant People or Startups",
+    description: "Browse curated profiles matched to your skills, industry, and goals. No noise — only relevant connections.",
   },
   {
     icon: Handshake,
@@ -39,7 +39,7 @@ export function StartupPipeline() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            How <span className="gradient-text">ConnectX</span> Works
+            How It <span className="gradient-text">Works</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
             Four simple steps from sign-up to building your startup.
@@ -56,7 +56,6 @@ export function StartupPipeline() {
               transition={{ delay: i * 0.1 }}
               className="flex gap-6 mb-8 last:mb-0"
             >
-              {/* Timeline */}
               <div className="flex flex-col items-center flex-shrink-0">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <s.icon className="w-5 h-5 text-primary" />
@@ -65,8 +64,6 @@ export function StartupPipeline() {
                   <div className="w-px h-full bg-border mt-2 min-h-[24px]" />
                 )}
               </div>
-
-              {/* Content */}
               <div className="pb-8">
                 <span className="text-xs font-bold text-primary mb-1 block">Step {s.step}</span>
                 <h3 className="font-display font-semibold text-lg text-foreground mb-1">{s.title}</h3>

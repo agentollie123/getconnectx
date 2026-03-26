@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Eye, Sparkles, TrendingUp, Zap } from "lucide-react";
+import { Eye, Sparkles, TrendingUp } from "lucide-react";
 
 const benefits = [
   {
@@ -9,18 +9,13 @@ const benefits = [
   },
   {
     icon: Sparkles,
-    title: "Better Matches",
+    title: "Discover Better Matches",
     description: "Premium members get access to higher match quality and advanced filters.",
   },
   {
     icon: TrendingUp,
-    title: "Higher Visibility",
-    description: "Your profile gets seen by more builders and startups in the ecosystem.",
-  },
-  {
-    icon: Zap,
-    title: "Boost Your Profile",
-    description: "Appear earlier in feeds and get highlighted to stand out from the crowd.",
+    title: "Be Seen by the Right People",
+    description: "Your profile gets higher visibility across the ecosystem — appear earlier in feeds.",
   },
 ];
 
@@ -35,14 +30,14 @@ export function BigVision() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Get to the right people <span className="gradient-text">faster</span>
+            Move faster with the <span className="gradient-text">right people</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
             ConnectX Premium helps you connect with better matches and stand out in the ecosystem.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {benefits.map((b, i) => (
             <motion.div
               key={b.title}

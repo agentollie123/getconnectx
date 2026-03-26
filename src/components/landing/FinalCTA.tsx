@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Rocket } from "lucide-react";
+import { ArrowRight, Rocket, Play } from "lucide-react";
 
 export function FinalCTA() {
   return (
@@ -20,12 +20,12 @@ export function FinalCTA() {
           </div>
 
           <h2 className="font-display text-3xl sm:text-5xl font-bold mb-6 max-w-2xl mx-auto leading-tight">
-            Start Building With the{" "}
+            Start Your Startup With the{" "}
             <span className="gradient-text">Right People</span>
           </h2>
 
           <p className="text-lg text-muted-foreground mb-10 max-w-lg mx-auto">
-            Join thousands of founders, engineers, and operators building the next generation of companies on ConnectX.
+            Don't wait to find the right team. Join thousands of founders, engineers, and operators building on ConnectX.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-4">
@@ -36,7 +36,10 @@ export function FinalCTA() {
               </a>
             </Button>
             <Button size="lg" variant="outline" className="h-12 border-border text-foreground hover:bg-secondary" asChild>
-              <a href="/app">Explore Playground</a>
+              <a href="/app">
+                <Play className="w-4 h-4 mr-2" />
+                Try Playground
+              </a>
             </Button>
           </div>
         </motion.div>
