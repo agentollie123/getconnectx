@@ -30,7 +30,7 @@ export function Navbar() {
           </Button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
             <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">
-              Join Waiting list
+              Join Waitlist
             </a>
           </Button>
         </div>
@@ -47,7 +47,7 @@ export function Navbar() {
           <a href="#playground" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Playground</a>
           <Link to="/app" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Web App</Link>
           <Button size="sm" className="w-full bg-primary text-primary-foreground" asChild>
-            <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">Join Waiting list</a>
+            <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">Join Waitlist</a>
           </Button>
         </div>
       }
