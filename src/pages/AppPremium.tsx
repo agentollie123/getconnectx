@@ -393,7 +393,9 @@ export default function AppPremium() {
       </div>
 
       <div className="flex-1 overflow-hidden flex flex-col">
-        {activeNav === "Home" && !reportProfile ? renderHomeDesktop() : (
+        {showOnboarding ? (
+          <OnboardingFlow onComplete={() => setShowOnboarding(false)} isPremium />
+        ) : activeNav === "Home" && !reportProfile ? renderHomeDesktop() : (
           <div className="flex-1 overflow-auto">{renderMainContent()}</div>
         )}
       </div>
