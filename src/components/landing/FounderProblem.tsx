@@ -67,17 +67,17 @@ export function FounderProblem() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2
-            className="font-display font-bold max-w-2xl mx-auto"
-            style={{ fontSize: "clamp(28px, 4vw, 40px)", lineHeight: 1.2, color: "#FFFFFF" }}
-          >
-            The hardest part of building a startup{" "}
-            <span style={{ color: "#FF8A3D" }}>isn't the idea — it's the people</span>
+          <h2 className="font-display font-bold max-w-3xl mx-auto">
+            <span className="block" style={{ fontSize: "clamp(30px, 4.5vw, 44px)", lineHeight: 1.15, color: "#FFFFFF" }}>
+              The hardest part of building a startup
+            </span>
+            <span className="block mt-1" style={{ fontSize: "clamp(30px, 4.5vw, 44px)", lineHeight: 1.15, color: "#FF8A3D" }}>
+              isn't the idea — it's the people
+            </span>
           </h2>
-          <p className="mt-4 max-w-md mx-auto" style={{ fontSize: 16, color: "#A1A1AA", lineHeight: "24px" }}>
-            Founders don't struggle to start.
-            <br />
-            They struggle to find the right people.
+          <p className="mt-5 max-w-lg mx-auto" style={{ fontSize: 16, color: "#8E8E93", lineHeight: "24px" }}>
+            Founders don't struggle to start. They struggle to find{" "}
+            <span style={{ color: "#FFFFFF", fontWeight: 500 }}>the right people</span>.
           </p>
         </motion.div>
 
