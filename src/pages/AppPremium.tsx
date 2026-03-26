@@ -319,6 +319,7 @@ export default function AppPremium() {
                   isTop={i === 0}
                   triggerExit={i === 0 ? buttonSwipeDir : null}
                   showAiExplanation={showAiExplanation}
+                  isPremium
                 />
               ))}
             </AnimatePresence>
