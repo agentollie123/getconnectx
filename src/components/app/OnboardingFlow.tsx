@@ -306,19 +306,26 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
       }
 
       case 5: {
-        const availOptions = [
-          { label: "Full-time", icon: Rocket, desc: "Fully committed, ready to go all-in" },
-          { label: "Part-time", icon: Clock, desc: "Contributing alongside other work" },
-          { label: "Flexible / Hybrid", icon: Globe, desc: "Open to discuss arrangement" },
-        ];
+        const isStartup = userType === "startup";
+        const availOptions = isStartup
+          ? [
+              { label: "Full-time", icon: Rocket, desc: "Candidates must be fully committed" },
+              { label: "Part-time", icon: Clock, desc: "Open to candidates with other commitments" },
+              { label: "Flexible / Hybrid", icon: Globe, desc: "Open to discuss arrangement" },
+            ]
+          : [
+              { label: "Full-time", icon: Rocket, desc: "I'm ready to go all-in" },
+              { label: "Part-time", icon: Clock, desc: "Contributing alongside other work" },
+              { label: "Flexible / Hybrid", icon: Globe, desc: "Open to discuss arrangement" },
+            ];
         const locationOptions = ["Remote", "Jakarta", "Singapore", "Bangalore", "Ho Chi Minh City", "Dubai", "Anywhere"];
         return (
           <motion.div key="s5" variants={pageTransition} initial="enter" animate="center" exit="exit" className="flex flex-col items-center text-center px-6">
             <h2 className="font-display text-xl font-bold text-foreground mb-2">
-              {userType === "startup" ? "What availability do you expect?" : "Your availability"}
+              {isStartup ? "What availability do you expect?" : "Your availability"}
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
-              {userType === "startup" ? "What commitment level should candidates have?" : "How much time can you commit?"}
+              {isStartup ? "What commitment level should candidates have?" : "How much time can you commit?"}
             </p>
             <div className="w-full max-w-xs space-y-2 mb-5">
               {availOptions.map((opt, i) => (
@@ -333,7 +340,7 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
               className="text-xs font-semibold text-foreground mb-2.5 flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-primary" />
-              {userType === "startup" ? "Where is your startup based?" : "Preferred location"}
+              {isStartup ? "Where is your startup based?" : "Where are you based?"}
             </motion.p>
             <div className="w-full max-w-xs flex flex-wrap gap-2 justify-center mb-5">
               {locationOptions.map((loc, i) => (
