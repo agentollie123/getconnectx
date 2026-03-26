@@ -29,20 +29,18 @@ const stats = [
 
 const insights = [
   {
-    title: "Talent exists — but access is broken",
-    lines: ["Millions of professionals want to work in startups, but don't know how to find the right founders or opportunities."],
+    title: "Talent exists — access is broken",
+    lines: ["Millions want to join startups.", "They don't know where to start."],
     source: "LinkedIn Talent Trends",
   },
   {
     title: "It's not a talent problem.\nIt's a connection problem.",
-    lines: ["Founders are looking for people. Talented people are looking for opportunities.", "But there is no simple system to connect them early."],
+    lines: ["People exist.", "Opportunities exist.", "They don't meet."],
     accent: true,
   },
   {
     title: "Today, people rely on luck",
-    lines: ["LinkedIn, events, personal networks — fragmented, slow, and often based on chance.", "Building a startup shouldn't depend on luck."],
-    accent: false,
-    highlight: true,
+    lines: ["LinkedIn. Events. Networks.", "Fragmented. Slow. Random."],
   },
 ];
 
