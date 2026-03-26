@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Send, UserPlus, Paperclip, Phone, Building2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { profiles, type Profile } from "@/lib/profileData";
