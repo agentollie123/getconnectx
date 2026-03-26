@@ -186,14 +186,14 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
             </p>
             <div className="w-full max-w-xs space-y-3">
               <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
-                <SelectCard selected={goal === "cofounder"} onClick={() => { setGoal("cofounder"); next(); }}
+                <SelectCard selected={goal === "cofounder"} onClick={() => { setGoal("cofounder"); setSpecifications([]); next(); }}
                   icon={Handshake} iconColor="bg-primary/10 text-primary" title="Co-Founder"
                   desc={userType === "startup" ? "Find a co-founder to lead with you" : "Find someone to build with from day one"} />
               </motion.div>
               <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
-                <SelectCard selected={goal === "team"} onClick={() => { setGoal("team"); next(); }}
+                <SelectCard selected={goal === "team"} onClick={() => { setGoal("team"); setSpecifications([]); next(); }}
                   icon={Users} iconColor="bg-accent/10 text-accent" title="Team"
-                  desc={userType === "startup" ? "Hire early-stage talent for your startup" : "Recruit early members for your startup"} />
+                  desc={userType === "startup" ? "Hire early-stage talent for your startup" : "Join an early-stage startup team"} />
               </motion.div>
             </div>
           </motion.div>
