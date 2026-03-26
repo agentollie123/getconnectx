@@ -63,7 +63,7 @@ function Card({ children, delay = 0, className = "" }: { children: React.ReactNo
 
 export function FounderProblem() {
   return (
-    <section className="py-24" style={{ background: "#0B0B0F" }}>
+    <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
         {/* Headline */}
         <motion.div
