@@ -234,29 +234,58 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
 
       case 4: {
         const isStartup = userType === "startup";
-        const specOptions = goal === "cofounder"
-          ? [
-              { label: "Technical Co-Founder", icon: Code, desc: "Engineering & architecture" },
-              { label: "Business Co-Founder", icon: Briefcase, desc: "Strategy & operations" },
-              { label: "Product Co-Founder", icon: Lightbulb, desc: "Product vision & design" },
-              { label: "Growth Co-Founder", icon: BarChart3, desc: "Marketing & distribution" },
-            ]
-          : [
-              { label: "CTO / Technical Lead", icon: Code, desc: "Lead engineering & tech stack" },
-              { label: "Product Designer", icon: Palette, desc: "UX/UI & product thinking" },
-              { label: "Growth Marketer", icon: TrendingUp, desc: "Acquisition & retention" },
-              { label: "Full-Stack Engineer", icon: Code, desc: "Build & ship fast" },
-              { label: "Operations Lead", icon: Globe, desc: "Ops, finance & logistics" },
-            ];
+        const isBuilder = userType === "builder";
+
+        // Different options based on userType + goal
+        let specOptions: { label: string; icon: any; desc: string }[];
+        let stepTitle: string;
+        let stepSubtitle: string;
+
+        if (isStartup && goal === "cofounder") {
+          stepTitle = "What kind of co-founder are you looking for?";
+          stepSubtitle = "Select all that apply";
+          specOptions = [
+            { label: "Technical Co-Founder", icon: Code, desc: "Engineering & architecture" },
+            { label: "Business Co-Founder", icon: Briefcase, desc: "Strategy & operations" },
+            { label: "Product Co-Founder", icon: Lightbulb, desc: "Product vision & design" },
+            { label: "Growth Co-Founder", icon: BarChart3, desc: "Marketing & distribution" },
+          ];
+        } else if (isStartup && goal === "team") {
+          stepTitle = "What talent does your startup need?";
+          stepSubtitle = "Select all roles you're hiring for";
+          specOptions = [
+            { label: "CTO / Technical Lead", icon: Code, desc: "Lead engineering & tech stack" },
+            { label: "Product Designer", icon: Palette, desc: "UX/UI & product thinking" },
+            { label: "Growth Marketer", icon: TrendingUp, desc: "Acquisition & retention" },
+            { label: "Full-Stack Engineer", icon: Code, desc: "Build & ship fast" },
+            { label: "Operations Lead", icon: Globe, desc: "Ops, finance & logistics" },
+          ];
+        } else if (isBuilder && goal === "cofounder") {
+          stepTitle = "What type of co-founder are you?";
+          stepSubtitle = "Select what best describes you";
+          specOptions = [
+            { label: "Technical Co-Founder", icon: Code, desc: "I build the product & tech" },
+            { label: "Business Co-Founder", icon: Briefcase, desc: "I handle strategy & ops" },
+            { label: "Product Co-Founder", icon: Lightbulb, desc: "I lead product & design" },
+            { label: "Growth Co-Founder", icon: BarChart3, desc: "I drive marketing & growth" },
+          ];
+        } else {
+          // Builder + team
+          stepTitle = "What's your skillset?";
+          stepSubtitle = "Select your strongest areas";
+          specOptions = [
+            { label: "Engineering", icon: Code, desc: "Full-stack, backend, or frontend dev" },
+            { label: "Product Design", icon: Palette, desc: "UX/UI, prototyping & research" },
+            { label: "Growth & Marketing", icon: TrendingUp, desc: "Acquisition, SEO & content" },
+            { label: "Operations", icon: Globe, desc: "Ops, finance & logistics" },
+            { label: "Product Management", icon: Lightbulb, desc: "Roadmap, specs & execution" },
+          ];
+        }
+
         return (
           <motion.div key="s4" variants={pageTransition} initial="enter" animate="center" exit="exit" className="flex flex-col items-center text-center px-6">
-            <h2 className="font-display text-xl font-bold text-foreground mb-2">
-              {isStartup
-                ? goal === "cofounder" ? "What kind of co-founder are you looking for?" : "What talent does your startup need?"
-                : goal === "cofounder" ? "What type of co-founder?" : "What roles do you need?"
-              }
-            </h2>
-            <p className="text-sm text-muted-foreground mb-5">Select all that apply</p>
+            <h2 className="font-display text-xl font-bold text-foreground mb-2">{stepTitle}</h2>
+            <p className="text-sm text-muted-foreground mb-5">{stepSubtitle}</p>
             <div className="w-full max-w-xs space-y-2">
               {specOptions.map((opt, i) => (
                 <motion.div key={opt.label} initial={{ x: 15, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.06 * i, duration: 0.25 }}>
