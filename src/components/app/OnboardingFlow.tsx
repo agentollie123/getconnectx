@@ -223,17 +223,17 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               <p className="text-sm text-muted-foreground mb-6">This determines what you'll see in your feed</p>
               <div className="w-full max-w-xs space-y-3">
                 <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
-                  <SelectCard selected={builderRole === "founder"} onClick={() => { setBuilderRole("founder"); setSpecifications([]); next(); }}
+                <SelectCard selected={builderRole === "founder"} onClick={() => { setBuilderRole("founder"); setSpecifications([]); next(); }}
                     icon={Rocket} iconColor="bg-primary/10 text-primary" title="Founder"
                     desc="I'm building something and looking for people" />
                 </motion.div>
                 <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.18 }}>
-                  <SelectCard selected={builderRole === "cofounder"} onClick={() => { setBuilderRole("cofounder"); setSpecifications([]); next(); }}
+                  <SelectCard selected={builderRole === "cofounder"} onClick={() => { setBuilderRole("cofounder"); setSpecifications([]); setStep(4); }}
                     icon={Handshake} iconColor="bg-accent/10 text-accent" title="Co-Founder"
                     desc="I want to join a startup as a co-founder" />
                 </motion.div>
                 <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.26 }}>
-                  <SelectCard selected={builderRole === "team"} onClick={() => { setBuilderRole("team"); setSpecifications([]); next(); }}
+                  <SelectCard selected={builderRole === "team"} onClick={() => { setBuilderRole("team"); setSpecifications([]); setStep(4); }}
                     icon={Users} iconColor="bg-muted text-foreground" title="Team Member"
                     desc="I want to join a startup team" />
                 </motion.div>
