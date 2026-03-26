@@ -216,7 +216,7 @@ export default function AppPremium() {
     }
 
     switch (activeNav) {
-      case "Matches":
+      case "Connects":
         return (
           <MatchesView
             connectedProfiles={connectedProfiles}
