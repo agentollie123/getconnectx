@@ -31,6 +31,7 @@ import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
+import { OnboardingFlow } from "@/components/app/OnboardingFlow";
 
 const navItems = [
   { icon: Home, label: "Home" },
