@@ -110,13 +110,13 @@ export function FounderProblem() {
           ))}
         </div>
 
-        {/* Insight row */}
-        <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+        {/* Insight row — 3 cards */}
+        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
           {insights.map((ins, i) => (
             <Card key={i} delay={0.24 + i * 0.08} className={ins.accent ? "border-[#FF8A3D]/20" : ""}>
               <p
                 className="font-sans font-semibold mb-2 whitespace-pre-line"
-                style={{ fontSize: 16, color: ins.accent ? "#FF8A3D" : "#FFFFFF", lineHeight: "22px" }}
+                style={{ fontSize: 15, color: ins.accent ? "#FF8A3D" : "#FFFFFF", lineHeight: "21px" }}
               >
                 {ins.title}
               </p>
@@ -125,6 +125,11 @@ export function FounderProblem() {
                   {line}
                 </p>
               ))}
+              {ins.source && (
+                <p className="font-sans mt-2" style={{ fontSize: 10, color: "#5A5A5E", fontStyle: "italic" }}>
+                  Source: {ins.source}
+                </p>
+              )}
             </Card>
           ))}
         </div>
