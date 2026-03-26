@@ -140,7 +140,7 @@ export function NetworkVisualization() {
     : null;
 
   return (
-    <div ref={containerRef} className="relative w-full select-none" style={{ aspectRatio: "4/3", maxWidth: 540 }}>
+    <div ref={containerRef} className="relative w-full select-none" style={{ aspectRatio: "4/3", maxWidth: 660 }}>
       {/* SVG Lines */}
       <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
         <defs>
