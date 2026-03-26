@@ -30,7 +30,7 @@ export function Navbar() {
           </Button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
             <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">
-              Join Waiting list
+              Join Waitlist
             </a>
           </Button>
         </div>
