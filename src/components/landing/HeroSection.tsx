@@ -42,7 +42,6 @@ function PhoneMockup() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            {/* Profile photo placeholder */}
             <div className="h-36 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center relative">
               <div className="w-16 h-16 rounded-full bg-primary/20 border-2 border-primary/30 flex items-center justify-center">
                 <Users className="w-7 h-7 text-primary" />
@@ -140,22 +139,25 @@ export function HeroSection() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-6">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              Startup Formation Platform
+              The platform where startups begin
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Where Builders{" "}
+              Build Your Startup{" "}
               <br className="hidden sm:block" />
-              and Startups{" "}
-              <br className="hidden sm:block" />
-              <span className="gradient-text">Come Together.</span>
+              With the{" "}
+              <span className="gradient-text">Right People.</span>
             </h1>
 
-            <p className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed">
-              Find co-founders, build your team, or join a startup — all in one place.
+            <p className="text-lg text-muted-foreground max-w-lg mb-3 leading-relaxed">
+              ConnectX connects founders, co-founders, and early teams to start startups together.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <p className="text-sm text-muted-foreground/70 max-w-lg mb-8">
+              No networking. No job boards. Just the people you need to start.
+            </p>
+
+            <div className="flex flex-wrap gap-4 mb-3">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
                 <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">
                   Join Waitlist
@@ -169,6 +171,10 @@ export function HeroSection() {
                 </a>
               </Button>
             </div>
+
+            <p className="text-xs text-primary/80 font-medium">
+              Be early. The best teams form first.
+            </p>
 
             {/* Quick stats */}
             <div className="flex gap-8 mt-10 pt-8 border-t border-border/50">

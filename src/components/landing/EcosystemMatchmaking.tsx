@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Layers, Target, Users, Rocket } from "lucide-react";
+import { Layers, Target, Rocket } from "lucide-react";
 
 const points = [
   {
@@ -30,11 +30,11 @@ export function EcosystemMatchmaking() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 max-w-2xl mx-auto">
-            Not networking. Not job boards.{" "}
+            Not LinkedIn. Not job boards.{" "}
             <span className="gradient-text">Not just co-founder matching.</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            ConnectX is purpose-built for startup formation — connecting every role in the startup ecosystem.
+            ConnectX is built for one thing: helping people start startups with the right people.
           </p>
         </motion.div>
 

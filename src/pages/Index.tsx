@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FounderProblem } from "@/components/landing/FounderProblem";
+import { SolutionSection } from "@/components/landing/SolutionSection";
 import { StartupPipeline } from "@/components/landing/StartupPipeline";
 import { BuiltForBuilders } from "@/components/landing/BuiltForBuilders";
 import { EcosystemMatchmaking } from "@/components/landing/EcosystemMatchmaking";
@@ -16,6 +17,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <FounderProblem />
+      <SolutionSection />
       <StartupPipeline />
       <BuiltForBuilders />
       <EcosystemMatchmaking />
