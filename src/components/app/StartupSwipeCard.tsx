@@ -77,13 +77,19 @@ export function StartupSwipeCard({ startup, onSwipe, isTop, triggerExit, showAiE
       dragSnapToOrigin
       dragElastic={0.7}
       onDragEnd={handleDragEnd}
-      initial={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10, opacity: isTop ? 1 : 0.6 }}
-      animate={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10, opacity: isTop ? 1 : 0.6, x: 0 }}
+      initial={{ scale: isTop ? 0.97 : 0.93, y: isTop ? 8 : 14, opacity: isTop ? 0 : 0.5 }}
+      animate={{
+        scale: isTop ? 1 : 0.95,
+        y: isTop ? 0 : 10,
+        opacity: isTop ? 1 : 0.6,
+        x: 0,
+        transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] },
+      }}
       exit={{
         x: resolvedExit === "left" ? -400 : 400,
         opacity: 0,
-        rotate: resolvedExit === "left" ? -20 : 20,
-        transition: { duration: 0.3 },
+        rotate: resolvedExit === "left" ? -18 : 18,
+        transition: { duration: 0.28, ease: [0.4, 0, 1, 1] as [number, number, number, number] },
       }}
     >
       {isTop && (

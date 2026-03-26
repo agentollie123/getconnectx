@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, useMotionValue, useTransform, type PanInfo } from "framer-motion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -19,7 +19,6 @@ function getAiReasons(profile: Profile): string[] {
   const primaryInterest = profile.interests[0] || "startup";
   const mainSkills = profile.skills.slice(0, 2).join(" + ");
   const experienceSignal = profile.workExperience?.[0]?.company;
-
   return [
     `${profile.stage} stage alignment fits early startup momentum`,
     mainSkills ? `Relevant execution stack: ${mainSkills}` : `Relevant skill overlap for execution`,
@@ -30,18 +29,41 @@ function getAiReasons(profile: Profile): string[] {
   ].slice(0, 3);
 }
 
+// Animated count-up for match score
+function AnimatedScore({ score }: { score: number }) {
+  const [display, setDisplay] = useState(0);
+  useEffect(() => {
+    let start = Math.max(score - 25, 50);
+    const duration = 600;
+    const stepTime = duration / (score - start);
+    let current = start;
+    const timer = setInterval(() => {
+      current++;
+      setDisplay(current);
+      if (current >= score) clearInterval(timer);
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [score]);
+  return <>{display}%</>;
+}
+
 function MatchBadge({ score, isPremium }: { score: number; isPremium?: boolean }) {
   const isTop = isPremium && score >= 90;
   const label = isTop ? "Top Match" : score >= 90 ? "Perfect Match" : score >= 75 ? "Strong Match" : "Potential Match";
   const color = isTop ? "text-accent" : score >= 90 ? "text-green-400" : score >= 75 ? "text-primary" : "text-accent";
   return (
-    <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${
-      isTop ? "bg-accent/15 border border-accent/30" : score >= 90 ? "bg-green-400/10" : score >= 75 ? "bg-primary/10" : "bg-accent/10"
-    }`}>
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 0.2, duration: 0.25, ease: "easeOut" }}
+      className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${
+        isTop ? "bg-accent/15 border border-accent/30" : score >= 90 ? "bg-green-400/10" : score >= 75 ? "bg-primary/10" : "bg-accent/10"
+      }`}
+    >
       <Star className={`w-3 h-3 ${color}`} fill="currentColor" />
       <span className={`text-[10px] font-bold ${color}`}>{label}</span>
       {isTop && <Crown className="w-3 h-3 text-accent" />}
-    </div>
+    </motion.div>
   );
 }
 
@@ -56,7 +78,7 @@ interface SwipeCardProps {
 
 export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanation = false, isPremium = false }: SwipeCardProps) {
   const x = useMotionValue(0);
-  const rotate = useTransform(x, [-200, 200], [-15, 15]);
+  const rotate = useTransform(x, [-200, 200], [-12, 12]);
   const likeOpacity = useTransform(x, [0, 80], [0, 1]);
   const nopeOpacity = useTransform(x, [-80, 0], [1, 0]);
   const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
@@ -83,13 +105,19 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
       dragSnapToOrigin
       dragElastic={0.7}
       onDragEnd={handleDragEnd}
-      initial={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10, opacity: isTop ? 1 : 0.6 }}
-      animate={{ scale: isTop ? 1 : 0.95, y: isTop ? 0 : 10, opacity: isTop ? 1 : 0.6, x: 0 }}
+      initial={{ scale: isTop ? 0.97 : 0.93, y: isTop ? 8 : 14, opacity: isTop ? 0 : 0.5 }}
+      animate={{
+        scale: isTop ? 1 : 0.95,
+        y: isTop ? 0 : 10,
+        opacity: isTop ? 1 : 0.6,
+        x: 0,
+        transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
+      }}
       exit={{
         x: resolvedExit === "left" ? -400 : 400,
         opacity: 0,
-        rotate: resolvedExit === "left" ? -20 : 20,
-        transition: { duration: 0.3 },
+        rotate: resolvedExit === "left" ? -18 : 18,
+        transition: { duration: 0.28, ease: [0.4, 0, 1, 1] },
       }}
     >
       {isTop && (
@@ -128,11 +156,18 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
           <div className="relative w-9 h-9 flex-shrink-0">
             <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
               <path d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831 15.9155 15.9155 0 0 1 0-31.831" fill="none" stroke="hsl(var(--border))" strokeWidth="3" />
-              <path d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831 15.9155 15.9155 0 0 1 0-31.831"
+              <motion.path
+                d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831 15.9155 15.9155 0 0 1 0-31.831"
                 fill="none" stroke="hsl(var(--primary))" strokeWidth="3"
-                strokeDasharray={`${matchScore}, 100`} strokeLinecap="round" />
+                strokeLinecap="round"
+                initial={{ strokeDasharray: "0, 100" }}
+                animate={{ strokeDasharray: `${matchScore}, 100` }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+              />
             </svg>
-            <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-primary">{matchScore}%</span>
+            <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-primary">
+              <AnimatedScore score={matchScore} />
+            </span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-[11px] font-semibold text-foreground">{profile.role}</p>
@@ -153,19 +188,31 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
             </p>
 
             {showAiExplanation && (
-              <div className="rounded-xl border border-primary/20 bg-primary/5 p-3">
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="rounded-xl border border-primary/20 bg-primary/5 p-3 overflow-hidden"
+              >
                 <div className="flex items-center gap-1.5 mb-2">
                   <Zap className="w-3.5 h-3.5 text-primary" />
                   <p className="text-[10px] font-semibold text-primary uppercase tracking-wider">Why this match</p>
                 </div>
                 <div className="space-y-1.5">
-                  {aiReasons.map((reason) => (
-                    <p key={reason} className="text-[11px] text-foreground/90 leading-relaxed">
+                  {aiReasons.map((reason, i) => (
+                    <motion.p
+                      key={reason}
+                      initial={{ x: -10, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 + i * 0.1, duration: 0.25 }}
+                      className="text-[11px] text-foreground/90 leading-relaxed"
+                    >
                       • {reason}
-                    </p>
+                    </motion.p>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {profile.startupIdea && (
@@ -178,20 +225,42 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
               </div>
             )}
 
+            {/* Staggered tags */}
             <div className="flex flex-wrap gap-1.5">
-              {profile.interests.map((i) => (
-                <span key={i} className="text-[10px] px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20 font-medium">{i}</span>
+              {profile.interests.map((interest, i) => (
+                <motion.span
+                  key={interest}
+                  initial={{ y: 6, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 + i * 0.05, duration: 0.2 }}
+                  className="text-[10px] px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20 font-medium"
+                >
+                  {interest}
+                </motion.span>
               ))}
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border text-muted-foreground">
+              <motion.span
+                initial={{ y: 6, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 + profile.interests.length * 0.05, duration: 0.2 }}
+                className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border text-muted-foreground"
+              >
                 <Clock className="w-2.5 h-2.5 inline mr-0.5" />{profile.commitment}
-              </span>
+              </motion.span>
             </div>
 
             <div>
               <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Skills</p>
               <div className="flex flex-wrap gap-1">
-                {profile.skills.map((s) => (
-                  <span key={s} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">{s}</span>
+                {profile.skills.map((s, i) => (
+                  <motion.span
+                    key={s}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.4 + i * 0.04, duration: 0.2 }}
+                    className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20"
+                  >
+                    {s}
+                  </motion.span>
                 ))}
               </div>
             </div>

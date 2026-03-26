@@ -1,4 +1,5 @@
-import { Heart, MessageCircle, Eye, Clock, Building2, Rocket, Lock, Crown } from "lucide-react";
+import { Heart, MessageCircle, Eye, Clock, Building2, Rocket, Lock, Crown, Search } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { profiles, type Profile } from "@/lib/profileData";
@@ -117,16 +118,25 @@ export function MatchesView({ connectedProfiles, connectedStartups = [], isStart
             <span className="text-[10px] text-muted-foreground">{matched.length} matches</span>
           </div>
           {matched.length === 0 ? (
-            <div className="text-center py-10">
-              <Heart className="w-10 h-10 text-muted-foreground/20 mx-auto mb-2" />
-              <p className="text-xs text-muted-foreground">No matches yet. Keep swiping!</p>
-            </div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-10">
+              <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ repeat: Infinity, duration: 2.5 }}>
+                <Search className="w-10 h-10 text-muted-foreground/20 mx-auto mb-2" />
+              </motion.div>
+              <p className="text-xs text-muted-foreground font-medium">We're finding better matches for you</p>
+              <p className="text-[10px] text-muted-foreground/60 mt-1">Update preferences to see more</p>
+            </motion.div>
           ) : (
             <div className="space-y-2.5">
-              {matched.map((p) => {
+              {matched.map((p, i) => {
                 const daysLeft = getExpiry(isPremium);
                 return (
-                  <div key={p.id} className="rounded-xl bg-card border border-border p-3 flex items-center gap-3">
+                  <motion.div
+                    key={p.id}
+                    initial={{ y: 12, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.08, duration: 0.3, ease: "easeOut" }}
+                    className="rounded-xl bg-card border border-border p-3 flex items-center gap-3"
+                  >
                     <div className="relative">
                       <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20" />
                       <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-green-400 border-2 border-card" />
@@ -147,7 +157,7 @@ export function MatchesView({ connectedProfiles, connectedStartups = [], isStart
                         <Eye className="w-4 h-4" />
                       </Button>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Send, UserPlus, Paperclip, Phone, Building2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { profiles, type Profile } from "@/lib/profileData";
@@ -149,8 +150,14 @@ export function ChatView({ activeChat, activeChatStartup, isStartupMode, connect
         {/* Messages */}
         <ScrollArea className="flex-1 p-3">
           <div className="space-y-2.5">
-            {chat.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}>
+            {chat.map((msg, i) => (
+              <motion.div
+                key={msg.id}
+                initial={{ y: 8, opacity: 0, scale: 0.97 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ duration: 0.25, ease: "easeOut", delay: i < 5 ? i * 0.05 : 0 }}
+                className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}
+              >
                 <div className={`max-w-[80%] rounded-2xl px-3 py-2 ${
                   msg.sender === "me"
                     ? "bg-primary text-primary-foreground rounded-br-sm"
@@ -159,7 +166,7 @@ export function ChatView({ activeChat, activeChatStartup, isStartupMode, connect
                   <p className="text-xs leading-relaxed">{msg.text}</p>
                   <p className={`text-[9px] mt-0.5 ${msg.sender === "me" ? "text-primary-foreground/50" : "text-muted-foreground"}`}>{msg.time}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </ScrollArea>
@@ -251,8 +258,14 @@ export function ChatView({ activeChat, activeChatStartup, isStartupMode, connect
 
       <ScrollArea className="flex-1 p-3">
         <div className="space-y-2.5">
-          {chat.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}>
+          {chat.map((msg, i) => (
+            <motion.div
+              key={msg.id}
+              initial={{ y: 8, opacity: 0, scale: 0.97 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 0.25, ease: "easeOut", delay: i < 5 ? i * 0.05 : 0 }}
+              className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}
+            >
               <div className={`max-w-[80%] rounded-2xl px-3 py-2 ${
                 msg.sender === "me"
                   ? "bg-primary text-primary-foreground rounded-br-sm"
@@ -261,7 +274,7 @@ export function ChatView({ activeChat, activeChatStartup, isStartupMode, connect
                 <p className="text-xs leading-relaxed">{msg.text}</p>
                 <p className={`text-[9px] mt-0.5 ${msg.sender === "me" ? "text-primary-foreground/50" : "text-muted-foreground"}`}>{msg.time}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </ScrollArea>
