@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
-import { AlertTriangle, Users, Search, Handshake, Globe } from "lucide-react";
+import { AlertTriangle, Users, Handshake, Globe } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { BrokenToConnected } from "./BrokenToConnected";
 
 function CountUp({ end, suffix = "", prefix = "", duration = 1.5 }: { end: number; suffix?: string; prefix?: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
