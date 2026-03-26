@@ -19,7 +19,7 @@ const socials = [
     <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
       <path d="M12.52 11.77a4.27 4.27 0 0 0-.44-.02c-1.68 0-2.66.99-2.66 2.73 0 1.78 1.01 2.73 2.73 2.73 1.59 0 2.62-.88 2.62-2.46 0-1.3-.82-2.46-2.25-2.98zm9.26.59C21.46 6.43 17.33 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10c5.33 0 9.46-4.43 9.78-10.36v-.28zm-4.5 3.2c0 2.85-1.98 4.67-5.14 4.67-3.22 0-5.36-1.97-5.36-4.88 0-2.82 2.04-4.72 5.08-4.72.16 0 .33 0 .49.02-.04-.88-.51-1.39-1.47-1.39-.72 0-1.23.3-1.5.88l-2.1-.87C7.92 8.04 9.17 7.2 10.93 7.2c2.35 0 3.7 1.26 3.7 3.57v1.3c0 .58.22.85.66.85.34 0 .6-.15.82-.44l1.17 1.08z"/>
     </svg>
-  ), label: "Threads", href: "https://www.threads.com/@getconnectx" },
+  ), label: "Threads", href: "https://www.threads.com/@getconnectx.app" },
   { icon: Send, label: "Telegram", href: "https://t.me/getconnectx" },
   { icon: Mail, label: "Email", href: "mailto:support@getconnectx.com" },
   { icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@getconnectx" },
