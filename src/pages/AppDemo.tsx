@@ -424,6 +424,15 @@ export default function AppDemo() {
           </div>
           <div className="flex items-center gap-2">
             <SwipeLimitBar current={swipeCount} max={0} isPremium />
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-6 text-[10px] gap-1 border-primary/30 text-primary hover:bg-primary/10"
+              onClick={() => navigate("/app/premium")}
+            >
+              <Crown className="w-3 h-3" />
+              Check Premium
+            </Button>
           </div>
         </div>
 
