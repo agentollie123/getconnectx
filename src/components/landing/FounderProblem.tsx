@@ -22,20 +22,27 @@ function CountUp({ end, suffix = "%", duration = 1.2 }: { end: number; suffix?: 
 }
 
 const stats = [
-  { end: 90, title: "Startups fail", body: "Not just ideas — execution, market, and team matter." },
-  { end: 23, title: "Fail due to team issues", body: "One of the most common breakdown points." },
-  { end: 65, title: "Experience co-founder conflict", body: "Misalignment early can break everything." },
+  { end: 90, title: "of startups fail", body: "Most don't fail because of ideas, but because of execution, market, and team challenges.", source: "CB Insights, Startup Genome" },
+  { end: 23, title: "fail due to team issues", body: "Problems inside the team are one of the most common reasons startups break down.", source: "CB Insights" },
+  { end: 65, title: "experience co-founder conflict", body: "Misalignment between founders is one of the biggest risks early on.", source: "Harvard Business School / Noam Wasserman" },
 ];
 
 const insights = [
   {
-    title: "Broken system",
-    lines: ["Founders are looking for people.", "Talented people are looking for opportunities.", "But they don't meet."],
+    title: "Talent exists — but access is broken",
+    lines: ["Millions of professionals want to work in startups, but don't know how to find the right founders or opportunities."],
+    source: "LinkedIn Talent Trends",
   },
   {
     title: "It's not a talent problem.\nIt's a connection problem.",
-    lines: ["No simple system connects them early."],
+    lines: ["Founders are looking for people. Talented people are looking for opportunities.", "But there is no simple system to connect them early."],
     accent: true,
+  },
+  {
+    title: "Today, people rely on luck",
+    lines: ["LinkedIn, events, personal networks — fragmented, slow, and often based on chance.", "Building a startup shouldn't depend on luck."],
+    accent: false,
+    highlight: true,
   },
 ];
 
