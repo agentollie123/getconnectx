@@ -249,7 +249,7 @@ export default function AppDemo() {
     }
 
     switch (activeNav) {
-      case "Matches":
+      case "Connects":
         return (
           <MatchesView
             connectedProfiles={connectedProfiles}
