@@ -18,11 +18,11 @@ const ALL_CONNECTIONS: [number, number][] = [
 
 // Match sequences: each is a "team formation" scenario
 const MATCH_SEQUENCES = [
-  { path: [0, 2, 6], label: "Matching founder with engineer…" },
-  { path: [1, 0, 4], label: "Connecting co-founder with advisor…" },
-  { path: [3, 0, 2], label: "Investor meeting founder…" },
-  { path: [5, 1, 6], label: "Forming team…" },
-  { path: [4, 2, 0], label: "Building startup team…" },
+  { path: [0, 2, 6], label: "Matching founder with engineer" },
+  { path: [1, 0, 4], label: "Connecting co-founder with advisor" },
+  { path: [3, 0, 2], label: "Investor meeting founder" },
+  { path: [5, 1, 6], label: "Forming team" },
+  { path: [4, 2, 0], label: "Building startup team" },
 ];
 
 type Phase = "idle" | "activation" | "scanning" | "connection" | "formation";
