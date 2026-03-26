@@ -29,7 +29,7 @@ const stats = [
     suffix: "%",
     displayText: null,
     label: "Startups fail because of team issues",
-    description: "The #1 reason startups fail isn't the idea — it's the team.",
+    description: "The #1 reason startups fail isn't the idea, it's the team.",
   },
   {
     icon: Search,
