@@ -51,9 +51,10 @@ interface SwipeCardProps {
   isTop: boolean;
   triggerExit?: "left" | "right" | null;
   showAiExplanation?: boolean;
+  isPremium?: boolean;
 }
 
-export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanation = false }: SwipeCardProps) {
+export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanation = false, isPremium = false }: SwipeCardProps) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const likeOpacity = useTransform(x, [0, 80], [0, 1]);
