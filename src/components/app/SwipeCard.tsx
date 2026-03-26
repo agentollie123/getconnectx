@@ -119,7 +119,7 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
                   {profile.distance && <span className="text-primary">· {profile.distance}</span>}
                 </p>
               </div>
-              <MatchBadge score={matchScore} />
+              <MatchBadge score={matchScore} isPremium={isPremium} />
             </div>
           </div>
         </div>
