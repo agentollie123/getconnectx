@@ -1,116 +1,96 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
-type Phase = "headline" | "broken" | "problem" | "connected" | "payoff";
-
 export function BrokenToConnected() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [phase, setPhase] = useState<Phase>("headline");
+  const [connected, setConnected] = useState(false);
+  const [showPayoff, setShowPayoff] = useState(false);
 
   useEffect(() => {
     if (!isInView) return;
-
-    const timers = [
-      setTimeout(() => setPhase("broken"), 800),
-      setTimeout(() => setPhase("problem"), 1800),
-      setTimeout(() => setPhase("connected"), 3200),
-      setTimeout(() => setPhase("payoff"), 4200),
-    ];
-
-    return () => timers.forEach(clearTimeout);
+    const t1 = setTimeout(() => setConnected(true), 1800);
+    const t2 = setTimeout(() => setShowPayoff(true), 2600);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [isInView]);
 
-  const reached = (target: Phase) => {
-    const order: Phase[] = ["headline", "broken", "problem", "connected", "payoff"];
-    return order.indexOf(phase) >= order.indexOf(target);
-  };
-
-  const fade = (delay = 0) => ({
-    initial: { opacity: 0, y: 8 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5, delay },
-  });
+  const labels = ["Founder", "Talent", "Opportunity"];
 
   return (
-    <div ref={ref} className="max-w-2xl mx-auto my-20 px-4">
-      {/* 1. Headline */}
+    <div ref={ref} className="max-w-2xl mx-auto my-20 px-4 text-center">
+      {/* Headline */}
       {isInView && (
-        <div className="text-center mb-12">
+        <div className="mb-14">
           <motion.p
             className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground"
-            {...fade()}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
             It's not a talent problem.
           </motion.p>
           <motion.p
             className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mt-1"
-            {...fade(0.3)}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
             It's a connection problem.
           </motion.p>
         </div>
       )}
 
-      {/* 2. Broken state — disconnected people */}
-      {reached("broken") && (
-        <motion.div className="text-center mb-8" {...fade()}>
-          <div className="flex items-start justify-center gap-10 sm:gap-16 mb-3">
-            <div className="flex flex-col items-center gap-1.5">
-              <span className="text-sm sm:text-base text-muted-foreground font-medium">Founder</span>
-              <span className="text-xl text-destructive/70">✕</span>
-            </div>
-            <div className="flex flex-col items-center gap-1.5">
-              <span className="text-sm sm:text-base text-muted-foreground font-medium">Talent</span>
-              <span className="text-xl text-destructive/70">✕</span>
-            </div>
+      {/* Visual: dots → connected line */}
+      {isInView && (
+        <div className="mb-10">
+          <div className="flex items-center justify-center gap-6 sm:gap-12">
+            {labels.map((label, i) => (
+              <motion.div
+                key={label}
+                className="flex flex-col items-center gap-2 relative z-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.8 + i * 0.3 }}
+              >
+                <span className="text-xs sm:text-sm text-muted-foreground font-medium">{label}</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-primary/80" />
+              </motion.div>
+            ))}
           </div>
-          <div className="flex flex-col items-center gap-1.5">
-            <span className="text-sm sm:text-base text-muted-foreground font-medium">Opportunity</span>
-            <span className="text-xl text-destructive/70">✕</span>
+
+          {/* Connecting line */}
+          <div className="flex justify-center -mt-[11px] pointer-events-none">
+            <motion.div
+              className="h-px bg-primary/60"
+              style={{ width: "calc(100% - 80px)", maxWidth: 340 }}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: connected ? 1 : 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            />
           </div>
-        </motion.div>
+        </div>
       )}
 
-      {/* 3. Problem text */}
-      {reached("problem") && (
-        <motion.div className="text-center mb-10" {...fade()}>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-            People exist. Opportunities exist.
-          </p>
-          <p className="text-sm sm:text-base text-foreground font-semibold mt-1">
-            They don't meet.
-          </p>
-        </motion.div>
+      {/* Single line of text */}
+      {isInView && !connected && (
+        <motion.p
+          className="text-sm sm:text-base text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 1.6 }}
+        >
+          People exist. They just don't meet.
+        </motion.p>
       )}
 
-      {/* 4. Divider */}
-      {reached("connected") && (
+      {/* Payoff */}
+      {showPayoff && (
         <motion.div
-          className="w-12 h-px bg-border mx-auto mb-10"
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.4 }}
-        />
-      )}
-
-      {/* 5. Connected state */}
-      {reached("connected") && (
-        <motion.div className="text-center mb-10" {...fade()}>
-          <div className="flex items-center justify-center gap-3 sm:gap-5">
-            <span className="text-sm sm:text-base text-foreground font-semibold">Founder</span>
-            <span className="text-primary text-xs">———</span>
-            <span className="text-sm sm:text-base text-foreground font-semibold">Talent</span>
-            <span className="text-primary text-xs">———</span>
-            <span className="text-sm sm:text-base text-foreground font-semibold">Opportunity</span>
-          </div>
-        </motion.div>
-      )}
-
-      {/* 6. Payoff */}
-      {reached("payoff") && (
-        <motion.div className="text-center" {...fade()}>
-          <p className="font-display text-2xl sm:text-3xl font-bold gradient-text mb-2">
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <p className="font-display text-2xl sm:text-3xl font-bold gradient-text mb-1">
             ConnectX
           </p>
           <p className="text-sm sm:text-base text-muted-foreground">
