@@ -29,6 +29,7 @@ import { PremiumLikedYouSection } from "@/components/app/PremiumLikedYouSection"
 import { VersionBadge, SwipeLimitBar } from "@/components/app/VersionBadge";
 import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
+import { OnboardingFlow } from "@/components/app/OnboardingFlow";
 
 const navItems = [
   { icon: Home, label: "Home" },
