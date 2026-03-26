@@ -18,8 +18,8 @@ const STEPS = 8;
 // Confident, not bouncy
 const pageTransition = {
   enter: { x: 40, opacity: 0, scale: 0.97 },
-  center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } },
-  exit: { x: -40, opacity: 0, scale: 0.97, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } },
+  center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] } },
+  exit: { x: -40, opacity: 0, scale: 0.97, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] as [number, number, number, number] } },
 };
 
 function SelectCard({ selected, onClick, icon: Icon, iconColor, title, desc }: {
