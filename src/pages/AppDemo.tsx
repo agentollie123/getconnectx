@@ -31,6 +31,7 @@ import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
+import { OnboardingFlow } from "@/components/app/OnboardingFlow";
 
 const navItems = [
   { icon: Home, label: "Home" },
@@ -60,6 +61,7 @@ const FEED_TITLES: Record<MatchingMode, string> = {
 
 export default function AppDemo() {
   const navigate = useNavigate();
+  const [showOnboarding, setShowOnboarding] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
@@ -395,9 +397,13 @@ export default function AppDemo() {
           </div>
         </div>
 
-        {/* Main content */}
+      {/* Main content */}
         <div className="flex-1 overflow-hidden">
-          {renderMainContent()}
+          {showOnboarding ? (
+            <OnboardingFlow onComplete={() => setShowOnboarding(false)} />
+          ) : (
+            renderMainContent()
+          )}
         </div>
 
         {/* Bottom nav */}

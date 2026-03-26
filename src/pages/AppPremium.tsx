@@ -29,6 +29,7 @@ import { PremiumLikedYouSection } from "@/components/app/PremiumLikedYouSection"
 import { VersionBadge, SwipeLimitBar } from "@/components/app/VersionBadge";
 import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
+import { OnboardingFlow } from "@/components/app/OnboardingFlow";
 
 const navItems = [
   { icon: Home, label: "Home" },
@@ -62,6 +63,7 @@ const FEED_TITLES: Record<MatchingMode, string> = {
 };
 
 export default function AppPremium() {
+  const [showOnboarding, setShowOnboarding] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
@@ -317,6 +319,7 @@ export default function AppPremium() {
                   isTop={i === 0}
                   triggerExit={i === 0 ? buttonSwipeDir : null}
                   showAiExplanation={showAiExplanation}
+                  isPremium
                 />
               ))}
             </AnimatePresence>
@@ -391,7 +394,9 @@ export default function AppPremium() {
       </div>
 
       <div className="flex-1 overflow-hidden flex flex-col">
-        {activeNav === "Home" && !reportProfile ? renderHomeDesktop() : (
+        {showOnboarding ? (
+          <OnboardingFlow onComplete={() => setShowOnboarding(false)} isPremium />
+        ) : activeNav === "Home" && !reportProfile ? renderHomeDesktop() : (
           <div className="flex-1 overflow-auto">{renderMainContent()}</div>
         )}
       </div>

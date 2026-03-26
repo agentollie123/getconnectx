@@ -3,15 +3,16 @@ import { motion, useMotionValue, useTransform, type PanInfo } from "framer-motio
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   MapPin, Lightbulb, Rocket, Clock, Globe,
-  Building2, GraduationCap, Star, Zap,
+  Building2, GraduationCap, Star, Zap, Crown,
 } from "lucide-react";
 import type { Profile } from "@/lib/profileData";
 
-function getMatchScore(profile: Profile): number {
-  const base = 70;
+function getMatchScore(profile: Profile, isPremium?: boolean): number {
+  const base = isPremium ? 82 : 70;
   const skillBonus = profile.skills.length * 3;
   const expBonus = profile.workExperience ? profile.workExperience.length * 4 : 0;
-  return Math.min(99, base + skillBonus + expBonus + (profile.id * 7) % 15);
+  const raw = base + skillBonus + expBonus + (profile.id * 7) % 15;
+  return Math.min(99, isPremium ? Math.max(raw, 85) : raw);
 }
 
 function getAiReasons(profile: Profile): string[] {
@@ -29,15 +30,17 @@ function getAiReasons(profile: Profile): string[] {
   ].slice(0, 3);
 }
 
-function MatchBadge({ score }: { score: number }) {
-  const label = score >= 90 ? "Perfect Match" : score >= 75 ? "Strong Match" : "Potential Match";
-  const color = score >= 90 ? "text-green-400" : score >= 75 ? "text-primary" : "text-accent";
+function MatchBadge({ score, isPremium }: { score: number; isPremium?: boolean }) {
+  const isTop = isPremium && score >= 90;
+  const label = isTop ? "Top Match" : score >= 90 ? "Perfect Match" : score >= 75 ? "Strong Match" : "Potential Match";
+  const color = isTop ? "text-accent" : score >= 90 ? "text-green-400" : score >= 75 ? "text-primary" : "text-accent";
   return (
     <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${
-      score >= 90 ? "bg-green-400/10" : score >= 75 ? "bg-primary/10" : "bg-accent/10"
+      isTop ? "bg-accent/15 border border-accent/30" : score >= 90 ? "bg-green-400/10" : score >= 75 ? "bg-primary/10" : "bg-accent/10"
     }`}>
       <Star className={`w-3 h-3 ${color}`} fill="currentColor" />
       <span className={`text-[10px] font-bold ${color}`}>{label}</span>
+      {isTop && <Crown className="w-3 h-3 text-accent" />}
     </div>
   );
 }
@@ -48,16 +51,17 @@ interface SwipeCardProps {
   isTop: boolean;
   triggerExit?: "left" | "right" | null;
   showAiExplanation?: boolean;
+  isPremium?: boolean;
 }
 
-export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanation = false }: SwipeCardProps) {
+export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanation = false, isPremium = false }: SwipeCardProps) {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
   const likeOpacity = useTransform(x, [0, 80], [0, 1]);
   const nopeOpacity = useTransform(x, [-80, 0], [1, 0]);
   const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
   const resolvedExit = triggerExit || exitDir;
-  const matchScore = getMatchScore(profile);
+  const matchScore = getMatchScore(profile, isPremium);
   const aiReasons = getAiReasons(profile);
 
   const handleDragEnd = (_: any, info: PanInfo) => {
@@ -115,7 +119,7 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
                   {profile.distance && <span className="text-primary">· {profile.distance}</span>}
                 </p>
               </div>
-              <MatchBadge score={matchScore} />
+              <MatchBadge score={matchScore} isPremium={isPremium} />
             </div>
           </div>
         </div>
