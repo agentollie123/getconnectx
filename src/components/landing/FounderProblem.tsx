@@ -22,20 +22,27 @@ function CountUp({ end, suffix = "%", duration = 1.2 }: { end: number; suffix?: 
 }
 
 const stats = [
-  { end: 90, title: "Startups fail", body: "Not just ideas — execution, market, and team matter." },
-  { end: 23, title: "Fail due to team issues", body: "One of the most common breakdown points." },
-  { end: 65, title: "Experience co-founder conflict", body: "Misalignment early can break everything." },
+  { end: 90, title: "of startups fail", body: "Most don't fail because of ideas, but because of execution, market, and team challenges.", source: "CB Insights, Startup Genome" },
+  { end: 23, title: "fail due to team issues", body: "Problems inside the team are one of the most common reasons startups break down.", source: "CB Insights" },
+  { end: 65, title: "experience co-founder conflict", body: "Misalignment between founders is one of the biggest risks early on.", source: "Harvard Business School / Noam Wasserman" },
 ];
 
 const insights = [
   {
-    title: "Broken system",
-    lines: ["Founders are looking for people.", "Talented people are looking for opportunities.", "But they don't meet."],
+    title: "Talent exists — but access is broken",
+    lines: ["Millions of professionals want to work in startups, but don't know how to find the right founders or opportunities."],
+    source: "LinkedIn Talent Trends",
   },
   {
     title: "It's not a talent problem.\nIt's a connection problem.",
-    lines: ["No simple system connects them early."],
+    lines: ["Founders are looking for people. Talented people are looking for opportunities.", "But there is no simple system to connect them early."],
     accent: true,
+  },
+  {
+    title: "Today, people rely on luck",
+    lines: ["LinkedIn, events, personal networks — fragmented, slow, and often based on chance.", "Building a startup shouldn't depend on luck."],
+    accent: false,
+    highlight: true,
   },
 ];
 
@@ -94,17 +101,22 @@ export function FounderProblem() {
               <p className="font-sans" style={{ fontSize: 13, color: "#8E8E93", lineHeight: "18px" }}>
                 {s.body}
               </p>
+              {s.source && (
+                <p className="font-sans mt-2" style={{ fontSize: 10, color: "#5A5A5E", fontStyle: "italic" }}>
+                  Source: {s.source}
+                </p>
+              )}
             </Card>
           ))}
         </div>
 
-        {/* Insight row */}
-        <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+        {/* Insight row — 3 cards */}
+        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
           {insights.map((ins, i) => (
             <Card key={i} delay={0.24 + i * 0.08} className={ins.accent ? "border-[#FF8A3D]/20" : ""}>
               <p
                 className="font-sans font-semibold mb-2 whitespace-pre-line"
-                style={{ fontSize: 16, color: ins.accent ? "#FF8A3D" : "#FFFFFF", lineHeight: "22px" }}
+                style={{ fontSize: 15, color: ins.accent ? "#FF8A3D" : "#FFFFFF", lineHeight: "21px" }}
               >
                 {ins.title}
               </p>
@@ -113,6 +125,11 @@ export function FounderProblem() {
                   {line}
                 </p>
               ))}
+              {ins.source && (
+                <p className="font-sans mt-2" style={{ fontSize: 10, color: "#5A5A5E", fontStyle: "italic" }}>
+                  Source: {ins.source}
+                </p>
+              )}
             </Card>
           ))}
         </div>
