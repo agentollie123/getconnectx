@@ -101,6 +101,11 @@ export function FounderProblem() {
               <p className="font-sans" style={{ fontSize: 13, color: "#8E8E93", lineHeight: "18px" }}>
                 {s.body}
               </p>
+              {s.source && (
+                <p className="font-sans mt-2" style={{ fontSize: 10, color: "#5A5A5E", fontStyle: "italic" }}>
+                  Source: {s.source}
+                </p>
+              )}
             </Card>
           ))}
         </div>
