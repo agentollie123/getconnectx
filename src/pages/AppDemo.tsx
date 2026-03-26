@@ -436,7 +436,7 @@ export default function AppDemo() {
               </button>
             )}
             <span className="font-display text-xs font-semibold text-foreground">
-              {reportProfile ? "Compatibility Report" : activeNav}
+              {reportProfile ? "Compatibility Report" : activeNav === "Home" ? getFeedLabel(userRole, matchingMode) : activeNav}
             </span>
           </div>
           <div className="flex items-center gap-2">
