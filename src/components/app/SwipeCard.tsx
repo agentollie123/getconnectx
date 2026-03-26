@@ -61,7 +61,7 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
   const nopeOpacity = useTransform(x, [-80, 0], [1, 0]);
   const [exitDir, setExitDir] = useState<"left" | "right" | null>(null);
   const resolvedExit = triggerExit || exitDir;
-  const matchScore = getMatchScore(profile);
+  const matchScore = getMatchScore(profile, isPremium);
   const aiReasons = getAiReasons(profile);
 
   const handleDragEnd = (_: any, info: PanInfo) => {
