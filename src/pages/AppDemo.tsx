@@ -66,6 +66,7 @@ export default function AppDemo() {
   const navigate = useNavigate();
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
+  const [userRole, setUserRole] = useState<UserRole>("founder");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
   const [stats, setStats] = useState({ connected: 0, skipped: 0 });
@@ -88,6 +89,41 @@ export default function AppDemo() {
   const [startupDetail, setStartupDetail] = useState<Startup | null>(null);
   const [matchedStartup, setMatchedStartup] = useState<Startup | null>(null);
   const [chatStartupTarget, setChatStartupTarget] = useState<Startup | null>(null);
+
+  const handleOnboardingComplete = (result: OnboardingResult) => {
+    setUserRole(result.userRole);
+    // Auto-set matching mode based on role
+    switch (result.userRole) {
+      case "founder":
+        setMatchingMode(result.intent === "team" ? "founder-team" : "founder-cofounder");
+        setCardStack([...profiles]);
+        break;
+      case "cofounder":
+        setMatchingMode("cofounder-startup");
+        setStartupStack([...startups.filter(s => s.lookingFor === "co-founder" || s.lookingFor === "both")]);
+        break;
+      case "team":
+        setMatchingMode("team-startup");
+        setStartupStack([...startups.filter(s => s.lookingFor === "team" || s.lookingFor === "both")]);
+        break;
+      case "startup":
+        setMatchingMode(result.intent === "team" ? "founder-team" : "founder-cofounder");
+        setCardStack([...profiles]);
+        break;
+    }
+    setShowOnboarding(false);
+  };
+
+  // Can toggle sub-mode (only founder & startup)
+  const canToggleSubMode = userRole === "founder" || userRole === "startup";
+  const toggleSubMode = () => {
+    if (!canToggleSubMode) return;
+    const newMode: MatchingMode = matchingMode === "founder-cofounder" ? "founder-team" : "founder-cofounder";
+    setMatchingMode(newMode);
+    setCardStack([...profiles]);
+    setStats({ connected: 0, skipped: 0 });
+    setSwipeCount(0);
+  };
 
   const generateMatches = useCallback((filters: FilterState) => {
     if (isStartupMode(matchingMode)) {
