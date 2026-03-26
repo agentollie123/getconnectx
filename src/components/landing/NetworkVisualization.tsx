@@ -247,9 +247,10 @@ export function NetworkVisualization() {
             transition={{ duration: 1.2, ease: "easeOut" }}
           />
         )}
-        <AnimatePresence>
-          {statusText && (
+        <AnimatePresence mode="wait">
+          {statusText ? (
             <motion.div
+              key={statusText}
               className="flex items-center justify-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -260,7 +261,7 @@ export function NetworkVisualization() {
                 {statusText}
               </span>
             </motion.div>
-          )}
+          ) : null}
         </AnimatePresence>
       </div>
 
