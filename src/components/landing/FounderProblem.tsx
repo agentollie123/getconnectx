@@ -86,7 +86,7 @@ export function FounderProblem() {
           {stats.map((s, i) => (
             <Card key={s.title} delay={i * 0.08}>
               <p className="font-display font-bold mb-1" style={{ fontSize: 30, color: "#FF8A3D" }}>
-                {s.value}
+                <CountUp end={s.end} />
               </p>
               <p className="font-sans font-semibold mb-1.5" style={{ fontSize: 15, color: "#FFFFFF" }}>
                 {s.title}
