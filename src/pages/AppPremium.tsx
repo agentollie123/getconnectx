@@ -56,10 +56,10 @@ type MatchingMode = "founder-cofounder" | "founder-team" | "cofounder-startup" |
 const isStartupMode = (mode: MatchingMode) => mode === "cofounder-startup" || mode === "team-startup";
 
 const FEED_TITLES: Record<MatchingMode, string> = {
-  "founder-cofounder": "Discover Co-Founders",
-  "founder-team": "Discover Team Members",
-  "cofounder-startup": "Discover Startups Looking for Co-Founders",
-  "team-startup": "Discover Startups Looking for Team Members",
+  "founder-cofounder": "Finding Co-Founder",
+  "founder-team": "Building Team",
+  "cofounder-startup": "Joining Startups",
+  "team-startup": "Explore Startups",
 };
 
 export default function AppPremium() {

@@ -15,10 +15,10 @@ export interface ModeCard {
 }
 
 export const MODE_CARDS: ModeCard[] = [
-  { mode: "founder-cofounder", label: "Founder → Co-Founder", sublabel: "Find your co-founder", icon: Users },
-  { mode: "founder-team", label: "Founder → Team", sublabel: "Hire early team", icon: Briefcase },
-  { mode: "team-startup", label: "Team → Startup", sublabel: "Join a startup", icon: Rocket },
-  { mode: "cofounder-startup", label: "Co-Founder → Startup", sublabel: "Co-found a venture", icon: Target },
+  { mode: "founder-cofounder", label: "Finding Co-Founder", sublabel: "Search for your ideal co-founder", icon: Users },
+  { mode: "founder-team", label: "Building Team", sublabel: "Hire early team members", icon: Briefcase },
+  { mode: "team-startup", label: "Explore Startups", sublabel: "Find a startup to join", icon: Rocket },
+  { mode: "cofounder-startup", label: "Joining Startups", sublabel: "Co-found a venture", icon: Target },
 ];
 
 export const isStartupFeedMode = (mode: MatchingMode) =>
