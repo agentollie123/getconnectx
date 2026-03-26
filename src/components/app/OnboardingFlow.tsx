@@ -397,7 +397,9 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
               className="text-sm text-muted-foreground mb-8 max-w-xs">
               {userType === "startup"
                 ? `Your startup profile is ready. Start discovering ${goal === "cofounder" ? "co-founders" : "talent"} that fit your needs.`
-                : `Your profile is ready. Start discovering ${goal === "cofounder" ? "co-founders" : "teammates"} that match your goals.`}
+                : goal === "cofounder"
+                  ? "Your profile is ready. Start discovering co-founders to build with."
+                  : "Your profile is ready. Start discovering startups and teams looking for people like you."}
             </motion.p>
             <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} whileTap={{ scale: 0.97 }}>
               <Button className="w-full max-w-xs bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold glow-primary" onClick={onComplete}>
