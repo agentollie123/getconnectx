@@ -1,35 +1,21 @@
 import { motion } from "framer-motion";
-import { UserPlus, Users, TrendingUp, Handshake, Lightbulb, Badge as BadgeIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Layers, Target, Users, Rocket } from "lucide-react";
 
-const ecosystem = [
+const points = [
   {
-    icon: UserPlus,
-    title: "Founder ↔ Co-Founder",
-    description: "Find a co-founder who complements your skills and shares your vision.",
-    status: "live" as const,
-    gradient: "from-primary/20 to-primary/5",
+    icon: Layers,
+    title: "Structured Matching",
+    description: "Not random networking. ConnectX uses role-based, skill-based, and interest-based matching to surface the right people.",
   },
   {
-    icon: Users,
-    title: "Founder ↔ Early Team",
-    description: "Discover engineers, designers, and operators eager to join startups.",
-    status: "live" as const,
-    gradient: "from-accent/20 to-accent/5",
+    icon: Target,
+    title: "Role-Based Discovery",
+    description: "Whether you're a founder, co-founder, engineer, or operator — your feed shows only what's relevant to you.",
   },
   {
-    icon: TrendingUp,
-    title: "Founder ↔ Investor",
-    description: "Get discovered by investors looking for promising founding teams.",
-    status: "soon" as const,
-    gradient: "from-muted to-muted/50",
-  },
-  {
-    icon: Handshake,
-    title: "Founder ↔ Advisors & Partners",
-    description: "Connect with strategic partners and experienced advisors.",
-    status: "soon" as const,
-    gradient: "from-muted to-muted/50",
+    icon: Rocket,
+    title: "Startup-Focused",
+    description: "This isn't LinkedIn. This isn't a job board. ConnectX is built exclusively for starting and joining startups.",
   },
 ];
 
@@ -43,38 +29,30 @@ export function EcosystemMatchmaking() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-4">
-            Startup Ecosystem
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Ecosystem <span className="gradient-text">Matchmaking</span>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 max-w-2xl mx-auto">
+            Not networking. Not job boards.{" "}
+            <span className="gradient-text">Not just co-founder matching.</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            ConnectX connects every node in the startup lifecycle — from co-founder discovery to investor intros.
+            ConnectX is purpose-built for startup formation — connecting every role in the startup ecosystem.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-          {ecosystem.map((item, i) => (
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          {points.map((p, i) => (
             <motion.div
-              key={item.title}
+              key={p.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className={`glass-card rounded-2xl p-6 bg-gradient-to-b ${item.gradient} hover:border-primary/20 transition-all duration-300 relative`}
+              transition={{ delay: i * 0.15 }}
+              className="glass-card rounded-2xl p-6 text-center hover:border-primary/20 transition-all duration-300"
             >
-              <Badge
-                variant={item.status === "live" ? "default" : "outline"}
-                className={`absolute top-4 right-4 text-[10px] ${item.status === "live" ? "bg-primary text-primary-foreground" : "border-primary/30 text-primary"}`}
-              >
-                {item.status === "live" ? "Live" : "Coming Soon"}
-              </Badge>
-              <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center mb-4 text-primary">
-                <item.icon className="w-6 h-6" />
+              <div className="inline-flex w-14 h-14 rounded-xl bg-primary/10 items-center justify-center mb-4">
+                <p.icon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-display font-semibold text-lg mb-2 text-foreground">{item.title}</h3>
-              <p className="text-sm text-muted-foreground">{item.description}</p>
+              <h3 className="font-display font-semibold text-lg text-foreground mb-2">{p.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.description}</p>
             </motion.div>
           ))}
         </div>

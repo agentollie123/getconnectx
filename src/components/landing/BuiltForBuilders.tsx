@@ -1,49 +1,108 @@
 import { motion } from "framer-motion";
-import { GraduationCap, Code2, Briefcase, Flame, Repeat } from "lucide-react";
+import { User, Building2, Search, UserPlus, Users, Rocket, Briefcase, Zap } from "lucide-react";
 
-const personas = [
-  { icon: GraduationCap, label: "Students", description: "University builders exploring their first startup." },
-  { icon: Code2, label: "Engineers", description: "Full-stack, ML, mobile — ready to build from day one." },
-  { icon: Briefcase, label: "Startup Operators", description: "Growth, ops, BD — the engine behind every startup." },
-  { icon: Flame, label: "Indie Hackers", description: "Solo builders looking for the right team to scale." },
-  { icon: Repeat, label: "Second-time Founders", description: "Experienced founders starting their next venture." },
+const builderFeatures = [
+  { icon: Search, text: "Find co-founders who complement your skills" },
+  { icon: Rocket, text: "Join early-stage startups looking for talent" },
+  { icon: Users, text: "Build your founding team from scratch" },
+];
+
+const startupFeatures = [
+  { icon: UserPlus, text: "Find co-founders to lead with you" },
+  { icon: Briefcase, text: "Hire your first engineers, designers & operators" },
+  { icon: Zap, text: "Build faster with the right early team" },
 ];
 
 export function BuiltForBuilders() {
   return (
-    <section className="py-24 bg-secondary/30">
+    <section id="modes" className="py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Built for <span className="gradient-text">Builders Everywhere</span>
+            Built for <span className="gradient-text">Builders and Startups</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Whether you're a first-time founder or a seasoned operator, ConnectX is your launchpad.
+            Two sides of the same ecosystem. One platform that connects them.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
-          {personas.map((p, i) => (
-            <motion.div
-              key={p.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="glass-card rounded-xl p-5 text-center hover:border-primary/20 transition-all duration-300"
-            >
-              <div className="inline-flex w-12 h-12 rounded-xl bg-primary/10 items-center justify-center mb-3">
-                <p.icon className="w-5 h-5 text-primary" />
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {/* Builder column */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass-card rounded-2xl p-8 hover:border-primary/20 transition-all duration-300"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                <User className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-display font-semibold text-sm text-foreground mb-1">{p.label}</h3>
-              <p className="text-xs text-muted-foreground">{p.description}</p>
-            </motion.div>
-          ))}
+              <div>
+                <h3 className="font-display font-bold text-xl text-foreground">Builders</h3>
+                <p className="text-xs text-muted-foreground">Founders, co-founders & team members</p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {builderFeatures.map((f, i) => (
+                <motion.div
+                  key={f.text}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className="flex items-start gap-3"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <f.icon className="w-4 h-4 text-primary" />
+                  </div>
+                  <p className="text-sm text-muted-foreground">{f.text}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Startup column */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass-card rounded-2xl p-8 hover:border-accent/20 transition-all duration-300"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-accent-foreground" />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-xl text-foreground">Startups</h3>
+                <p className="text-xs text-muted-foreground">Teams hiring & building</p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {startupFeatures.map((f, i) => (
+                <motion.div
+                  key={f.text}
+                  initial={{ opacity: 0, x: 10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className="flex items-start gap-3"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <f.icon className="w-4 h-4 text-accent-foreground" />
+                  </div>
+                  <p className="text-sm text-muted-foreground">{f.text}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

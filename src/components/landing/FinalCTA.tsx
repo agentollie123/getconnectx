@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Rocket } from "lucide-react";
 
 export function FinalCTA() {
-
   return (
     <section className="py-32 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -14,14 +13,14 @@ export function FinalCTA() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}>
-          
+          viewport={{ once: true }}
+        >
           <div className="inline-flex w-16 h-16 rounded-2xl bg-primary/10 items-center justify-center mb-6">
             <Rocket className="w-8 h-8 text-primary" />
           </div>
 
           <h2 className="font-display text-3xl sm:text-5xl font-bold mb-6 max-w-2xl mx-auto leading-tight">
-            Your Next Startup Starts With the{" "}
+            Start Building With the{" "}
             <span className="gradient-text">Right People</span>
           </h2>
 
@@ -32,18 +31,16 @@ export function FinalCTA() {
           <div className="flex flex-wrap justify-center gap-4 mb-4">
             <Button size="lg" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
               <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">
-                Join Waiting List
+                Join Waitlist
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
             </Button>
             <Button size="lg" variant="outline" className="h-12 border-border text-foreground hover:bg-secondary" asChild>
-              <a href="/app">Try the Playground</a>
+              <a href="/app">Explore Playground</a>
             </Button>
           </div>
-
-          <p className="text-sm text-muted-foreground">Available on iOS and Android  </p>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
