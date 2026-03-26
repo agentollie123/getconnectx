@@ -30,15 +30,17 @@ function getAiReasons(profile: Profile): string[] {
   ].slice(0, 3);
 }
 
-function MatchBadge({ score }: { score: number }) {
-  const label = score >= 90 ? "Perfect Match" : score >= 75 ? "Strong Match" : "Potential Match";
-  const color = score >= 90 ? "text-green-400" : score >= 75 ? "text-primary" : "text-accent";
+function MatchBadge({ score, isPremium }: { score: number; isPremium?: boolean }) {
+  const isTop = isPremium && score >= 90;
+  const label = isTop ? "Top Match" : score >= 90 ? "Perfect Match" : score >= 75 ? "Strong Match" : "Potential Match";
+  const color = isTop ? "text-accent" : score >= 90 ? "text-green-400" : score >= 75 ? "text-primary" : "text-accent";
   return (
     <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${
-      score >= 90 ? "bg-green-400/10" : score >= 75 ? "bg-primary/10" : "bg-accent/10"
+      isTop ? "bg-accent/15 border border-accent/30" : score >= 90 ? "bg-green-400/10" : score >= 75 ? "bg-primary/10" : "bg-accent/10"
     }`}>
       <Star className={`w-3 h-3 ${color}`} fill="currentColor" />
       <span className={`text-[10px] font-bold ${color}`}>{label}</span>
+      {isTop && <Crown className="w-3 h-3 text-accent" />}
     </div>
   );
 }
