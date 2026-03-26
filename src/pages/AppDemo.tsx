@@ -26,16 +26,16 @@ import { DemoLimitModal } from "@/components/app/DemoLimitModal";
 import { SpotlightModal } from "@/components/app/SpotlightModal";
 import { AddToTeamModal } from "@/components/app/AddToTeamModal";
 import { UpgradeModal } from "@/components/app/UpgradeModal";
-import { VersionBadge, MatchingModeSelector, SwipeLimitBar } from "@/components/app/VersionBadge";
+import { VersionBadge, SwipeLimitBar } from "@/components/app/VersionBadge";
 import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
-import { OnboardingFlow } from "@/components/app/OnboardingFlow";
+import { OnboardingFlow, type UserRole, type OnboardingResult } from "@/components/app/OnboardingFlow";
 
 const navItems = [
   { icon: Home, label: "Home" },
-  { icon: Heart, label: "Matches" },
+  { icon: Heart, label: "Connects" },
   { icon: MessageCircle, label: "Chat" },
   { icon: Users, label: "Team" },
   { icon: User, label: "Profile" },
@@ -52,17 +52,21 @@ type MatchingMode = "founder-cofounder" | "founder-team" | "cofounder-startup" |
 
 const isStartupMode = (mode: MatchingMode) => mode === "cofounder-startup" || mode === "team-startup";
 
-const FEED_TITLES: Record<MatchingMode, string> = {
-  "founder-cofounder": "Discover Co-Founders",
-  "founder-team": "Discover Team Members",
-  "cofounder-startup": "Discover Startups Looking for Co-Founders",
-  "team-startup": "Discover Startups Looking for Team Members",
+const getFeedLabel = (role: UserRole, mode: MatchingMode): string => {
+  switch (role) {
+    case "founder": return mode === "founder-team" ? "Building Team" : "Finding Co-Founder";
+    case "cofounder": return "Joining a Startup";
+    case "team": return "Explore Startups";
+    case "startup": return mode === "founder-team" ? "Hiring Builders" : "Hiring Co-Founders";
+    default: return "Discover";
+  }
 };
 
 export default function AppDemo() {
   const navigate = useNavigate();
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
+  const [userRole, setUserRole] = useState<UserRole>("founder");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
   const [stats, setStats] = useState({ connected: 0, skipped: 0 });
@@ -85,6 +89,41 @@ export default function AppDemo() {
   const [startupDetail, setStartupDetail] = useState<Startup | null>(null);
   const [matchedStartup, setMatchedStartup] = useState<Startup | null>(null);
   const [chatStartupTarget, setChatStartupTarget] = useState<Startup | null>(null);
+
+  const handleOnboardingComplete = (result: OnboardingResult) => {
+    setUserRole(result.userRole);
+    // Auto-set matching mode based on role
+    switch (result.userRole) {
+      case "founder":
+        setMatchingMode(result.intent === "team" ? "founder-team" : "founder-cofounder");
+        setCardStack([...profiles]);
+        break;
+      case "cofounder":
+        setMatchingMode("cofounder-startup");
+        setStartupStack([...startups.filter(s => s.lookingFor === "co-founder" || s.lookingFor === "both")]);
+        break;
+      case "team":
+        setMatchingMode("team-startup");
+        setStartupStack([...startups.filter(s => s.lookingFor === "team" || s.lookingFor === "both")]);
+        break;
+      case "startup":
+        setMatchingMode(result.intent === "team" ? "founder-team" : "founder-cofounder");
+        setCardStack([...profiles]);
+        break;
+    }
+    setShowOnboarding(false);
+  };
+
+  // Can toggle sub-mode (only founder & startup)
+  const canToggleSubMode = userRole === "founder" || userRole === "startup";
+  const toggleSubMode = () => {
+    if (!canToggleSubMode) return;
+    const newMode: MatchingMode = matchingMode === "founder-cofounder" ? "founder-team" : "founder-cofounder";
+    setMatchingMode(newMode);
+    setCardStack([...profiles]);
+    setStats({ connected: 0, skipped: 0 });
+    setSwipeCount(0);
+  };
 
   const generateMatches = useCallback((filters: FilterState) => {
     if (isStartupMode(matchingMode)) {
@@ -210,7 +249,7 @@ export default function AppDemo() {
     }
 
     switch (activeNav) {
-      case "Matches":
+      case "Connects":
         return (
           <MatchesView
             connectedProfiles={connectedProfiles}
@@ -266,7 +305,36 @@ export default function AppDemo() {
 
   const renderHomeView = () => (
     <div className="flex-1 flex flex-col items-center p-3 relative">
-
+      {/* Feed context label + sub-mode toggle */}
+      <div className="w-full max-w-[360px] mb-2 flex items-center justify-between">
+        <span className="text-[10px] font-bold text-primary uppercase tracking-wider">
+          {getFeedLabel(userRole, matchingMode)}
+        </span>
+        {canToggleSubMode && (
+          <div className="flex gap-1">
+            <button
+              onClick={() => { if (matchingMode !== "founder-cofounder") toggleSubMode(); }}
+              className={`px-2 py-0.5 rounded-full text-[9px] font-semibold border transition-colors ${
+                matchingMode === "founder-cofounder"
+                  ? "bg-primary/15 text-primary border-primary/40"
+                  : "bg-card border-border/50 text-muted-foreground hover:border-primary/30"
+              }`}
+            >
+              {userRole === "startup" ? "Co-Founders" : "Co-Founder"}
+            </button>
+            <button
+              onClick={() => { if (matchingMode !== "founder-team") toggleSubMode(); }}
+              className={`px-2 py-0.5 rounded-full text-[9px] font-semibold border transition-colors ${
+                matchingMode === "founder-team"
+                  ? "bg-primary/15 text-primary border-primary/40"
+                  : "bg-card border-border/50 text-muted-foreground hover:border-primary/30"
+              }`}
+            >
+              Team
+            </button>
+          </div>
+        )}
+      </div>
       <div className="relative w-full max-w-[360px] h-[420px]">
         {isEmpty ? (
           <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
@@ -368,7 +436,7 @@ export default function AppDemo() {
               </button>
             )}
             <span className="font-display text-xs font-semibold text-foreground">
-              {reportProfile ? "Compatibility Report" : activeNav}
+              {reportProfile ? "Compatibility Report" : activeNav === "Home" ? getFeedLabel(userRole, matchingMode) : activeNav}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -400,7 +468,7 @@ export default function AppDemo() {
       {/* Main content */}
         <div className="flex-1 overflow-hidden">
           {showOnboarding ? (
-            <OnboardingFlow onComplete={() => setShowOnboarding(false)} />
+            <OnboardingFlow onComplete={handleOnboardingComplete} />
           ) : (
             renderMainContent()
           )}
