@@ -1,124 +1,123 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Rocket, Handshake, Zap, Code, BarChart3, Users, Lightbulb } from "lucide-react";
+import { ArrowRight, Play, Rocket, Handshake, Zap, Code, BarChart3, Users, Lightbulb, Link } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const NODES = [
-  { id: "founders", label: "Founders", icon: Rocket, x: 50, y: 8, delay: 0 },
-  { id: "cofounders", label: "Co-Founders", icon: Handshake, x: 12, y: 32, delay: 0.15 },
-  { id: "engineers", label: "Engineers", icon: Code, x: 88, y: 28, delay: 0.3 },
-  { id: "operators", label: "Operators", icon: BarChart3, x: 78, y: 72, delay: 0.45 },
-  { id: "advisors", label: "Advisors", icon: Lightbulb, x: 20, y: 75, delay: 0.6 },
-  { id: "partners", label: "Partners", icon: Users, x: 50, y: 92, delay: 0.75 },
+  { id: "founders", label: "Founders", emoji: "🚀", x: 48, y: 6, delay: 0 },
+  { id: "cofounders", label: "Co-Founders", emoji: "🤝", x: 10, y: 30, delay: 0.12 },
+  { id: "engineers", label: "Engineers", emoji: "⚡", x: 88, y: 25, delay: 0.24 },
+  { id: "investors", label: "Investors", emoji: "💰", x: 14, y: 62, delay: 0.36 },
+  { id: "advisors", label: "Advisors", emoji: "🧠", x: 82, y: 58, delay: 0.48 },
+  { id: "partners", label: "Partners", emoji: "🔗", x: 32, y: 88, delay: 0.6 },
+  { id: "operators", label: "Operators", emoji: "📊", x: 65, y: 82, delay: 0.72 },
 ];
 
-const CONNECTIONS = [
-  { from: 0, to: 1 }, { from: 0, to: 2 }, { from: 1, to: 4 },
-  { from: 2, to: 3 }, { from: 3, to: 5 }, { from: 4, to: 5 },
-  { from: 0, to: 3 }, { from: 1, to: 5 }, { from: 2, to: 4 },
+const CONNECTIONS: [number, number][] = [
+  [0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 6],
+  [0, 4], [1, 5], [2, 6], [0, 6], [1, 2], [3, 4],
 ];
 
 function NetworkVisualization() {
   const [activeConn, setActiveConn] = useState(0);
+  const [pulseKey, setPulseKey] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveConn((prev) => (prev + 1) % CONNECTIONS.length);
-    }, 2000);
+      setActiveConn((prev) => {
+        const next = (prev + 1) % CONNECTIONS.length;
+        setPulseKey((k) => k + 1);
+        return next;
+      });
+    }, 1800);
     return () => clearInterval(interval);
   }, []);
 
+  const activeFrom = CONNECTIONS[activeConn][0];
+  const activeTo = CONNECTIONS[activeConn][1];
+
   return (
-    <div className="relative w-full aspect-square max-w-[500px] mx-auto">
-      {/* Connection lines */}
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-        {CONNECTIONS.map((conn, i) => {
-          const from = NODES[conn.from];
-          const to = NODES[conn.to];
-          const isActive = i === activeConn;
-          return (
-            <motion.line
-              key={`${conn.from}-${conn.to}`}
-              x1={from.x} y1={from.y}
-              x2={to.x} y2={to.y}
-              stroke={isActive ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.15)"}
-              strokeWidth={isActive ? 0.4 : 0.2}
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1, delay: 0.8 + i * 0.1 }}
-            />
-          );
-        })}
-        {/* Traveling pulse on active connection */}
-        {(() => {
-          const conn = CONNECTIONS[activeConn];
-          const from = NODES[conn.from];
-          const to = NODES[conn.to];
-          return (
-            <motion.circle
-              r="0.6"
-              fill="hsl(var(--primary))"
-              filter="url(#glow)"
-              initial={{ cx: from.x, cy: from.y }}
-              animate={{ cx: to.x, cy: to.y }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              key={activeConn}
-            />
-          );
-        })()}
+    <div className="relative w-full" style={{ aspectRatio: "4/3", maxWidth: 520 }}>
+      {/* Lines */}
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
         <defs>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="1" result="blur" />
+          <filter id="line-glow">
+            <feGaussianBlur stdDeviation="0.8" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
         </defs>
+        {CONNECTIONS.map(([from, to], i) => {
+          const a = NODES[from];
+          const b = NODES[to];
+          const isActive = i === activeConn;
+          return (
+            <motion.line
+              key={`${from}-${to}`}
+              x1={a.x} y1={a.y} x2={b.x} y2={b.y}
+              stroke={isActive ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.12)"}
+              strokeWidth={isActive ? 0.5 : 0.25}
+              filter={isActive ? "url(#line-glow)" : undefined}
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 + i * 0.08 }}
+            />
+          );
+        })}
+        {/* Traveling dot */}
+        <motion.circle
+          key={pulseKey}
+          r="1"
+          fill="hsl(var(--primary))"
+          filter="url(#line-glow)"
+          initial={{ cx: NODES[activeFrom].x, cy: NODES[activeFrom].y, opacity: 1 }}
+          animate={{ cx: NODES[activeTo].x, cy: NODES[activeTo].y, opacity: [1, 1, 0.4] }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
       </svg>
 
       {/* Nodes */}
-      {NODES.map((node) => {
-        const Icon = node.icon;
-        const isActive = CONNECTIONS[activeConn].from === NODES.indexOf(node) || CONNECTIONS[activeConn].to === NODES.indexOf(node);
+      {NODES.map((node, idx) => {
+        const isActive = idx === activeFrom || idx === activeTo;
         return (
           <motion.div
             key={node.id}
-            className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5"
+            className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2"
             style={{ left: `${node.x}%`, top: `${node.y}%` }}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: node.delay + 0.3, type: "spring" }}
+            transition={{ duration: 0.5, delay: node.delay + 0.2, type: "spring", stiffness: 200 }}
           >
             <motion.div
-              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border transition-all duration-500 ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border backdrop-blur-sm transition-all duration-500 ${
                 isActive
-                  ? "bg-primary/20 border-primary/50 shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
-                  : "bg-card border-border/50"
+                  ? "bg-card/90 border-primary/40 shadow-[0_0_24px_hsl(var(--primary)/0.25)]"
+                  : "bg-card/60 border-border/40"
               }`}
-              animate={isActive ? { scale: [1, 1.1, 1] } : { scale: 1 }}
-              transition={{ duration: 0.6 }}
+              animate={isActive ? { scale: [1, 1.08, 1] } : { scale: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              <Icon className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-500 ${isActive ? "text-primary" : "text-muted-foreground"}`} />
+              <span className="text-sm">{node.emoji}</span>
+              <span className={`text-xs font-medium whitespace-nowrap transition-colors duration-500 ${
+                isActive ? "text-foreground" : "text-muted-foreground"
+              }`}>
+                {node.label}
+              </span>
             </motion.div>
-            <span className={`text-[10px] sm:text-xs font-medium transition-colors duration-500 ${isActive ? "text-primary" : "text-muted-foreground"}`}>
-              {node.label}
-            </span>
           </motion.div>
         );
       })}
 
-      {/* Center pulse */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+      {/* Center ambient dot */}
+      <div className="absolute top-[45%] left-[48%] -translate-x-1/2 -translate-y-1/2 pointer-events-none">
         <motion.div
-          className="w-3 h-3 rounded-full bg-primary"
-          animate={{ scale: [1, 2.5, 1], opacity: [0.6, 0, 0.6] }}
-          transition={{ duration: 3, repeat: Infinity }}
+          className="w-2.5 h-2.5 rounded-full bg-primary"
+          animate={{ scale: [1, 3, 1], opacity: [0.5, 0, 0.5] }}
+          transition={{ duration: 4, repeat: Infinity }}
         />
       </div>
-
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-primary/5 rounded-full blur-3xl -z-10" />
     </div>
   );
 }
