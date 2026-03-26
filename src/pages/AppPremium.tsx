@@ -33,7 +33,7 @@ import { OnboardingFlow } from "@/components/app/OnboardingFlow";
 
 const navItems = [
   { icon: Home, label: "Home" },
-  { icon: Heart, label: "Matches" },
+  { icon: Heart, label: "Connects" },
   { icon: MessageCircle, label: "Chat" },
   { icon: Users, label: "Team" },
   { icon: User, label: "Profile" },
