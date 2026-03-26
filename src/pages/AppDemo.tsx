@@ -305,7 +305,36 @@ export default function AppDemo() {
 
   const renderHomeView = () => (
     <div className="flex-1 flex flex-col items-center p-3 relative">
-
+      {/* Feed context label + sub-mode toggle */}
+      <div className="w-full max-w-[360px] mb-2 flex items-center justify-between">
+        <span className="text-[10px] font-bold text-primary uppercase tracking-wider">
+          {getFeedLabel(userRole, matchingMode)}
+        </span>
+        {canToggleSubMode && (
+          <div className="flex gap-1">
+            <button
+              onClick={() => { if (matchingMode !== "founder-cofounder") toggleSubMode(); }}
+              className={`px-2 py-0.5 rounded-full text-[9px] font-semibold border transition-colors ${
+                matchingMode === "founder-cofounder"
+                  ? "bg-primary/15 text-primary border-primary/40"
+                  : "bg-card border-border/50 text-muted-foreground hover:border-primary/30"
+              }`}
+            >
+              {userRole === "startup" ? "Co-Founders" : "Co-Founder"}
+            </button>
+            <button
+              onClick={() => { if (matchingMode !== "founder-team") toggleSubMode(); }}
+              className={`px-2 py-0.5 rounded-full text-[9px] font-semibold border transition-colors ${
+                matchingMode === "founder-team"
+                  ? "bg-primary/15 text-primary border-primary/40"
+                  : "bg-card border-border/50 text-muted-foreground hover:border-primary/30"
+              }`}
+            >
+              Team
+            </button>
+          </div>
+        )}
+      </div>
       <div className="relative w-full max-w-[360px] h-[420px]">
         {isEmpty ? (
           <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
