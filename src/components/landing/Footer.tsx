@@ -40,7 +40,7 @@ export function Footer() {
               The platform where startups begin.
             </p>
             <p className="text-xs text-muted-foreground mb-4 italic">
-              LinkedIn + AngelList + Bumble for founders.
+              Swipe. Match. Build together.
             </p>
             <div className="flex flex-wrap gap-2">
               {socials.map((s) => {
