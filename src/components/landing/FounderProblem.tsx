@@ -51,7 +51,7 @@ function Card({ children, delay = 0, className = "" }: { children: React.ReactNo
     <motion.div
       ref={ref}
       className={`rounded-2xl p-5 ${className}`}
-      style={{ background: "#141414", border: "1px solid #1C1C1E" }}
+      style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))" }}
       initial={{ opacity: 0, y: 12 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4, delay }}
@@ -63,7 +63,7 @@ function Card({ children, delay = 0, className = "" }: { children: React.ReactNo
 
 export function FounderProblem() {
   return (
-    <section className="py-24" style={{ background: "#0B0B0F" }}>
+    <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
         {/* Headline */}
         <motion.div
