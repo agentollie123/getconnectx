@@ -236,24 +236,8 @@ export function NetworkVisualization() {
         )}
       </svg>
 
-      {/* Center core — "ConnectX Engine" */}
+      {/* Center — Status text replaces dot */}
       <div className="absolute top-[46%] left-[48%] -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        <motion.div
-          className="rounded-full bg-primary"
-          initial={{ width: 8, height: 8, opacity: 0.3 }}
-          animate={
-            activated
-              ? phase === "activation"
-                ? { width: 16, height: 16, opacity: 0.7, scale: [1, 1.6, 1] }
-                : { width: 12, height: 12, opacity: [0.3, 0.6, 0.3], scale: [1, 1.15, 1] }
-              : { width: 8, height: 8, opacity: 0.2 }
-          }
-          transition={
-            phase === "activation"
-              ? { duration: 1, ease: "easeOut" }
-              : { duration: 3, repeat: Infinity, ease: "easeInOut" }
-          }
-        />
         {/* Activation ripple */}
         {phase === "activation" && (
           <motion.div
@@ -263,6 +247,21 @@ export function NetworkVisualization() {
             transition={{ duration: 1.2, ease: "easeOut" }}
           />
         )}
+        <AnimatePresence>
+          {statusText && (
+            <motion.div
+              className="flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.4 }}
+            >
+              <span className="text-xs text-primary font-medium tracking-wide whitespace-nowrap">
+                {statusText}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Nodes */}
