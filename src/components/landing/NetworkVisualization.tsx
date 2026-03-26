@@ -356,17 +356,17 @@ export function NetworkVisualization() {
         />
       )}
 
-      {/* Status text overlay */}
+      {/* Status text overlay — centered */}
       <AnimatePresence>
         {statusText && (
           <motion.div
-            className="absolute bottom-2 left-1/2 -translate-x-1/2"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 0.7, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
+            className="absolute top-[54%] left-[48%] -translate-x-1/2 -translate-y-1/2"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 0.85, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4 }}
           >
-            <span className="text-[10px] text-primary/80 font-medium tracking-wide">
+            <span className="text-xs text-primary font-medium tracking-wide whitespace-nowrap">
               {statusText}
             </span>
           </motion.div>
