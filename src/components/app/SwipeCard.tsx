@@ -7,11 +7,12 @@ import {
 } from "lucide-react";
 import type { Profile } from "@/lib/profileData";
 
-function getMatchScore(profile: Profile): number {
-  const base = 70;
+function getMatchScore(profile: Profile, isPremium?: boolean): number {
+  const base = isPremium ? 82 : 70;
   const skillBonus = profile.skills.length * 3;
   const expBonus = profile.workExperience ? profile.workExperience.length * 4 : 0;
-  return Math.min(99, base + skillBonus + expBonus + (profile.id * 7) % 15);
+  const raw = base + skillBonus + expBonus + (profile.id * 7) % 15;
+  return Math.min(99, isPremium ? Math.max(raw, 85) : raw);
 }
 
 function getAiReasons(profile: Profile): string[] {
