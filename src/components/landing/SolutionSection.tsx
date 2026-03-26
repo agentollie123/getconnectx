@@ -27,7 +27,7 @@ export function SolutionSection() {
             <span className="gradient-text">Find Each Other</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            ConnectX helps you find the right people based on what you want to build — not random connections.
+            ConnectX helps you find the right people based on what you want to build not random connections.
           </p>
         </motion.div>
 
