@@ -1,121 +1,124 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Heart, X, Star, Users, Briefcase, Zap } from "lucide-react";
-import logoIcon from "@/assets/logo-icon.png";
+import { ArrowRight, Play, Rocket, Handshake, Zap, Code, BarChart3, Users, Lightbulb } from "lucide-react";
+import { useEffect, useState } from "react";
 
-function PhoneMockup() {
+const NODES = [
+  { id: "founders", label: "Founders", icon: Rocket, x: 50, y: 8, delay: 0 },
+  { id: "cofounders", label: "Co-Founders", icon: Handshake, x: 12, y: 32, delay: 0.15 },
+  { id: "engineers", label: "Engineers", icon: Code, x: 88, y: 28, delay: 0.3 },
+  { id: "operators", label: "Operators", icon: BarChart3, x: 78, y: 72, delay: 0.45 },
+  { id: "advisors", label: "Advisors", icon: Lightbulb, x: 20, y: 75, delay: 0.6 },
+  { id: "partners", label: "Partners", icon: Users, x: 50, y: 92, delay: 0.75 },
+];
+
+const CONNECTIONS = [
+  { from: 0, to: 1 }, { from: 0, to: 2 }, { from: 1, to: 4 },
+  { from: 2, to: 3 }, { from: 3, to: 5 }, { from: 4, to: 5 },
+  { from: 0, to: 3 }, { from: 1, to: 5 }, { from: 2, to: 4 },
+];
+
+function NetworkVisualization() {
+  const [activeConn, setActiveConn] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveConn((prev) => (prev + 1) % CONNECTIONS.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="relative w-[280px] sm:w-[300px] mx-auto">
-      {/* Phone frame */}
-      <div className="rounded-[36px] border-[5px] border-foreground/15 bg-background shadow-2xl overflow-hidden">
-        {/* Status bar */}
-        <div className="h-7 bg-card flex items-center justify-between px-5 text-[10px] text-muted-foreground">
-          <span>9:41</span>
-          <div className="flex gap-1">
-            <div className="w-3.5 h-1.5 rounded-sm bg-muted-foreground/30" />
-            <div className="w-3.5 h-1.5 rounded-sm bg-muted-foreground/30" />
-            <div className="w-3.5 h-1.5 rounded-sm bg-muted-foreground/30" />
-          </div>
-        </div>
+    <div className="relative w-full aspect-square max-w-[500px] mx-auto">
+      {/* Connection lines */}
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+        {CONNECTIONS.map((conn, i) => {
+          const from = NODES[conn.from];
+          const to = NODES[conn.to];
+          const isActive = i === activeConn;
+          return (
+            <motion.line
+              key={`${conn.from}-${conn.to}`}
+              x1={from.x} y1={from.y}
+              x2={to.x} y2={to.y}
+              stroke={isActive ? "hsl(var(--primary))" : "hsl(var(--primary) / 0.15)"}
+              strokeWidth={isActive ? 0.4 : 0.2}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 1, delay: 0.8 + i * 0.1 }}
+            />
+          );
+        })}
+        {/* Traveling pulse on active connection */}
+        {(() => {
+          const conn = CONNECTIONS[activeConn];
+          const from = NODES[conn.from];
+          const to = NODES[conn.to];
+          return (
+            <motion.circle
+              r="0.6"
+              fill="hsl(var(--primary))"
+              filter="url(#glow)"
+              initial={{ cx: from.x, cy: from.y }}
+              animate={{ cx: to.x, cy: to.y }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              key={activeConn}
+            />
+          );
+        })()}
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="1" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
 
-        {/* App header */}
-        <div className="h-10 bg-card border-b border-border flex items-center justify-between px-4">
-          <div className="flex items-center gap-1.5">
-            <img src={logoIcon} alt="ConnectX" className="w-5 h-5 rounded" />
-            <span className="font-display font-bold text-foreground text-xs">ConnectX</span>
-          </div>
-          <div className="flex items-center gap-1 text-[9px]">
-            <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground font-medium">Builder</span>
-          </div>
-        </div>
-
-        {/* Mode label */}
-        <div className="px-4 py-2 bg-card/50">
-          <p className="text-[10px] text-muted-foreground">Finding Co-Founder</p>
-        </div>
-
-        {/* Swipe card */}
-        <div className="px-3 pb-3">
+      {/* Nodes */}
+      {NODES.map((node) => {
+        const Icon = node.icon;
+        const isActive = CONNECTIONS[activeConn].from === NODES.indexOf(node) || CONNECTIONS[activeConn].to === NODES.indexOf(node);
+        return (
           <motion.div
-            className="rounded-xl bg-card border border-border overflow-hidden"
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            key={node.id}
+            className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5"
+            style={{ left: `${node.x}%`, top: `${node.y}%` }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: node.delay + 0.3, type: "spring" }}
           >
-            <div className="h-36 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center relative">
-              <div className="w-16 h-16 rounded-full bg-primary/20 border-2 border-primary/30 flex items-center justify-center">
-                <Users className="w-7 h-7 text-primary" />
-              </div>
-              <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-primary/90 text-primary-foreground text-[9px] font-bold">
-                92% Match
-              </div>
-            </div>
-            <div className="p-3 space-y-2">
-              <div>
-                <h4 className="font-display font-bold text-sm text-foreground">Sarah Chen</h4>
-                <p className="text-[10px] text-muted-foreground">Full-Stack Engineer · Singapore</p>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {["React", "AI/ML", "SaaS"].map(s => (
-                  <span key={s} className="text-[8px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                    {s}
-                  </span>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-1">
-                <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-accent/10 text-accent-foreground border border-accent/20 flex items-center gap-0.5">
-                  <Zap className="w-2 h-2" /> Complementary Skill
-                </span>
-                <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
-                  Same Industry
-                </span>
-              </div>
-            </div>
+            <motion.div
+              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border transition-all duration-500 ${
+                isActive
+                  ? "bg-primary/20 border-primary/50 shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+                  : "bg-card border-border/50"
+              }`}
+              animate={isActive ? { scale: [1, 1.1, 1] } : { scale: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Icon className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-500 ${isActive ? "text-primary" : "text-muted-foreground"}`} />
+            </motion.div>
+            <span className={`text-[10px] sm:text-xs font-medium transition-colors duration-500 ${isActive ? "text-primary" : "text-muted-foreground"}`}>
+              {node.label}
+            </span>
           </motion.div>
+        );
+      })}
 
-          {/* Action buttons */}
-          <div className="flex items-center justify-center gap-5 pt-3">
-            <motion.div
-              className="w-11 h-11 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <X className="w-5 h-5 text-destructive" />
-            </motion.div>
-            <motion.div
-              className="w-9 h-9 rounded-full border-2 border-accent/30 bg-card flex items-center justify-center"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Star className="w-4 h-4 text-accent" />
-            </motion.div>
-            <motion.div
-              className="w-11 h-11 rounded-full border-2 border-primary/30 bg-card flex items-center justify-center"
-              animate={{ scale: [1, 1.08, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <Heart className="w-5 h-5 text-primary" />
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Bottom nav */}
-        <div className="h-10 bg-card border-t border-border flex items-center justify-around px-4">
-          {[
-            { icon: Users, label: "Discover", active: true },
-            { icon: Heart, label: "Connects", active: false },
-            { icon: Briefcase, label: "Teams", active: false },
-          ].map(n => (
-            <div key={n.label} className="flex flex-col items-center gap-0.5">
-              <n.icon className={`w-3.5 h-3.5 ${n.active ? 'text-primary' : 'text-muted-foreground'}`} />
-              <span className={`text-[8px] ${n.active ? 'text-primary font-medium' : 'text-muted-foreground'}`}>{n.label}</span>
-            </div>
-          ))}
-        </div>
+      {/* Center pulse */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+        <motion.div
+          className="w-3 h-3 rounded-full bg-primary"
+          animate={{ scale: [1, 2.5, 1], opacity: [0.6, 0, 0.6] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
       </div>
 
-      {/* Glow effect */}
-      <div className="absolute -inset-8 bg-primary/5 rounded-full blur-3xl -z-10" />
+      {/* Background glow */}
+      <div className="absolute inset-0 bg-primary/5 rounded-full blur-3xl -z-10" />
     </div>
   );
 }
@@ -123,7 +126,6 @@ function PhoneMockup() {
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
-      {/* Background effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
@@ -131,7 +133,6 @@ export function HeroSection() {
 
       <div className="container mx-auto px-4 py-20">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: copy */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -176,7 +177,6 @@ export function HeroSection() {
               Be early. The best teams form first.
             </p>
 
-            {/* Quick stats */}
             <div className="flex gap-8 mt-10 pt-8 border-t border-border/50">
               {[
                 { value: "12,000+", label: "Builders" },
@@ -191,14 +191,13 @@ export function HeroSection() {
             </div>
           </motion.div>
 
-          {/* Right: Phone Mockup */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="hidden lg:flex justify-center"
           >
-            <PhoneMockup />
+            <NetworkVisualization />
           </motion.div>
         </div>
       </div>
