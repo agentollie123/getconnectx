@@ -186,14 +186,14 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
             </p>
             <div className="w-full max-w-xs space-y-3">
               <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
-                <SelectCard selected={goal === "cofounder"} onClick={() => { setGoal("cofounder"); next(); }}
+                <SelectCard selected={goal === "cofounder"} onClick={() => { setGoal("cofounder"); setSpecifications([]); next(); }}
                   icon={Handshake} iconColor="bg-primary/10 text-primary" title="Co-Founder"
                   desc={userType === "startup" ? "Find a co-founder to lead with you" : "Find someone to build with from day one"} />
               </motion.div>
               <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
-                <SelectCard selected={goal === "team"} onClick={() => { setGoal("team"); next(); }}
+                <SelectCard selected={goal === "team"} onClick={() => { setGoal("team"); setSpecifications([]); next(); }}
                   icon={Users} iconColor="bg-accent/10 text-accent" title="Team"
-                  desc={userType === "startup" ? "Hire early-stage talent for your startup" : "Recruit early members for your startup"} />
+                  desc={userType === "startup" ? "Hire early-stage talent for your startup" : "Join an early-stage startup team"} />
               </motion.div>
             </div>
           </motion.div>
@@ -234,29 +234,58 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
 
       case 4: {
         const isStartup = userType === "startup";
-        const specOptions = goal === "cofounder"
-          ? [
-              { label: "Technical Co-Founder", icon: Code, desc: "Engineering & architecture" },
-              { label: "Business Co-Founder", icon: Briefcase, desc: "Strategy & operations" },
-              { label: "Product Co-Founder", icon: Lightbulb, desc: "Product vision & design" },
-              { label: "Growth Co-Founder", icon: BarChart3, desc: "Marketing & distribution" },
-            ]
-          : [
-              { label: "CTO / Technical Lead", icon: Code, desc: "Lead engineering & tech stack" },
-              { label: "Product Designer", icon: Palette, desc: "UX/UI & product thinking" },
-              { label: "Growth Marketer", icon: TrendingUp, desc: "Acquisition & retention" },
-              { label: "Full-Stack Engineer", icon: Code, desc: "Build & ship fast" },
-              { label: "Operations Lead", icon: Globe, desc: "Ops, finance & logistics" },
-            ];
+        const isBuilder = userType === "builder";
+
+        // Different options based on userType + goal
+        let specOptions: { label: string; icon: any; desc: string }[];
+        let stepTitle: string;
+        let stepSubtitle: string;
+
+        if (isStartup && goal === "cofounder") {
+          stepTitle = "What kind of co-founder are you looking for?";
+          stepSubtitle = "Select all that apply";
+          specOptions = [
+            { label: "Technical Co-Founder", icon: Code, desc: "Engineering & architecture" },
+            { label: "Business Co-Founder", icon: Briefcase, desc: "Strategy & operations" },
+            { label: "Product Co-Founder", icon: Lightbulb, desc: "Product vision & design" },
+            { label: "Growth Co-Founder", icon: BarChart3, desc: "Marketing & distribution" },
+          ];
+        } else if (isStartup && goal === "team") {
+          stepTitle = "What talent does your startup need?";
+          stepSubtitle = "Select all roles you're hiring for";
+          specOptions = [
+            { label: "CTO / Technical Lead", icon: Code, desc: "Lead engineering & tech stack" },
+            { label: "Product Designer", icon: Palette, desc: "UX/UI & product thinking" },
+            { label: "Growth Marketer", icon: TrendingUp, desc: "Acquisition & retention" },
+            { label: "Full-Stack Engineer", icon: Code, desc: "Build & ship fast" },
+            { label: "Operations Lead", icon: Globe, desc: "Ops, finance & logistics" },
+          ];
+        } else if (isBuilder && goal === "cofounder") {
+          stepTitle = "What type of co-founder are you?";
+          stepSubtitle = "Select what best describes you";
+          specOptions = [
+            { label: "Technical Co-Founder", icon: Code, desc: "I build the product & tech" },
+            { label: "Business Co-Founder", icon: Briefcase, desc: "I handle strategy & ops" },
+            { label: "Product Co-Founder", icon: Lightbulb, desc: "I lead product & design" },
+            { label: "Growth Co-Founder", icon: BarChart3, desc: "I drive marketing & growth" },
+          ];
+        } else {
+          // Builder + team
+          stepTitle = "What's your skillset?";
+          stepSubtitle = "Select your strongest areas";
+          specOptions = [
+            { label: "Engineering", icon: Code, desc: "Full-stack, backend, or frontend dev" },
+            { label: "Product Design", icon: Palette, desc: "UX/UI, prototyping & research" },
+            { label: "Growth & Marketing", icon: TrendingUp, desc: "Acquisition, SEO & content" },
+            { label: "Operations", icon: Globe, desc: "Ops, finance & logistics" },
+            { label: "Product Management", icon: Lightbulb, desc: "Roadmap, specs & execution" },
+          ];
+        }
+
         return (
           <motion.div key="s4" variants={pageTransition} initial="enter" animate="center" exit="exit" className="flex flex-col items-center text-center px-6">
-            <h2 className="font-display text-xl font-bold text-foreground mb-2">
-              {isStartup
-                ? goal === "cofounder" ? "What kind of co-founder are you looking for?" : "What talent does your startup need?"
-                : goal === "cofounder" ? "What type of co-founder?" : "What roles do you need?"
-              }
-            </h2>
-            <p className="text-sm text-muted-foreground mb-5">Select all that apply</p>
+            <h2 className="font-display text-xl font-bold text-foreground mb-2">{stepTitle}</h2>
+            <p className="text-sm text-muted-foreground mb-5">{stepSubtitle}</p>
             <div className="w-full max-w-xs space-y-2">
               {specOptions.map((opt, i) => (
                 <motion.div key={opt.label} initial={{ x: 15, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.06 * i, duration: 0.25 }}>
@@ -277,19 +306,26 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
       }
 
       case 5: {
-        const availOptions = [
-          { label: "Full-time", icon: Rocket, desc: "Fully committed, ready to go all-in" },
-          { label: "Part-time", icon: Clock, desc: "Contributing alongside other work" },
-          { label: "Flexible / Hybrid", icon: Globe, desc: "Open to discuss arrangement" },
-        ];
+        const isStartup = userType === "startup";
+        const availOptions = isStartup
+          ? [
+              { label: "Full-time", icon: Rocket, desc: "Candidates must be fully committed" },
+              { label: "Part-time", icon: Clock, desc: "Open to candidates with other commitments" },
+              { label: "Flexible / Hybrid", icon: Globe, desc: "Open to discuss arrangement" },
+            ]
+          : [
+              { label: "Full-time", icon: Rocket, desc: "I'm ready to go all-in" },
+              { label: "Part-time", icon: Clock, desc: "Contributing alongside other work" },
+              { label: "Flexible / Hybrid", icon: Globe, desc: "Open to discuss arrangement" },
+            ];
         const locationOptions = ["Remote", "Jakarta", "Singapore", "Bangalore", "Ho Chi Minh City", "Dubai", "Anywhere"];
         return (
           <motion.div key="s5" variants={pageTransition} initial="enter" animate="center" exit="exit" className="flex flex-col items-center text-center px-6">
             <h2 className="font-display text-xl font-bold text-foreground mb-2">
-              {userType === "startup" ? "What availability do you expect?" : "Your availability"}
+              {isStartup ? "What availability do you expect?" : "Your availability"}
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
-              {userType === "startup" ? "What commitment level should candidates have?" : "How much time can you commit?"}
+              {isStartup ? "What commitment level should candidates have?" : "How much time can you commit?"}
             </p>
             <div className="w-full max-w-xs space-y-2 mb-5">
               {availOptions.map((opt, i) => (
@@ -304,7 +340,7 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
               className="text-xs font-semibold text-foreground mb-2.5 flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-primary" />
-              {userType === "startup" ? "Where is your startup based?" : "Preferred location"}
+              {isStartup ? "Where is your startup based?" : "Where are you based?"}
             </motion.p>
             <div className="w-full max-w-xs flex flex-wrap gap-2 justify-center mb-5">
               {locationOptions.map((loc, i) => (
@@ -361,7 +397,9 @@ export function OnboardingFlow({ onComplete, isPremium }: OnboardingFlowProps) {
               className="text-sm text-muted-foreground mb-8 max-w-xs">
               {userType === "startup"
                 ? `Your startup profile is ready. Start discovering ${goal === "cofounder" ? "co-founders" : "talent"} that fit your needs.`
-                : `Your profile is ready. Start discovering ${goal === "cofounder" ? "co-founders" : "teammates"} that match your goals.`}
+                : goal === "cofounder"
+                  ? "Your profile is ready. Start discovering co-founders to build with."
+                  : "Your profile is ready. Start discovering startups and teams looking for people like you."}
             </motion.p>
             <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }} whileTap={{ scale: 0.97 }}>
               <Button className="w-full max-w-xs bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold glow-primary" onClick={onComplete}>
