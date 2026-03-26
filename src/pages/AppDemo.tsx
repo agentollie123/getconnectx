@@ -397,9 +397,13 @@ export default function AppDemo() {
           </div>
         </div>
 
-        {/* Main content */}
+      {/* Main content */}
         <div className="flex-1 overflow-hidden">
-          {renderMainContent()}
+          {showOnboarding ? (
+            <OnboardingFlow onComplete={() => setShowOnboarding(false)} />
+          ) : (
+            renderMainContent()
+          )}
         </div>
 
         {/* Bottom nav */}

@@ -63,6 +63,7 @@ const FEED_TITLES: Record<MatchingMode, string> = {
 };
 
 export default function AppPremium() {
+  const [showOnboarding, setShowOnboarding] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
   const [startupStack, setStartupStack] = useState<Startup[]>([...startups]);
