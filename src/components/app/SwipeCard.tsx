@@ -3,7 +3,7 @@ import { motion, useMotionValue, useTransform, type PanInfo } from "framer-motio
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   MapPin, Lightbulb, Rocket, Clock, Globe,
-  Building2, GraduationCap, Star, Zap,
+  Building2, GraduationCap, Star, Zap, Crown,
 } from "lucide-react";
 import type { Profile } from "@/lib/profileData";
 
