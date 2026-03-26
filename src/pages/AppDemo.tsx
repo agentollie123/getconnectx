@@ -26,16 +26,16 @@ import { DemoLimitModal } from "@/components/app/DemoLimitModal";
 import { SpotlightModal } from "@/components/app/SpotlightModal";
 import { AddToTeamModal } from "@/components/app/AddToTeamModal";
 import { UpgradeModal } from "@/components/app/UpgradeModal";
-import { VersionBadge, MatchingModeSelector, SwipeLimitBar } from "@/components/app/VersionBadge";
+import { VersionBadge, SwipeLimitBar } from "@/components/app/VersionBadge";
 import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
-import { OnboardingFlow } from "@/components/app/OnboardingFlow";
+import { OnboardingFlow, type UserRole, type OnboardingResult } from "@/components/app/OnboardingFlow";
 
 const navItems = [
   { icon: Home, label: "Home" },
-  { icon: Heart, label: "Matches" },
+  { icon: Heart, label: "Connects" },
   { icon: MessageCircle, label: "Chat" },
   { icon: Users, label: "Team" },
   { icon: User, label: "Profile" },
@@ -52,11 +52,14 @@ type MatchingMode = "founder-cofounder" | "founder-team" | "cofounder-startup" |
 
 const isStartupMode = (mode: MatchingMode) => mode === "cofounder-startup" || mode === "team-startup";
 
-const FEED_TITLES: Record<MatchingMode, string> = {
-  "founder-cofounder": "Discover Co-Founders",
-  "founder-team": "Discover Team Members",
-  "cofounder-startup": "Discover Startups Looking for Co-Founders",
-  "team-startup": "Discover Startups Looking for Team Members",
+const getFeedLabel = (role: UserRole, mode: MatchingMode): string => {
+  switch (role) {
+    case "founder": return mode === "founder-team" ? "Building Team" : "Finding Co-Founder";
+    case "cofounder": return "Joining a Startup";
+    case "team": return "Explore Startups";
+    case "startup": return mode === "founder-team" ? "Hiring Builders" : "Hiring Co-Founders";
+    default: return "Discover";
+  }
 };
 
 export default function AppDemo() {
