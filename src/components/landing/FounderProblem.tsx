@@ -26,7 +26,7 @@ const stats = [
   {
     icon: AlertTriangle,
     numValue: 90,
-    prefix: "~",
+    prefix: "",
     suffix: "%",
     displayText: null,
     label: "of startups fail",
