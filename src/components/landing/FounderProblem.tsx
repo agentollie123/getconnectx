@@ -1,32 +1,36 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+
+function CountUp({ end, suffix = "%", duration = 1.2 }: { end: number; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const start = performance.now();
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / (duration * 1000), 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(eased * end));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView, end, duration]);
+
+  return <span ref={ref}>{value}{suffix}</span>;
+}
 
 const stats = [
-  {
-    value: "90%",
-    title: "Startups fail",
-    body: "Not just ideas — execution, market, and team matter.",
-  },
-  {
-    value: "23%",
-    title: "Fail due to team issues",
-    body: "One of the most common breakdown points.",
-  },
-  {
-    value: "65%",
-    title: "Experience co-founder conflict",
-    body: "Misalignment early can break everything.",
-  },
+  { end: 90, title: "Startups fail", body: "Not just ideas — execution, market, and team matter." },
+  { end: 23, title: "Fail due to team issues", body: "One of the most common breakdown points." },
+  { end: 65, title: "Experience co-founder conflict", body: "Misalignment early can break everything." },
 ];
 
 const insights = [
   {
     title: "Broken system",
-    lines: [
-      "Founders are looking for people.",
-      "Talented people are looking for opportunities.",
-      "But they don't meet.",
-    ],
+    lines: ["Founders are looking for people.", "Talented people are looking for opportunities.", "But they don't meet."],
   },
   {
     title: "It's not a talent problem.\nIt's a connection problem.",
@@ -82,7 +86,7 @@ export function FounderProblem() {
           {stats.map((s, i) => (
             <Card key={s.title} delay={i * 0.08}>
               <p className="font-display font-bold mb-1" style={{ fontSize: 30, color: "#FF8A3D" }}>
-                {s.value}
+                <CountUp end={s.end} />
               </p>
               <p className="font-sans font-semibold mb-1.5" style={{ fontSize: 15, color: "#FFFFFF" }}>
                 {s.title}
