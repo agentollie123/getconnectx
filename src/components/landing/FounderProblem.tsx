@@ -67,8 +67,6 @@ const stats = [
   },
 ];
 
-const currentReality = ["LinkedIn", "Events", "Personal networks"];
-
 export function FounderProblem() {
   return (
     <section className="py-24 bg-secondary/30">
