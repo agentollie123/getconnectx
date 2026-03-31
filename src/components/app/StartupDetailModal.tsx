@@ -113,10 +113,10 @@ export function StartupDetailModal({ startup, onClose, onInterested, onPass }: S
             {/* Actions */}
             <div className="flex gap-3 pt-1">
               <Button variant="outline" className="flex-1 border-border" onClick={onPass}>
-                <X className="w-4 h-4 mr-1.5 text-destructive" /> Pass
+                <X className="w-4 h-4 mr-1.5 text-destructive" /> Skip
               </Button>
               <Button className="flex-1 bg-primary text-primary-foreground" onClick={onInterested}>
-                <Check className="w-4 h-4 mr-1.5" /> Interested
+                <Check className="w-4 h-4 mr-1.5" /> Connect
               </Button>
             </div>
           </div>
