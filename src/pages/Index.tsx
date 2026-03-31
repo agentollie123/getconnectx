@@ -6,7 +6,7 @@ import { StartupPipeline } from "@/components/landing/StartupPipeline";
 import { PremiumVsFree } from "@/components/landing/PremiumVsFree";
 import { PlaygroundSection } from "@/components/landing/PlaygroundSection";
 import { SocialProof } from "@/components/landing/SocialProof";
-import { BigVision } from "@/components/landing/BigVision";
+
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
 
