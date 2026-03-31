@@ -18,8 +18,7 @@ const Index = () => {
       <FounderProblem />
       <SolutionSection />
       <StartupPipeline />
-      <BuiltForBuilders />
-      <EcosystemMatchmaking />
+      <PremiumVsFree />
       <PlaygroundSection />
       <SocialProof />
       <BigVision />
