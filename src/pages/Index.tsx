@@ -21,7 +21,7 @@ const Index = () => {
       <PremiumVsFree />
       <PlaygroundSection />
       <SocialProof />
-      <BigVision />
+      
       <FinalCTA />
       <Footer />
     </div>
