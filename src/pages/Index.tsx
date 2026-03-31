@@ -3,8 +3,7 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { FounderProblem } from "@/components/landing/FounderProblem";
 import { SolutionSection } from "@/components/landing/SolutionSection";
 import { StartupPipeline } from "@/components/landing/StartupPipeline";
-import { BuiltForBuilders } from "@/components/landing/BuiltForBuilders";
-import { EcosystemMatchmaking } from "@/components/landing/EcosystemMatchmaking";
+import { PremiumVsFree } from "@/components/landing/PremiumVsFree";
 import { PlaygroundSection } from "@/components/landing/PlaygroundSection";
 import { SocialProof } from "@/components/landing/SocialProof";
 import { BigVision } from "@/components/landing/BigVision";
@@ -19,8 +18,7 @@ const Index = () => {
       <FounderProblem />
       <SolutionSection />
       <StartupPipeline />
-      <BuiltForBuilders />
-      <EcosystemMatchmaking />
+      <PremiumVsFree />
       <PlaygroundSection />
       <SocialProof />
       <BigVision />
