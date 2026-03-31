@@ -439,12 +439,12 @@ function StartupMatchModal({ startup, onClose, onChat }: { startup: Startup; onC
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-4">
           <span className="text-xl font-display font-bold text-primary-foreground">{initials}</span>
         </div>
-        <h2 className="font-display text-xl font-bold gradient-text mb-1">Startup Match! 🚀</h2>
+        <h2 className="font-display text-xl font-bold gradient-text mb-1">Connection started! 🚀</h2>
         <p className="text-sm text-foreground font-semibold mb-1">{startup.name}</p>
         <p className="text-xs text-muted-foreground mb-1">Founded by {startup.founder}</p>
-        <Badge variant="outline" className="text-[10px] border-primary/30 text-primary mb-4">Startup Match</Badge>
+        <Badge variant="outline" className="text-[10px] border-primary/30 text-primary mb-4">Connected</Badge>
         <p className="text-xs text-muted-foreground mb-4">
-          {startup.founder} is interested in connecting with you for <span className="text-primary font-medium">{startup.openRoles[0]}</span>
+          You and {startup.name} are now connected for <span className="text-primary font-medium">{startup.openRoles[0]}</span>
         </p>
         <Button className="w-full bg-primary text-primary-foreground" onClick={onChat}>
           <MessageCircle className="w-4 h-4 mr-1.5" /> Chat with Founder
