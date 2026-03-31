@@ -95,10 +95,10 @@ export function StartupSwipeCard({ startup, onSwipe, isTop, triggerExit, showAiE
       {isTop && (
         <>
           <motion.div className="absolute top-8 right-4 z-20 px-5 py-2.5 rounded-xl border-2 border-green-400 bg-green-400/20 font-display font-bold text-green-400 text-xl -rotate-12 shadow-lg" style={{ opacity: likeOpacity }}>
-            INTERESTED
+            CONNECT
           </motion.div>
           <motion.div className="absolute top-8 left-4 z-20 px-5 py-2.5 rounded-xl border-2 border-destructive bg-destructive/20 font-display font-bold text-destructive text-xl rotate-12 shadow-lg" style={{ opacity: nopeOpacity }}>
-            PASS
+            SKIP
           </motion.div>
         </>
       )}
