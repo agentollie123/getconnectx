@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Crown, Check, Rocket, Eye, MessageCircle, Sparkles } from "lucide-react";
+import { X, Crown, Check, Zap, Eye, RotateCcw, SlidersHorizontal, Star, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -8,303 +8,143 @@ interface UpgradeModalProps {
   onClose: () => void;
 }
 
-const BENEFITS = [
-  {
-    icon: Rocket,
-    title: "Better Matches",
-    desc: "See higher-quality, more relevant people",
-  },
-  {
-    icon: Eye,
-    title: "Get Seen First",
-    desc: "Appear earlier to founders and startups",
-  },
-  {
-    icon: MessageCircle,
-    title: "Don't Miss Opportunities",
-    desc: "See who wants to connect with you",
-  },
+const PREMIUM_FEATURES = [
+  { icon: Eye, label: "See who liked you" },
+  { icon: Zap, label: "Unlimited swipes" },
+  { icon: SlidersHorizontal, label: "Advanced filters" },
+  { icon: Star, label: "Priority visibility" },
+  { icon: RotateCcw, label: "Rewind swipes" },
 ];
 
-const FREE_LIST = [
-  "Explore profiles",
-  "Basic matching",
-  "Limited visibility",
+const PLANS_ID = [
+  { duration: "1 Week", price: "Rp19.000", perWeek: "" },
+  { duration: "1 Month", price: "Rp79.000", perWeek: "Rp19.750/wk", popular: true },
+  { duration: "3 Months", price: "Rp199.000", perWeek: "Rp15.308/wk" },
+  { duration: "12 Months", price: "Rp599.000", perWeek: "Rp11.519/wk", best: true },
+  { duration: "Lifetime", price: "Rp899.000", badge: "Early Supporter" },
 ];
 
-const PREMIUM_LIST = [
-  "See your connects",
-  "Higher match quality",
-  "Priority visibility",
-  "Faster connections",
+const PLANS_GLOBAL = [
+  { duration: "1 Week", price: "$4.99", perWeek: "" },
+  { duration: "1 Month", price: "$14.99", perWeek: "$3.75/wk", popular: true },
+  { duration: "3 Months", price: "$39.99", perWeek: "$3.08/wk" },
+  { duration: "12 Months", price: "$99", perWeek: "$1.90/wk", best: true },
+  { duration: "Lifetime", price: "$149", badge: "Early Supporter" },
 ];
 
 export function UpgradeModal({ open, onClose }: UpgradeModalProps) {
-  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly">("yearly");
-  const [showDismiss, setShowDismiss] = useState(false);
+  const [region, setRegion] = useState<"id" | "global">("global");
+  const plans = region === "id" ? PLANS_ID : PLANS_GLOBAL;
+  const [selected, setSelected] = useState(1);
 
   if (!open) return null;
-
-  const handleClose = () => {
-    setShowDismiss(true);
-  };
-
-  const handleConfirmClose = () => {
-    setShowDismiss(false);
-    onClose();
-  };
-
   return (
     <AnimatePresence>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-background/80 backdrop-blur-sm"
-        onClick={handleClose}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4"
+        onClick={onClose}
       >
         <motion.div
-          initial={{ y: 60, opacity: 0, scale: 0.97 }}
-          animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: 60, opacity: 0, scale: 0.97 }}
-          transition={{ type: "spring", damping: 28, stiffness: 320 }}
-          className="relative w-full max-w-md rounded-t-3xl sm:rounded-3xl bg-card border border-border/50 shadow-2xl overflow-hidden max-h-[95vh] flex flex-col"
+          initial={{ scale: 0.95, opacity: 0, y: 10 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.95, opacity: 0, y: 10 }}
+          transition={{ type: "spring", damping: 25, stiffness: 300 }}
+          className="relative w-full max-w-[380px] rounded-3xl bg-card border border-border/50 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Close */}
-          <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 z-10 w-7 h-7 rounded-full bg-muted/40 flex items-center justify-center text-muted-foreground/60 hover:text-foreground hover:bg-muted transition-colors"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
+          {/* Header */}
+          <div className="relative px-6 pt-6 pb-4 bg-gradient-to-b from-primary/8 to-transparent">
+            <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+              <X className="w-4 h-4" />
+            </button>
 
-          <div className="flex-1 overflow-y-auto">
-            {/* HERO / HOOK */}
-            <div className="relative px-6 pt-8 pb-6 text-center overflow-hidden">
-              {/* Blurred profiles background */}
-              <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-[0.08]">
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-16 h-20 rounded-xl bg-primary/40 blur-sm"
-                    style={{ transform: `rotate(${(i - 2) * 8}deg) translateY(${Math.abs(i - 2) * 6}px)` }}
-                  />
-                ))}
-              </div>
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-primary flex items-center justify-center mx-auto mb-3 shadow-lg shadow-primary/20">
+              <Crown className="w-6 h-6 text-primary-foreground" />
+            </div>
+            <h2 className="font-display text-lg font-bold text-foreground text-center">ConnectX PRO</h2>
+            <p className="text-[11px] text-muted-foreground text-center mt-1">Unlock the full potential of your network</p>
 
-              {/* Glowing icon */}
-              <motion.div
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", delay: 0.1 }}
-                className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-accent to-primary flex items-center justify-center mx-auto mb-4"
-                style={{ boxShadow: "0 0 30px hsl(var(--primary) / 0.3)" }}
+            {/* Region Toggle */}
+            <div className="flex items-center justify-center gap-0.5 mt-4 p-0.5 rounded-full bg-muted/60 border border-border/50 w-fit mx-auto">
+              <button
+                onClick={() => { setRegion("id"); setSelected(1); }}
+                className={`px-4 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-200 ${region === "id" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
               >
-                <Crown className="w-7 h-7 text-primary-foreground" />
-              </motion.div>
-
-              <h2 className="font-display text-xl font-bold text-foreground mb-2">
-                Find the Right People Faster
-              </h2>
-              <p className="text-xs text-muted-foreground leading-relaxed max-w-[280px] mx-auto">
-                You're already exploring.
-                <br />
-                Now increase your chances of building the right startup.
-              </p>
-            </div>
-
-            {/* WHY UPGRADE — 3 BENEFITS */}
-            <div className="px-6 pb-5">
-              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Why Upgrade to Premium
-              </p>
-              <div className="space-y-3">
-                {BENEFITS.map((b, i) => (
-                  <motion.div
-                    key={b.title}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.15 + i * 0.08 }}
-                    className="flex items-start gap-3"
-                  >
-                    <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <b.icon className="w-4 h-4 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">{b.title}</p>
-                      <p className="text-[11px] text-muted-foreground">{b.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Differentiator */}
-              <div className="mt-4 px-3 py-2.5 rounded-xl bg-primary/5 border border-primary/15">
-                <p className="text-[11px] text-primary font-medium text-center flex items-center justify-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Premium users are matched earlier with higher-fit profiles
-                </p>
-              </div>
-            </div>
-
-            {/* FREE VS PREMIUM COMPARISON */}
-            <div className="px-6 pb-5">
-              <div className="grid grid-cols-2 gap-3">
-                {/* Free */}
-                <div className="rounded-xl bg-muted/20 border border-border/40 p-3">
-                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-2.5">Free</p>
-                  <div className="space-y-2">
-                    {FREE_LIST.map((item) => (
-                      <div key={item} className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-muted-foreground/50 mt-0.5 flex-shrink-0" />
-                        <span className="text-[11px] text-muted-foreground">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Premium */}
-                <div
-                  className="rounded-xl border border-primary/30 p-3 bg-card"
-                  style={{ boxShadow: "0 0 20px -8px hsl(var(--primary) / 0.15)" }}
-                >
-                  <p className="text-[10px] font-bold text-primary uppercase tracking-wider mb-2.5 flex items-center gap-1">
-                    <Crown className="w-3 h-3" /> Premium
-                  </p>
-                  <div className="space-y-2">
-                    {PREMIUM_LIST.map((item) => (
-                      <div key={item} className="flex items-start gap-1.5">
-                        <Check className="w-3 h-3 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-[11px] text-foreground font-medium">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* PRICING */}
-            <div className="px-6 pb-5">
-              <div className="space-y-2">
-                {/* Monthly */}
-                <motion.button
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setSelectedPlan("monthly")}
-                  className={`w-full flex items-center justify-between p-3.5 rounded-2xl border-2 transition-all duration-200 ${
-                    selectedPlan === "monthly"
-                      ? "border-primary/60 bg-primary/5"
-                      : "border-transparent bg-muted/30 hover:bg-muted/50"
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${selectedPlan === "monthly" ? "border-primary" : "border-muted-foreground/30"}`}>
-                      {selectedPlan === "monthly" && <div className="w-2 h-2 rounded-full bg-primary" />}
-                    </div>
-                    <span className="text-[13px] font-semibold text-foreground">Monthly</span>
-                  </div>
-                  <span className={`text-[13px] font-bold ${selectedPlan === "monthly" ? "text-primary" : "text-foreground"}`}>
-                    $9.99/mo
-                  </span>
-                </motion.button>
-
-                {/* Yearly */}
-                <motion.button
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setSelectedPlan("yearly")}
-                  className={`w-full flex items-center justify-between p-3.5 rounded-2xl border-2 transition-all duration-200 ${
-                    selectedPlan === "yearly"
-                      ? "border-primary/60 bg-primary/5 shadow-sm shadow-primary/10"
-                      : "border-transparent bg-muted/30 hover:bg-muted/50"
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${selectedPlan === "yearly" ? "border-primary" : "border-muted-foreground/30"}`}>
-                      {selectedPlan === "yearly" && <div className="w-2 h-2 rounded-full bg-primary" />}
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[13px] font-semibold text-foreground">Yearly</span>
-                      <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground leading-none">
-                        SAVE 50%
-                      </span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className={`text-[13px] font-bold ${selectedPlan === "yearly" ? "text-primary" : "text-foreground"}`}>
-                      $59/yr
-                    </span>
-                    <p className="text-[10px] text-muted-foreground">$4.92/mo</p>
-                  </div>
-                </motion.button>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="px-6 pb-3">
-              <Button
-                className="w-full h-12 rounded-2xl bg-gradient-to-r from-accent to-primary text-primary-foreground font-semibold text-sm shadow-lg transition-all hover:shadow-primary/30 active:scale-[0.98]"
-                style={{ boxShadow: "0 8px 25px -5px hsl(var(--primary) / 0.3)" }}
+                🇮🇩 Indonesia
+              </button>
+              <button
+                onClick={() => { setRegion("global"); setSelected(1); }}
+                className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-200 ${region === "global" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
               >
-                <Crown className="w-4 h-4 mr-2" />
-                Upgrade to Premium
-              </Button>
-              <p className="text-[11px] text-muted-foreground text-center mt-2">
-                Start finding better matches today
-              </p>
-            </div>
-
-            {/* URGENCY + SOCIAL PROOF */}
-            <div className="px-6 pb-6 space-y-2">
-              <p className="text-[10px] text-primary/70 text-center font-medium italic">
-                The best teams are already forming
-              </p>
-              <p className="text-[10px] text-muted-foreground/60 text-center">
-                Founders who upgrade get matches 2× faster
-              </p>
+                <Globe className="w-3 h-3" /> Global
+              </button>
             </div>
           </div>
 
-          {/* DISMISS OVERLAY */}
-          <AnimatePresence>
-            {showDismiss && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 z-20 bg-background/90 backdrop-blur-sm flex items-center justify-center p-6"
-              >
-                <motion.div
-                  initial={{ scale: 0.95, y: 10 }}
-                  animate={{ scale: 1, y: 0 }}
-                  exit={{ scale: 0.95, y: 10 }}
-                  className="text-center"
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto px-6 pb-6">
+            {/* Plans */}
+            <div className="space-y-1.5 mb-5">
+              {plans.map((p, i) => (
+                <motion.button
+                  key={p.duration}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setSelected(i)}
+                  className={`w-full flex items-center justify-between p-3 rounded-2xl border-2 transition-all duration-200 ${
+                    selected === i
+                      ? "border-primary bg-primary/5 shadow-sm shadow-primary/10"
+                      : "border-transparent bg-muted/30 hover:bg-muted/50"
+                  }`}
                 >
-                  <p className="font-display text-sm font-semibold text-foreground mb-1">
-                    Keep exploring with limited matches
-                  </p>
-                  <p className="text-[11px] text-muted-foreground mb-5 max-w-[240px] mx-auto">
-                    You can always upgrade later to unlock better connections
-                  </p>
-                  <div className="flex flex-col gap-2">
-                    <Button
-                      size="sm"
-                      className="bg-gradient-to-r from-accent to-primary text-primary-foreground text-xs"
-                      onClick={() => setShowDismiss(false)}
-                    >
-                      <Crown className="w-3 h-3 mr-1.5" />
-                      Stay on Premium
-                    </Button>
-                    <button
-                      onClick={handleConfirmClose}
-                      className="text-[11px] text-muted-foreground hover:text-foreground transition-colors py-1"
-                    >
-                      Continue with Free
-                    </button>
+                  <div className="flex items-center gap-2.5 text-left">
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${selected === i ? "border-primary" : "border-muted-foreground/30"}`}>
+                      {selected === i && <div className="w-2 h-2 rounded-full bg-primary" />}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[13px] font-semibold text-foreground">{p.duration}</span>
+                        {(p as any).popular && (
+                          <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground leading-none">POPULAR</span>
+                        )}
+                        {(p as any).best && (
+                          <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground leading-none">BEST VALUE</span>
+                        )}
+                        {p.badge && (
+                          <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-accent/20 text-accent leading-none">🎉 {p.badge}</span>
+                        )}
+                      </div>
+                      {p.perWeek && (
+                        <span className="text-[10px] text-muted-foreground">{p.perWeek}</span>
+                      )}
+                    </div>
                   </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                  <span className={`text-[13px] font-bold ${selected === i ? "text-primary" : "text-foreground"}`}>{p.price}</span>
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Features */}
+            <div className="rounded-2xl bg-muted/20 border border-border/50 p-3 mb-5">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Everything included</p>
+              <div className="grid grid-cols-1 gap-2">
+                {PREMIUM_FEATURES.map((f) => (
+                  <div key={f.label} className="flex items-center gap-2.5">
+                    <Check className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                    <span className="text-xs text-foreground">{f.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Button className="w-full h-11 rounded-2xl bg-gradient-to-r from-accent to-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow">
+              <Crown className="w-4 h-4 mr-2" />
+              Upgrade — {plans[selected].price}
+            </Button>
+            <p className="text-[10px] text-muted-foreground text-center mt-2.5 opacity-60">Feature available in full release</p>
+          </div>
         </motion.div>
       </motion.div>
     </AnimatePresence>
