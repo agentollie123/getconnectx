@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const PLANS_ID = [
   { duration: "1 Week", price: "Rp19.000", perWeek: "" },
-  { duration: "1 Month", price: "Rp79.000", perWeek: "Rp19.750/wk", popular: true },
+  { duration: "1 Month", price: "Rp79.000", perWeek: "Rp18.245/wk", popular: true, save: "4%" },
   { duration: "3 Months", price: "Rp199.000", perWeek: "Rp15.308/wk", save: "19%" },
   { duration: "12 Months", price: "Rp599.000", perWeek: "Rp11.519/wk", best: true, save: "39%" },
   { duration: "Lifetime", price: "Rp899.000", badge: "Early Supporter" },
