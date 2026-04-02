@@ -13,7 +13,7 @@ const PLANS_ID = [
 
 const PLANS_GLOBAL = [
   { duration: "1 Week", price: "$4.99", perWeek: "" },
-  { duration: "1 Month", price: "$14.99", perWeek: "$3.75/wk", popular: true, save: "25%" },
+  { duration: "1 Month", price: "$14.99", perWeek: "$3.46/wk", popular: true, save: "31%" },
   { duration: "3 Months", price: "$39.99", perWeek: "$3.08/wk", save: "38%" },
   { duration: "12 Months", price: "$99", perWeek: "$1.90/wk", best: true, save: "62%" },
   { duration: "Lifetime", price: "$149", badge: "Early Supporter" },
