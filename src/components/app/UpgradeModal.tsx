@@ -31,7 +31,9 @@ const BLURRED_PROFILES = [
 ];
 
 export function UpgradeModal({ open, onClose }: UpgradeModalProps) {
-  const [billing, setBilling] = useState<"monthly" | "yearly">("yearly");
+  const [region, setRegion] = useState<"id" | "global">("global");
+  const plans = region === "id" ? PLANS_ID : PLANS_GLOBAL;
+  const [selected, setSelected] = useState(1);
   const [showDismiss, setShowDismiss] = useState(false);
 
   if (!open) return null;
