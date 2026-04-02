@@ -216,38 +216,60 @@ export function UpgradeModal({ open, onClose }: UpgradeModalProps) {
 
             {/* Pricing */}
             <div className="px-6 pb-5">
-              <div className="flex items-center gap-0.5 p-0.5 rounded-xl bg-muted/40 border border-border/30 mb-3">
+              {/* Region Toggle */}
+              <div className="flex items-center justify-center gap-0.5 mb-4 p-0.5 rounded-full bg-muted/60 border border-border/50 w-fit mx-auto">
                 <button
-                  onClick={() => setBilling("monthly")}
-                  className={`flex-1 py-2 rounded-lg text-[11px] font-semibold transition-all ${
-                    billing === "monthly" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"
-                  }`}
+                  onClick={() => { setRegion("id"); setSelected(1); }}
+                  className={`px-4 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-200 ${region === "id" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
                 >
-                  Monthly
+                  🇮🇩 Indonesia
                 </button>
                 <button
-                  onClick={() => setBilling("yearly")}
-                  className={`flex-1 py-2 rounded-lg text-[11px] font-semibold transition-all relative ${
-                    billing === "yearly" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"
-                  }`}
+                  onClick={() => { setRegion("global"); setSelected(1); }}
+                  className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-200 ${region === "global" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
                 >
-                  Yearly
-                  <span className="absolute -top-1.5 -right-1 text-[8px] px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground font-bold">SAVE 50%</span>
+                  <Globe className="w-3 h-3" /> Global
                 </button>
               </div>
 
-              <div className="text-center mb-4">
-                <div className="flex items-baseline justify-center gap-1">
-                  <span className="font-display text-3xl font-bold text-foreground">
-                    {billing === "monthly" ? "$9.99" : "$59"}
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    / {billing === "monthly" ? "month" : "year"}
-                  </span>
-                </div>
-                {billing === "yearly" && (
-                  <p className="text-[11px] text-primary mt-0.5">That's just $4.92/month</p>
-                )}
+              {/* Plans */}
+              <div className="space-y-1.5 mb-4">
+                {plans.map((p, i) => (
+                  <motion.button
+                    key={p.duration}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelected(i)}
+                    className={`w-full flex items-center justify-between p-3 rounded-2xl border-2 transition-all duration-200 ${
+                      selected === i
+                        ? "border-primary bg-primary/5 shadow-sm shadow-primary/10"
+                        : "border-transparent bg-muted/30 hover:bg-muted/50"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 text-left">
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${selected === i ? "border-primary" : "border-muted-foreground/30"}`}>
+                        {selected === i && <div className="w-2 h-2 rounded-full bg-primary" />}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[13px] font-semibold text-foreground">{p.duration}</span>
+                          {(p as any).popular && (
+                            <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground leading-none">POPULAR</span>
+                          )}
+                          {(p as any).best && (
+                            <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground leading-none">BEST VALUE</span>
+                          )}
+                          {(p as any).badge && (
+                            <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-accent/20 text-accent leading-none">🎉 {(p as any).badge}</span>
+                          )}
+                        </div>
+                        {p.perWeek && (
+                          <span className="text-[10px] text-muted-foreground">{p.perWeek}</span>
+                        )}
+                      </div>
+                    </div>
+                    <span className={`text-[13px] font-bold ${selected === i ? "text-primary" : "text-foreground"}`}>{p.price}</span>
+                  </motion.button>
+                ))}
               </div>
 
               {/* CTA */}
@@ -255,7 +277,7 @@ export function UpgradeModal({ open, onClose }: UpgradeModalProps) {
                 className="w-full h-12 rounded-2xl bg-gradient-to-r from-accent to-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all active:scale-[0.98]"
               >
                 <Crown className="w-4 h-4 mr-2" />
-                Upgrade to Premium
+                Upgrade — {plans[selected].price}
               </Button>
               <p className="text-[11px] text-muted-foreground text-center mt-2">Start finding better matches today</p>
             </div>
