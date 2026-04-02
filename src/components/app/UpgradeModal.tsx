@@ -1,7 +1,23 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Crown, Check, Rocket, Eye, MessageCircle, Sparkles } from "lucide-react";
+import { X, Crown, Check, Rocket, Eye, MessageCircle, Sparkles, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+
+const PLANS_ID = [
+  { duration: "1 Week", price: "Rp19.000", perWeek: "" },
+  { duration: "1 Month", price: "Rp79.000", perWeek: "Rp19.750/wk", popular: true },
+  { duration: "3 Months", price: "Rp199.000", perWeek: "Rp15.308/wk" },
+  { duration: "12 Months", price: "Rp599.000", perWeek: "Rp11.519/wk", best: true },
+  { duration: "Lifetime", price: "Rp899.000", badge: "Early Supporter" },
+];
+
+const PLANS_GLOBAL = [
+  { duration: "1 Week", price: "$4.99", perWeek: "" },
+  { duration: "1 Month", price: "$14.99", perWeek: "$3.75/wk", popular: true },
+  { duration: "3 Months", price: "$39.99", perWeek: "$3.08/wk" },
+  { duration: "12 Months", price: "$99", perWeek: "$1.90/wk", best: true },
+  { duration: "Lifetime", price: "$149", badge: "Early Supporter" },
+];
 
 interface UpgradeModalProps {
   open: boolean;
