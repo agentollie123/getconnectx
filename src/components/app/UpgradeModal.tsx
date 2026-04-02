@@ -263,7 +263,12 @@ export function UpgradeModal({ open, onClose }: UpgradeModalProps) {
                           )}
                         </div>
                         {p.perWeek && (
-                          <span className="text-[10px] text-muted-foreground">{p.perWeek}</span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[10px] text-muted-foreground">{p.perWeek}</span>
+                            {(p as any).save && (
+                              <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-green-500/15 text-green-500 leading-none">-{(p as any).save}</span>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>
