@@ -5,10 +5,10 @@ import { useState } from "react";
 
 const PLANS_ID = [
   { duration: "1 Week", price: "Rp19.000", perWeek: "" },
-  { duration: "1 Month", price: "Rp79.000", perWeek: "Rp19.750/wk", popular: true },
+  { duration: "1 Month", price: "Rp79.000", perWeek: "Rp19.750/wk", popular: true, save: "4%" },
   { duration: "3 Months", price: "Rp199.000", perWeek: "Rp15.308/wk", save: "19%" },
   { duration: "12 Months", price: "Rp599.000", perWeek: "Rp11.519/wk", best: true, save: "39%" },
-  { duration: "Lifetime", price: "Rp899.000", badge: "Early Supporter" },
+  { duration: "Lifetime", price: "Rp899.000", perWeek: "", badge: "Early Supporter", save: "54%" },
 ];
 
 const PLANS_GLOBAL = [
@@ -16,7 +16,7 @@ const PLANS_GLOBAL = [
   { duration: "1 Month", price: "$14.99", perWeek: "$3.75/wk", popular: true, save: "25%" },
   { duration: "3 Months", price: "$39.99", perWeek: "$3.08/wk", save: "38%" },
   { duration: "12 Months", price: "$99", perWeek: "$1.90/wk", best: true, save: "62%" },
-  { duration: "Lifetime", price: "$149", badge: "Early Supporter" },
+  { duration: "Lifetime", price: "$149", perWeek: "", badge: "Early Supporter", save: "71%" },
 ];
 
 interface UpgradeModalProps {
