@@ -286,8 +286,8 @@ export default function AppPremium() {
         )}
       </AnimatePresence>
 
-      <div className="flex-1 flex flex-col items-center justify-center p-3 relative">
-        <div className="relative w-full max-w-[380px] flex-1 min-h-0 max-h-[520px]">
+      <div className="flex-1 flex flex-col items-center px-3 pt-2 pb-1 relative min-h-0">
+        <div className="relative w-full max-w-[390px] flex-1 min-h-0 overflow-hidden">
           {isEmpty ? (
             <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
