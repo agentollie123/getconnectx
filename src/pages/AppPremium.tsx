@@ -344,10 +344,6 @@ export default function AppPremium() {
           </div>
         )}
       </div>
-
-      <aside className="hidden xl:flex flex-col w-[280px] border-l border-border/30 bg-card/30 p-4 overflow-auto">
-        <PremiumLikedYouSection onAccept={(p) => setConnectedProfiles((prev) => [...prev, p])} />
-      </aside>
     </div>
   );
 
@@ -363,7 +359,7 @@ export default function AppPremium() {
         <div className="flex items-center gap-3">
           <SwipeLimitBar current={swipeCount} max={0} isPremium />
           {activeNav === "Home" && (
-            <button onClick={() => setShowFilters(!showFilters)} className={`lg:hidden w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${showFilters ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
+            <button onClick={() => setShowFilters(!showFilters)} className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${showFilters ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
               <SlidersHorizontal className="w-4 h-4" />
             </button>
           )}
