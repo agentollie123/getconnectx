@@ -258,30 +258,36 @@ export default function AppPremium() {
   };
 
   const renderHomeDesktop = () => (
-    <div className="flex-1 flex overflow-hidden">
-      <motion.aside initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="hidden lg:flex flex-col w-[300px] border-r border-border/30 bg-card/30 p-4 overflow-hidden">
-        <PremiumFilterPanel
-          onGenerate={generateMatches}
-          activeMode={matchingMode}
-          onModeChange={handleModeChange}
-          onAiExplainChange={setShowAiExplanation}
-        />
-      </motion.aside>
-
-      <div className="flex-1 flex flex-col items-center justify-center p-3 lg:p-6 relative">
+    <div className="flex-1 flex flex-col overflow-hidden relative">
+      {/* Filter overlay */}
+      <AnimatePresence>
         {showFilters && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute inset-0 z-30 bg-background/95 backdrop-blur-sm p-4 overflow-auto lg:hidden">
-            <PremiumFilterPanel
-              onGenerate={generateMatches}
-              activeMode={matchingMode}
-              onModeChange={handleModeChange}
-              onAiExplainChange={setShowAiExplanation}
-            />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="absolute inset-0 z-30 bg-background/95 backdrop-blur-md flex flex-col"
+          >
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border/30">
+              <span className="font-display font-bold text-sm text-foreground">Premium Filters</span>
+              <button onClick={() => setShowFilters(false)} className="w-8 h-8 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-auto p-4">
+              <PremiumFilterPanel
+                onGenerate={(filters) => { generateMatches(filters); setShowFilters(false); }}
+                activeMode={matchingMode}
+                onModeChange={handleModeChange}
+                onAiExplainChange={setShowAiExplanation}
+              />
+            </div>
           </motion.div>
         )}
+      </AnimatePresence>
 
-
-        <div className="relative w-full max-w-[360px] h-[420px]">
+      <div className="flex-1 flex flex-col items-center justify-center p-3 relative">
+        <div className="relative w-full max-w-[380px] flex-1 min-h-0 max-h-[520px]">
           {isEmpty ? (
             <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
