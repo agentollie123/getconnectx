@@ -39,11 +39,6 @@ const navItems = [
   { icon: User, label: "Profile" },
 ];
 
-const STATS_BAR = [
-  { label: "Builders", value: "12K+" },
-  { label: "Connections", value: "80K+" },
-  { label: "Teams", value: "300+" },
-];
 
 const INITIAL_TEAM = [
   { role: "Founder", type: "Business", icon: Briefcase, filled: true, profile: null as Profile | null, equity: 40, commitment: "Full-time" },
