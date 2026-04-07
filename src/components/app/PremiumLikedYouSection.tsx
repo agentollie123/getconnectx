@@ -13,13 +13,13 @@ export function PremiumLikedYouSection({ onAccept }: PremiumLikedYouSectionProps
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Heart className="w-4 h-4 text-accent" fill="currentColor" />
-          <h3 className="text-sm font-display font-bold text-foreground">Liked You</h3>
+          <h3 className="text-sm font-display font-bold text-foreground">Connects</h3>
           <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-accent/20 text-accent font-bold">
             {likedProfiles.length}
           </span>
         </div>
         <span className="text-[9px] px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/30 font-semibold">
-          ✦ Premium — All Visible
+          ✦ Premium — All Connects Visible
         </span>
       </div>
 

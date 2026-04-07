@@ -14,7 +14,7 @@ export function LikedYouSection({ onAccept }: LikedYouSectionProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Heart className="w-4 h-4 text-primary" fill="currentColor" />
-          <h3 className="text-sm font-display font-bold text-foreground">Liked You</h3>
+          <h3 className="text-sm font-display font-bold text-foreground">Connects</h3>
           <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/20 text-primary font-bold">
             {likedProfiles.length}
           </span>

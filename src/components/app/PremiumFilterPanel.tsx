@@ -377,7 +377,7 @@ export function PremiumFilterPanel({ onGenerate, activeMode, onModeChange, onAiE
         <div className="rounded-xl bg-accent/5 border border-accent/20 p-2.5 mb-2">
           <div className="flex flex-wrap gap-1.5">
             {[
-              { icon: "👀", text: "Full Liked You" },
+              { icon: "👀", text: "Full Connects" },
               { icon: "⚡", text: "Priority Feed" },
               { icon: "🧠", text: "AI Explanations" },
               { icon: "↩️", text: "Undo Swipe" },

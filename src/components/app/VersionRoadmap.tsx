@@ -34,7 +34,7 @@ const TIERS: RoadmapTier[] = [
     tier: "Premium",
     status: "live",
     features: [
-      "See who liked you",
+      "See all Connects",
       "Unlimited swipes",
       "Advanced filters",
       "Rewind swipes",
