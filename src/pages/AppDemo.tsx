@@ -477,7 +477,7 @@ export default function AppDemo() {
         </div>
 
       {/* Main content */}
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden flex flex-col min-h-0">
           {showOnboarding ? (
             <OnboardingFlow onComplete={handleOnboardingComplete} />
           ) : (
