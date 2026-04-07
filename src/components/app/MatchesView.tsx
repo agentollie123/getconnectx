@@ -84,7 +84,7 @@ export function MatchesView({ connectedProfiles, connectedStartups = [], isStart
   return (
     <ScrollArea className="h-full">
       <div className="p-4 space-y-5">
-        {/* Connects / Liked You */}
+        {/* Connects */}
         {isPremium ? (
           <LikedYouSection onAccept={onAcceptLike} />
         ) : (
