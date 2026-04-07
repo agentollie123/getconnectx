@@ -351,7 +351,8 @@ export default function AppPremium() {
   );
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
+      <div className="w-full max-w-[430px] h-[932px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
       <header className="flex-shrink-0 px-4 sm:px-6 py-2.5 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
         <div className="flex items-center gap-2.5">
           <img src={logoIcon} alt="ConnectX" className="w-7 h-7 rounded-md" />
@@ -424,6 +425,7 @@ export default function AppPremium() {
       )}
       <SpotlightModal open={showSpotlight} onClose={() => setShowSpotlight(false)} />
       <AddToTeamModal profile={addToTeamTarget} onClose={() => setAddToTeamTarget(null)} onConfirm={handleAddToTeamConfirm} />
+      </div>
     </div>
   );
 }
