@@ -379,7 +379,7 @@ export default function AppDemo() {
 
       {/* Swipe controls */}
       {!isEmpty && (
-        <div className="flex items-center justify-center gap-4 mt-4 z-20">
+        <div className="flex items-center justify-center gap-4 mt-2 py-2 z-20 flex-shrink-0">
           <button
             onClick={() => handleButtonSwipe("left")}
             className="w-13 h-13 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90"
