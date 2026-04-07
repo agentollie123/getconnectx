@@ -328,17 +328,17 @@ export default function AppPremium() {
         </div>
 
         {!isEmpty && (
-          <div className="flex items-center justify-center gap-4 mt-4 z-20">
-            <button onClick={() => handleButtonSwipe("left")} className="w-[52px] h-[52px] rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
+          <div className="flex items-center justify-center gap-4 py-2 z-20 flex-shrink-0">
+            <button onClick={() => handleButtonSwipe("left")} className="w-13 h-13 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
               <X className="w-6 h-6 text-destructive" />
             </button>
-            <button onClick={handleRewind} disabled={!canRewind} className={`w-10 h-10 rounded-full border border-accent/40 bg-card flex items-center justify-center shadow-md hover:scale-110 transition-transform active:scale-90 ${!canRewind ? "opacity-30" : "glow-accent"}`} title="Rewind last swipe">
+            <button onClick={handleRewind} disabled={!canRewind} className={`w-9 h-9 rounded-full border border-accent/40 bg-card flex items-center justify-center shadow-md hover:scale-110 transition-transform active:scale-90 ${!canRewind ? "opacity-30" : "glow-accent"}`} title="Rewind last swipe">
               <RotateCcw className="w-4 h-4 text-accent" />
             </button>
-            <button onClick={() => setShowSpotlight(true)} className="w-11 h-11 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90 glow-primary">
+            <button onClick={() => setShowSpotlight(true)} className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90 glow-primary">
               <Zap className="w-5 h-5 text-primary-foreground" />
             </button>
-            <button onClick={() => handleButtonSwipe("right")} className="w-[52px] h-[52px] rounded-full border-2 border-green-400/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
+            <button onClick={() => handleButtonSwipe("right")} className="w-13 h-13 rounded-full border-2 border-green-400/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90">
               <Check className="w-6 h-6 text-green-400" />
             </button>
           </div>
