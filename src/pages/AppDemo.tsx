@@ -304,9 +304,9 @@ export default function AppDemo() {
   const isEmpty = currentStack.length === 0;
 
   const renderHomeView = () => (
-    <div className="flex-1 flex flex-col items-center px-3 pt-2 pb-1 relative overflow-hidden">
+    <div className="flex-1 flex flex-col items-center px-3 pt-2 pb-1 relative min-h-0">
       {/* Feed context label + sub-mode toggle */}
-      <div className="w-full max-w-[390px] mb-2 flex items-center justify-between">
+      <div className="w-full max-w-[390px] mb-1 flex items-center justify-between flex-shrink-0">
         <span className="text-[10px] font-bold text-primary uppercase tracking-wider">
           {getFeedLabel(userRole, matchingMode)}
         </span>
@@ -335,7 +335,9 @@ export default function AppDemo() {
           </div>
         )}
       </div>
-      <div className="relative w-full max-w-[390px] flex-1 min-h-0">
+
+      {/* Card area - takes all remaining space */}
+      <div className="relative w-full max-w-[390px] flex-1 min-h-0 overflow-hidden">
         {isEmpty ? (
           <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
             <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
@@ -377,9 +379,9 @@ export default function AppDemo() {
         )}
       </div>
 
-      {/* Swipe controls */}
+      {/* Swipe controls - fixed at bottom */}
       {!isEmpty && (
-        <div className="flex items-center justify-center gap-4 mt-2 py-2 z-20 flex-shrink-0">
+        <div className="flex items-center justify-center gap-4 py-2 z-20 flex-shrink-0">
           <button
             onClick={() => handleButtonSwipe("left")}
             className="w-13 h-13 rounded-full border-2 border-destructive/30 bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform active:scale-90"
