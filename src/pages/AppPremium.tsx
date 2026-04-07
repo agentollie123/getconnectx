@@ -39,11 +39,6 @@ const navItems = [
   { icon: User, label: "Profile" },
 ];
 
-const STATS_BAR = [
-  { label: "Builders", value: "12K+" },
-  { label: "Connections", value: "80K+" },
-  { label: "Teams", value: "300+" },
-];
 
 const INITIAL_TEAM = [
   { role: "Founder", type: "Business", icon: Briefcase, filled: true, profile: null as Profile | null, equity: 40, commitment: "Full-time" },
@@ -361,12 +356,6 @@ export default function AppPremium() {
         </div>
         <div className="flex items-center gap-3">
           <SwipeLimitBar current={swipeCount} max={0} isPremium />
-          {STATS_BAR.map((s) => (
-            <div key={s.label} className="flex items-center gap-1 hidden sm:flex">
-              <span className="text-[10px] font-bold text-primary">{s.value}</span>
-              <span className="text-[9px] text-muted-foreground">{s.label}</span>
-            </div>
-          ))}
           {activeNav === "Home" && (
             <button onClick={() => setShowFilters(!showFilters)} className={`lg:hidden w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${showFilters ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
               <SlidersHorizontal className="w-4 h-4" />
