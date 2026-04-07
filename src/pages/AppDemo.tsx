@@ -413,7 +413,7 @@ export default function AppDemo() {
   return (
     <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
       {/* Mobile frame */}
-      <div className="w-full max-w-[430px] h-[92vh] max-h-[850px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
+      <div className="w-full max-w-[430px] h-[95vh] max-h-[932px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
 
         {/* Status bar */}
         <div className="flex-shrink-0 px-3 py-2 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
