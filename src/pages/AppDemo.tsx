@@ -304,9 +304,9 @@ export default function AppDemo() {
   const isEmpty = currentStack.length === 0;
 
   const renderHomeView = () => (
-    <div className="flex-1 flex flex-col items-center p-3 relative">
+    <div className="flex-1 flex flex-col items-center px-3 pt-2 pb-1 relative overflow-hidden">
       {/* Feed context label + sub-mode toggle */}
-      <div className="w-full max-w-[360px] mb-2 flex items-center justify-between">
+      <div className="w-full max-w-[390px] mb-2 flex items-center justify-between">
         <span className="text-[10px] font-bold text-primary uppercase tracking-wider">
           {getFeedLabel(userRole, matchingMode)}
         </span>
@@ -335,7 +335,7 @@ export default function AppDemo() {
           </div>
         )}
       </div>
-      <div className="relative w-full max-w-[360px] h-[420px]">
+      <div className="relative w-full max-w-[390px] flex-1 min-h-0">
         {isEmpty ? (
           <div className="h-full rounded-2xl bg-card border border-border flex flex-col items-center justify-center text-center px-6 shadow-xl">
             <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">

@@ -3,7 +3,7 @@ import { motion, useMotionValue, useTransform, type PanInfo } from "framer-motio
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   MapPin, Lightbulb, Rocket, Clock, Globe,
-  Building2, GraduationCap, Star, Zap, Crown,
+  Building2, GraduationCap, Star, Zap, Crown, Briefcase,
 } from "lucide-react";
 import type { Profile } from "@/lib/profileData";
 
@@ -29,7 +29,6 @@ function getAiReasons(profile: Profile): string[] {
   ].slice(0, 3);
 }
 
-// Animated count-up for match score
 function AnimatedScore({ score }: { score: number }) {
   const [display, setDisplay] = useState(0);
   useEffect(() => {
@@ -47,23 +46,38 @@ function AnimatedScore({ score }: { score: number }) {
   return <>{display}%</>;
 }
 
-function MatchBadge({ score, isPremium }: { score: number; isPremium?: boolean }) {
+function MatchScoreRing({ score, isPremium }: { score: number; isPremium?: boolean }) {
   const isTop = isPremium && score >= 90;
-  const label = isTop ? "Top Match" : score >= 90 ? "Perfect Match" : score >= 75 ? "Strong Match" : "Potential Match";
   const color = isTop ? "text-accent" : score >= 90 ? "text-green-400" : score >= 75 ? "text-primary" : "text-accent";
+  const stroke = isTop ? "stroke-[hsl(var(--accent))]" : score >= 90 ? "stroke-green-400" : score >= 75 ? "stroke-[hsl(var(--primary))]" : "stroke-[hsl(var(--accent))]";
+  const label = isTop ? "Top Match" : score >= 90 ? "Perfect Match" : score >= 75 ? "Strong Match" : "Potential Match";
+
   return (
-    <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: 0.2, duration: 0.25, ease: "easeOut" }}
-      className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${
-        isTop ? "bg-accent/15 border border-accent/30" : score >= 90 ? "bg-green-400/10" : score >= 75 ? "bg-primary/10" : "bg-accent/10"
-      }`}
-    >
-      <Star className={`w-3 h-3 ${color}`} fill="currentColor" />
-      <span className={`text-[10px] font-bold ${color}`}>{label}</span>
-      {isTop && <Crown className="w-3 h-3 text-accent" />}
-    </motion.div>
+    <div className="flex items-center gap-2">
+      <div className="relative w-12 h-12 flex-shrink-0">
+        <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
+          <path d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831 15.9155 15.9155 0 0 1 0-31.831" fill="none" stroke="hsl(var(--border))" strokeWidth="2.5" />
+          <motion.path
+            d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831 15.9155 15.9155 0 0 1 0-31.831"
+            fill="none" className={stroke} strokeWidth="2.5"
+            strokeLinecap="round"
+            initial={{ strokeDasharray: "0, 100" }}
+            animate={{ strokeDasharray: `${score}, 100` }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+          />
+        </svg>
+        <span className={`absolute inset-0 flex items-center justify-center text-[10px] font-bold ${color}`}>
+          <AnimatedScore score={score} />
+        </span>
+      </div>
+      <div>
+        <div className="flex items-center gap-1">
+          <Star className={`w-3 h-3 ${color}`} fill="currentColor" />
+          <span className={`text-[10px] font-bold ${color}`}>{label}</span>
+          {isTop && <Crown className="w-3 h-3 text-accent" />}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -122,82 +136,64 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
     >
       {isTop && (
         <>
-          <motion.div className="absolute top-8 right-4 z-20 px-5 py-2.5 rounded-xl border-2 border-green-400 bg-green-400/20 font-display font-bold text-green-400 text-xl -rotate-12 shadow-lg" style={{ opacity: likeOpacity }}>
+          <motion.div className="absolute top-10 right-5 z-20 px-6 py-3 rounded-xl border-2 border-green-400 bg-green-400/20 font-display font-bold text-green-400 text-2xl -rotate-12 shadow-lg" style={{ opacity: likeOpacity }}>
             CONNECT
           </motion.div>
-          <motion.div className="absolute top-8 left-4 z-20 px-5 py-2.5 rounded-xl border-2 border-destructive bg-destructive/20 font-display font-bold text-destructive text-xl rotate-12 shadow-lg" style={{ opacity: nopeOpacity }}>
+          <motion.div className="absolute top-10 left-5 z-20 px-6 py-3 rounded-xl border-2 border-destructive bg-destructive/20 font-display font-bold text-destructive text-2xl rotate-12 shadow-lg" style={{ opacity: nopeOpacity }}>
             SKIP
           </motion.div>
         </>
       )}
 
       <div className="h-full rounded-2xl bg-card border border-border overflow-hidden flex flex-col shadow-2xl">
-        <div className="relative h-48 flex-shrink-0">
+        {/* Hero photo section - much taller */}
+        <div className="relative h-56 flex-shrink-0">
           <img src={profile.photo} alt={profile.name} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
-          <div className="absolute bottom-3 left-3 right-3">
-            <div className="flex items-end justify-between">
-              <div>
-                <h3 className="font-display font-bold text-xl text-foreground drop-shadow-lg">
-                  {profile.name}{profile.age ? `, ${profile.age}` : ""}
-                </h3>
-                <p className="text-xs text-muted-foreground flex items-center gap-1">
-                  <MapPin className="w-3 h-3" />
-                  {profile.location}
-                  {profile.distance && <span className="text-primary">· {profile.distance}</span>}
-                </p>
-              </div>
-              <MatchBadge score={matchScore} isPremium={isPremium} />
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
+          <div className="absolute bottom-3 left-4 right-4">
+            <h3 className="font-display font-bold text-2xl text-foreground drop-shadow-lg">
+              {profile.name}{profile.age ? `, ${profile.age}` : ""}
+            </h3>
+            <p className="text-sm text-muted-foreground flex items-center gap-1 mt-0.5">
+              <MapPin className="w-3.5 h-3.5" />
+              {profile.location}
+              {profile.distance && <span className="text-primary font-medium">· {profile.distance}</span>}
+            </p>
+          </div>
+        </div>
+
+        {/* Match score + role bar */}
+        <div className="px-4 py-3 bg-muted/30 flex items-center justify-between border-b border-border/50">
+          <MatchScoreRing score={matchScore} isPremium={isPremium} />
+          <div className="text-right">
+            <p className="text-sm font-semibold text-foreground">{profile.role}</p>
+            <div className="flex items-center gap-1.5 justify-end text-xs text-muted-foreground">
+              <Rocket className="w-3.5 h-3.5 text-primary" />
+              <span>{profile.stage}</span>
             </div>
           </div>
         </div>
 
-        <div className="px-3 py-2 bg-muted/30 flex items-center gap-2.5 border-b border-border/50">
-          <div className="relative w-9 h-9 flex-shrink-0">
-            <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
-              <path d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831 15.9155 15.9155 0 0 1 0-31.831" fill="none" stroke="hsl(var(--border))" strokeWidth="3" />
-              <motion.path
-                d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831 15.9155 15.9155 0 0 1 0-31.831"
-                fill="none" stroke="hsl(var(--primary))" strokeWidth="3"
-                strokeLinecap="round"
-                initial={{ strokeDasharray: "0, 100" }}
-                animate={{ strokeDasharray: `${matchScore}, 100` }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-              />
-            </svg>
-            <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-primary">
-              <AnimatedScore score={matchScore} />
-            </span>
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-[11px] font-semibold text-foreground">{profile.role}</p>
-            <p className="text-[10px] text-muted-foreground truncate">
-              {profile.lookingFor === "Both" ? "Co-founder & Team" : `Looking for ${profile.lookingFor}`}
-            </p>
-          </div>
-          <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-            <Rocket className="w-3 h-3 text-primary" />
-            <span>{profile.stage}</span>
-          </div>
-        </div>
-
+        {/* Scrollable content */}
         <ScrollArea className="flex-1">
-          <div className="p-3.5 space-y-3">
-            <p className="text-xs text-foreground/90 leading-relaxed">
+          <div className="p-4 space-y-4">
+            {/* Bio */}
+            <p className="text-sm text-foreground/90 leading-relaxed">
               {profile.bio || "Open to exciting startup opportunities."}
             </p>
 
+            {/* AI explanation */}
             {showAiExplanation && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="rounded-xl border border-primary/20 bg-primary/5 p-3 overflow-hidden"
+                className="rounded-xl border border-primary/20 bg-primary/5 p-3.5 overflow-hidden"
               >
                 <div className="flex items-center gap-1.5 mb-2">
-                  <Zap className="w-3.5 h-3.5 text-primary" />
-                  <p className="text-[10px] font-semibold text-primary uppercase tracking-wider">Why this match</p>
+                  <Zap className="w-4 h-4 text-primary" />
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wider">Why this match</p>
                 </div>
                 <div className="space-y-1.5">
                   {aiReasons.map((reason, i) => (
@@ -206,7 +202,7 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
                       initial={{ x: -10, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.1 + i * 0.1, duration: 0.25 }}
-                      className="text-[11px] text-foreground/90 leading-relaxed"
+                      className="text-xs text-foreground/90 leading-relaxed"
                     >
                       • {reason}
                     </motion.p>
@@ -215,49 +211,54 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
               </motion.div>
             )}
 
+            {/* Startup Idea */}
             {profile.startupIdea && (
-              <div className="rounded-xl bg-primary/5 border border-primary/20 p-3 flex items-start gap-2.5">
-                <Lightbulb className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-[10px] font-semibold text-primary uppercase tracking-wider mb-0.5">Startup Idea</p>
-                  <p className="text-xs text-foreground">{profile.startupIdea}</p>
+              <div className="rounded-xl bg-primary/5 border border-primary/20 p-3.5">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Lightbulb className="w-4 h-4 text-primary" />
+                  <p className="text-xs font-semibold text-primary uppercase tracking-wider">Startup Idea</p>
                 </div>
+                <p className="text-sm text-foreground">{profile.startupIdea}</p>
               </div>
             )}
 
-            {/* Staggered tags */}
-            <div className="flex flex-wrap gap-1.5">
-              {profile.interests.map((interest, i) => (
+            {/* Industries & Interests */}
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wider">Industries & Interests</p>
+              <div className="flex flex-wrap gap-2">
+                {profile.interests.map((interest, i) => (
+                  <motion.span
+                    key={interest}
+                    initial={{ y: 6, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3 + i * 0.05, duration: 0.2 }}
+                    className="text-xs px-3 py-1 rounded-full bg-accent/10 text-accent border border-accent/20 font-medium"
+                  >
+                    {interest}
+                  </motion.span>
+                ))}
                 <motion.span
-                  key={interest}
                   initial={{ y: 6, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 + i * 0.05, duration: 0.2 }}
-                  className="text-[10px] px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20 font-medium"
+                  transition={{ delay: 0.3 + profile.interests.length * 0.05, duration: 0.2 }}
+                  className="text-xs px-3 py-1 rounded-full bg-muted border border-border text-muted-foreground"
                 >
-                  {interest}
+                  <Clock className="w-3 h-3 inline mr-1" />{profile.commitment}
                 </motion.span>
-              ))}
-              <motion.span
-                initial={{ y: 6, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 + profile.interests.length * 0.05, duration: 0.2 }}
-                className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border text-muted-foreground"
-              >
-                <Clock className="w-2.5 h-2.5 inline mr-0.5" />{profile.commitment}
-              </motion.span>
+              </div>
             </div>
 
+            {/* Skills */}
             <div>
-              <p className="text-[10px] font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Skills</p>
-              <div className="flex flex-wrap gap-1">
+              <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wider">Skills</p>
+              <div className="flex flex-wrap gap-2">
                 {profile.skills.map((s, i) => (
                   <motion.span
                     key={s}
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.4 + i * 0.04, duration: 0.2 }}
-                    className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20"
+                    className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium"
                   >
                     {s}
                   </motion.span>
@@ -265,35 +266,40 @@ export function SwipeCard({ profile, onSwipe, isTop, triggerExit, showAiExplanat
               </div>
             </div>
 
-            {profile.languages && (
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Globe className="w-3.5 h-3.5 text-primary" />
-                <span>{profile.languages.join(" · ")}</span>
-              </div>
-            )}
-
+            {/* Work Experience */}
             {profile.workExperience && profile.workExperience.length > 0 && (
               <div>
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <Building2 className="w-3.5 h-3.5 text-primary" />
-                  <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Experience</p>
+                <div className="flex items-center gap-2 mb-2.5">
+                  <Briefcase className="w-4 h-4 text-primary" />
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Experience</p>
                 </div>
-                {profile.workExperience.slice(0, 2).map((w, idx) => (
-                  <div key={idx} className="rounded-lg bg-muted/30 p-2 mb-1.5 border-l-2 border-primary/40">
-                    <p className="text-[11px] font-semibold text-foreground">{w.title}</p>
-                    <p className="text-[10px] text-primary">{w.company} · {w.duration}</p>
-                  </div>
-                ))}
+                <div className="space-y-2">
+                  {profile.workExperience.slice(0, 2).map((w, idx) => (
+                    <div key={idx} className="rounded-xl bg-muted/30 p-3 border-l-2 border-primary/40">
+                      <p className="text-sm font-semibold text-foreground">{w.title}</p>
+                      <p className="text-xs text-primary mt-0.5">{w.company} · {w.duration}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
+            {/* Education */}
             {profile.education && profile.education.length > 0 && (
-              <div className="flex items-center gap-2.5 rounded-lg bg-muted/30 p-2">
-                <GraduationCap className="w-4 h-4 text-accent flex-shrink-0" />
+              <div className="flex items-center gap-3 rounded-xl bg-muted/30 p-3">
+                <GraduationCap className="w-5 h-5 text-accent flex-shrink-0" />
                 <div>
-                  <p className="text-[11px] font-semibold text-foreground">{profile.education[0].degree}</p>
-                  <p className="text-[10px] text-accent">{profile.education[0].school}</p>
+                  <p className="text-sm font-semibold text-foreground">{profile.education[0].degree}</p>
+                  <p className="text-xs text-accent">{profile.education[0].school}</p>
                 </div>
+              </div>
+            )}
+
+            {/* Languages */}
+            {profile.languages && (
+              <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                <Globe className="w-4 h-4 text-primary" />
+                <span>{profile.languages.join(" · ")}</span>
               </div>
             )}
           </div>
