@@ -361,12 +361,6 @@ export default function AppPremium() {
         </div>
         <div className="flex items-center gap-3">
           <SwipeLimitBar current={swipeCount} max={0} isPremium />
-          {STATS_BAR.map((s) => (
-            <div key={s.label} className="flex items-center gap-1 hidden sm:flex">
-              <span className="text-[10px] font-bold text-primary">{s.value}</span>
-              <span className="text-[9px] text-muted-foreground">{s.label}</span>
-            </div>
-          ))}
           {activeNav === "Home" && (
             <button onClick={() => setShowFilters(!showFilters)} className={`lg:hidden w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${showFilters ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
               <SlidersHorizontal className="w-4 h-4" />
