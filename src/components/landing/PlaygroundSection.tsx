@@ -179,7 +179,7 @@ export function PlaygroundSection() {
             Swipe. Match. <span className="gradient-text-accent">Build Together.</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
-            Experience how ConnectX helps you discover co-founders and teammates — try the interactive demo below or jump into the full app.
+            Experience how ConnectX helps you discover co-founders and teammates. Try the interactive demo below or jump into the full app.
           </p>
         </motion.div>
 
@@ -361,7 +361,7 @@ export function PlaygroundSection() {
                 Open Full App Demo
               </a>
               <p className="text-[10px] text-muted-foreground max-w-[320px]">
-                Explore all features — swipe modes, team builder, chat & more.
+                Explore all features such as swipe modes, team builder, chat & more.
               </p>
             </div>
           </motion.div>
