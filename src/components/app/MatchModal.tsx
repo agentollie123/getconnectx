@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, MessageCircle, BarChart3, X, Sparkles } from "lucide-react";
+import { MessageCircle, BarChart3, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Profile } from "@/lib/profileData";
+import connectxLogo from "@/assets/connectx-logo.png";
 
 interface MatchModalProps {
   profile: Profile | null;
@@ -42,33 +43,31 @@ export function MatchModal({ profile, onClose, onChat, onReport }: MatchModalPro
             <X className="w-5 h-5" />
           </button>
 
-          {/* Two profiles sliding together */}
-          <div className="flex items-center justify-center gap-3 mb-5">
+          {/* Animated ConnectX Logo */}
+          <div className="relative flex items-center justify-center mb-5 h-24">
+            {/* Glow pulse */}
             <motion.div
-              initial={{ x: -40, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.15, duration: 0.4, ease: "easeOut" }}
-            >
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center ring-3 ring-primary/20">
-                <Sparkles className="w-7 h-7 text-primary-foreground" />
-              </div>
-            </motion.div>
-
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: [0.5, 1.4, 1.0], opacity: [0, 0.5, 0] }}
+              transition={{ delay: 0.3, duration: 1.2, ease: "easeInOut" }}
+              className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-[#FF9836]/40 to-[#FED12E]/30 blur-2xl"
+            />
+            {/* Ripple ring */}
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.35, type: "spring", stiffness: 300, damping: 15 }}
-            >
-              <Heart className="w-8 h-8 text-primary" fill="currentColor" />
-            </motion.div>
-
-            <motion.div
-              initial={{ x: 40, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.15, duration: 0.4, ease: "easeOut" }}
-            >
-              <img src={profile.photo} alt={profile.name} className="w-16 h-16 rounded-full ring-3 ring-primary/20 object-cover" />
-            </motion.div>
+              initial={{ scale: 0.3, opacity: 0 }}
+              animate={{ scale: [0.3, 1.8, 1.2], opacity: [0, 0.3, 0] }}
+              transition={{ delay: 0.5, duration: 1.0, ease: "easeOut" }}
+              className="absolute w-20 h-20 rounded-full border-2 border-[#FF9836]/20"
+            />
+            {/* Logo */}
+            <motion.img
+              src={connectxLogo}
+              alt="ConnectX"
+              className="w-20 h-20 relative z-10 drop-shadow-lg"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: [0.6, 1.08, 1.0] }}
+              transition={{ delay: 0.15, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            />
           </div>
 
           <motion.h2
