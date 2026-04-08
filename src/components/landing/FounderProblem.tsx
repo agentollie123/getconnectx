@@ -77,7 +77,7 @@ export function FounderProblem() {
               The hardest part of building a startup
             </span>
             <span className="block mt-1" style={{ fontSize: "clamp(24px, 3.2vw, 40px)", lineHeight: 1.15, color: "#FF8A3D" }}>
-              isn't the idea — it's the people
+              isn't the idea it's the people
             </span>
           </h2>
           <p className="mt-5 max-w-lg mx-auto" style={{ fontSize: 16, color: "#8E8E93", lineHeight: "24px" }}>
