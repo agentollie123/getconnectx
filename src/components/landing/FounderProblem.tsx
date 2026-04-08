@@ -29,7 +29,7 @@ const stats = [
 
 const insights = [
   {
-    title: "Talent exists — access is broken",
+    title: "Talent exists but access is broken",
     lines: ["Millions want to join startups.", "They don't know where to start."],
     source: "LinkedIn Talent Trends",
   },

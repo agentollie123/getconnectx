@@ -12,13 +12,13 @@ const steps = [
     icon: Settings,
     step: "02",
     title: "Define Your Role or What You're Looking For",
-    description: "Builders choose their role — founder, co-founder, or team member. Startups define the roles they're hiring for.",
+    description: "Builders choose their role as a founder, co-founder, or team member. Startups define the roles they're hiring for.",
   },
   {
     icon: Compass,
     step: "03",
     title: "Discover Relevant People or Startups",
-    description: "Browse curated profiles matched to your skills, industry, and goals. No noise — only relevant connections.",
+    description: "Browse curated profiles matched to your skills, industry, and goals. No noise only relevant connections.",
   },
   {
     icon: Handshake,

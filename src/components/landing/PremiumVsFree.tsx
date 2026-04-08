@@ -40,7 +40,7 @@ export function PremiumVsFree() {
             <span className="gradient-text">Premium to Move Faster.</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Better people. Faster outcomes. Higher chances to build.
+            Better builders. Faster outcomes. Higher chances to build.
           </p>
         </motion.div>
 
