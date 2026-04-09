@@ -349,7 +349,7 @@ export default function AppPremium() {
 
   return (
     <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
-      <div className="w-full max-w-[430px] h-[932px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
+      <div className="w-full max-w-[390px] h-[844px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
       {/* Phone notch/camera spacer */}
       <div className="flex-shrink-0 h-12 bg-card/60 backdrop-blur-md" />
       <header className="flex-shrink-0 px-4 sm:px-6 py-2.5 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
