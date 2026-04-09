@@ -351,40 +351,37 @@ export default function AppPremium() {
     <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
       <div className="w-full max-w-[390px] h-[844px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
       {/* Phone notch/camera spacer */}
-      <div className="flex-shrink-0 h-12 bg-card/60 backdrop-blur-md" />
+      <div className="flex-shrink-0 h-11 bg-card/60 backdrop-blur-md" />
       <header className="flex-shrink-0 px-4 py-2 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
         <div className="flex items-center gap-2">
-          <img src={logoIcon} alt="ConnectX" className="w-6 h-6 rounded-md" />
-          <span className="font-display font-bold text-foreground text-xs">ConnectX</span>
-          <VersionBadge tier="premium" version={1} />
+          {reportProfile ? (
+            <>
+              <button onClick={() => setReportProfile(null)} className="text-muted-foreground hover:text-foreground">
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+              <span className="font-display text-xs font-semibold text-foreground">Compatibility Report</span>
+            </>
+          ) : (
+            <>
+              <img src={logoIcon} alt="ConnectX" className="w-6 h-6 rounded-md" />
+              <span className="font-display font-bold text-foreground text-xs">ConnectX</span>
+              <VersionBadge tier="premium" version={1} />
+            </>
+          )}
         </div>
         <div className="flex items-center gap-2">
-          {activeNav === "Home" && (
-            <button onClick={() => setShowFilters(!showFilters)} className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${showFilters ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-            </button>
+          {activeNav === "Home" && !reportProfile && (
+            <>
+              <Badge variant="outline" className="border-accent/20 text-accent text-[9px] py-0 h-5">
+                {stats.connected} ✓ · {stats.skipped} ✗
+              </Badge>
+              <button onClick={() => setShowFilters(!showFilters)} className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${showFilters ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
+                <SlidersHorizontal className="w-3.5 h-3.5" />
+              </button>
+            </>
           )}
         </div>
       </header>
-
-      <div className="flex-shrink-0 px-4 sm:px-6 py-1.5 border-b border-border/20 flex items-center justify-between bg-card/30">
-        <div className="flex items-center gap-2">
-          {reportProfile && (
-            <button onClick={() => setReportProfile(null)} className="text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-          )}
-          <span className="font-display text-xs font-semibold text-foreground">
-            {reportProfile ? "Compatibility Report" : activeNav}
-          </span>
-        </div>
-        {activeNav === "Home" && !reportProfile && (
-          <Badge variant="outline" className="border-accent/20 text-accent text-[9px] py-0 h-5">
-            <Crown className="w-3 h-3 mr-1" />
-            {stats.connected} ✓ · {stats.skipped} ✗
-          </Badge>
-        )}
-      </div>
 
       <div className="flex-1 overflow-hidden flex flex-col">
         {showOnboarding ? (
