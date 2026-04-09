@@ -418,14 +418,13 @@ export default function AppDemo() {
       <div className="w-full max-w-[390px] h-[844px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
 
         {/* Status bar */}
-        <div className="flex-shrink-0 px-3 py-2 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
+        <div className="flex-shrink-0 px-4 py-2 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
           <div className="flex items-center gap-2">
             <img src={logoIcon} alt="ConnectX" className="w-6 h-6 rounded-md" />
             <span className="font-display font-bold text-foreground text-xs">ConnectX</span>
             <VersionBadge tier="free" version={1} />
           </div>
-          <div className="flex items-center gap-2">
-            <SwipeLimitBar current={swipeCount} max={0} isPremium />
+          <div className="flex items-center gap-1.5">
             <Button
               variant="outline"
               size="sm"
@@ -433,7 +432,7 @@ export default function AppDemo() {
               onClick={() => navigate("/app/premium")}
             >
               <Crown className="w-3 h-3" />
-              Check Premium
+              Premium
             </Button>
           </div>
         </div>
@@ -486,7 +485,7 @@ export default function AppDemo() {
         </div>
 
         {/* Bottom nav */}
-        <nav className="flex-shrink-0 bg-card border-t border-border/30 flex items-center justify-around py-1 pb-2">
+        <nav className="flex-shrink-0 bg-card border-t border-border/30 flex items-center justify-around py-2.5 pb-3">
           {navItems.map((item) => (
             <button
               key={item.label}
@@ -495,17 +494,13 @@ export default function AppDemo() {
                 setReportProfile(null);
                 setShowFilters(false);
               }}
-              className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-colors ${
+              className={`relative flex items-center justify-center w-10 h-10 rounded-xl transition-colors ${
                 activeNav === item.label
-                  ? "text-primary"
-                  : "text-muted-foreground"
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              <item.icon className={`w-4 h-4 ${activeNav === item.label ? "drop-shadow-[0_0_6px_hsl(var(--primary))]" : ""}`} />
-              <span className="text-[8px] font-medium">{item.label}</span>
-              {activeNav === item.label && (
-                <div className="w-1 h-1 rounded-full bg-primary" />
-              )}
+              <item.icon className={`w-5 h-5 ${activeNav === item.label ? "drop-shadow-[0_0_6px_hsl(var(--primary))]" : ""}`} />
             </button>
           ))}
         </nav>
