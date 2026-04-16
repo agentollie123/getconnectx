@@ -40,7 +40,7 @@ export function HeroSection() {
 
             <div className="flex flex-wrap gap-4 mb-3">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
-                <a href="https://forms.gle/EmBYw8UWtjQnR2HD9" target="_blank" rel="noopener noreferrer">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">
                   Join Waitlist
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </a>
