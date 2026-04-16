@@ -30,7 +30,7 @@ export function FinalCTA() {
 
           <div className="flex flex-wrap justify-center gap-4 mb-4">
             <Button size="lg" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
-              <a href="https://forms.gle/ut7mQmX8XKrr56136" target="_blank" rel="noopener noreferrer">
+              <a href="https://forms.gle/EmBYw8UWtjQnR2HD9" target="_blank" rel="noopener noreferrer">
                 Join Waitlist
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
