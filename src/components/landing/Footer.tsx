@@ -2,9 +2,9 @@ import { Linkedin, Twitter, Instagram, Youtube, Mail, Send } from "lucide-react"
 import logoIcon from "@/assets/logo-icon.png";
 
 const footerLinks = {
-  Product: ["Discover", "Playground", "Idea Marketplace", "Download"],
-  Company: ["About", "Careers", "Press", "Contact"],
-  Resources: ["Blog", "Privacy Policy", "Terms of Service"]
+  Product: ["Discover", "Playground", "Download"],
+  Company: ["About", "Press", "Contact", "Careers"],
+  Resources: ["Blog", "Privacy Policy", "Terms of Condition", "Community Guidelines"]
 };
 
 const socials = [
