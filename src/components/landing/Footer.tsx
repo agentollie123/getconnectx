@@ -1,10 +1,25 @@
 import { Linkedin, Twitter, Instagram, Youtube, Mail, Send } from "lucide-react";
+import { Link } from "react-router-dom";
 import logoIcon from "@/assets/logo-icon.png";
 
-const footerLinks = {
-  Product: ["Discover", "Playground", "Download"],
-  Company: ["About", "Press", "Contact", "Careers"],
-  Resources: ["Blog", "Privacy Policy", "Terms of Condition", "Community Guidelines"]
+const footerLinks: Record<string, { label: string; href: string }[]> = {
+  Product: [
+    { label: "Discover", href: "/app" },
+    { label: "Playground", href: "/app" },
+    { label: "Download", href: "#" },
+  ],
+  Company: [
+    { label: "About", href: "#" },
+    { label: "Press", href: "#" },
+    { label: "Contact", href: "mailto:support@getconnectx.com" },
+    { label: "Careers", href: "#" },
+  ],
+  Resources: [
+    { label: "Blog", href: "#" },
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Condition", href: "/terms" },
+    { label: "Community Guidelines", href: "#" },
+  ],
 };
 
 const socials = [
