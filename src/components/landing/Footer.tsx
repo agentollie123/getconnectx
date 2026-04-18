@@ -15,7 +15,7 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
     { label: "Careers", href: "#" },
   ],
   Resources: [
-    { label: "Blog", href: "https://getconnectx.com" },
+    { label: "Blog", href: "https://getconnectx.app" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Condition", href: "/terms" },
     { label: "Community Guidelines", href: "/community-guidelines" },
