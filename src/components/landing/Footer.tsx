@@ -11,7 +11,7 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
   Company: [
     { label: "About", href: "#" },
     { label: "Press", href: "#" },
-    { label: "Contact", href: "mailto:support@getconnectx.com" },
+    { label: "Contact", href: "mailto:info@getconnectx.app" },
     { label: "Careers", href: "#" },
   ],
   Resources: [
