@@ -1,10 +1,25 @@
 import { Linkedin, Twitter, Instagram, Youtube, Mail, Send } from "lucide-react";
+import { Link } from "react-router-dom";
 import logoIcon from "@/assets/logo-icon.png";
 
-const footerLinks = {
-  Product: ["Discover", "Playground", "Download"],
-  Company: ["About", "Press", "Contact", "Careers"],
-  Resources: ["Blog", "Privacy Policy", "Terms of Condition", "Community Guidelines"]
+const footerLinks: Record<string, { label: string; href: string }[]> = {
+  Product: [
+    { label: "Discover", href: "/app" },
+    { label: "Playground", href: "/app" },
+    { label: "Download", href: "#" },
+  ],
+  Company: [
+    { label: "About", href: "#" },
+    { label: "Press", href: "#" },
+    { label: "Contact", href: "mailto:support@getconnectx.com" },
+    { label: "Careers", href: "#" },
+  ],
+  Resources: [
+    { label: "Blog", href: "#" },
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Condition", href: "/terms" },
+    { label: "Community Guidelines", href: "#" },
+  ],
 };
 
 const socials = [
@@ -58,11 +73,22 @@ export function Footer() {
           <div key={title}>
               <h4 className="font-display font-semibold text-foreground mb-4">{title}</h4>
               <ul className="space-y-2">
-                {links.map((link) =>
-              <li key={link}>
-                    <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{link}</a>
-                  </li>
-              )}
+                {links.map((link) => {
+                  const isInternal = link.href.startsWith("/");
+                  return (
+                    <li key={link.label}>
+                      {isInternal ? (
+                        <Link to={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                          {link.label}
+                        </Link>
+                      ) : (
+                        <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                          {link.label}
+                        </a>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
