@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import AppDemo from "./pages/AppDemo";
 import AppPremium from "./pages/AppPremium";
 import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/app" element={<AppDemo />} />
           <Route path="/app/premium" element={<AppPremium />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
