@@ -11,7 +11,7 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
   Company: [
     { label: "About", href: "#" },
     { label: "Press", href: "#" },
-    { label: "Contact", href: "mailto:support@getconnectx.com" },
+    { label: "Contact", href: "mailto:info@getconnectx.app" },
     { label: "Careers", href: "#" },
   ],
   Resources: [
@@ -36,7 +36,7 @@ const socials = [
     </svg>
   ), label: "Threads", href: "https://www.threads.com/@getconnectx.app" },
   { icon: Send, label: "Telegram", href: "https://t.me/getconnectx" },
-  { icon: Mail, label: "Email", href: "mailto:support@getconnectx.com" },
+  { icon: Mail, label: "Email", href: "mailto:info@getconnectx.app" },
   { icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@getconnectx" },
   { icon: Twitter, label: "X", href: "https://x.com/getconnectx" },
 ];
