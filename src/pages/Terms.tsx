@@ -244,10 +244,10 @@ const Terms = () => {
             <p className="text-xs text-muted-foreground text-center">
               For questions about these Terms, contact{" "}
               <a
-                href="mailto:support@getconnectx.com"
+                href="mailto:info@getconnectx.app"
                 className="text-primary hover:underline"
               >
-                support@getconnectx.com
+                info@getconnectx.app
               </a>
             </p>
           </div>
