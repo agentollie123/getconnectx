@@ -73,11 +73,22 @@ export function Footer() {
           <div key={title}>
               <h4 className="font-display font-semibold text-foreground mb-4">{title}</h4>
               <ul className="space-y-2">
-                {links.map((link) =>
-              <li key={link}>
-                    <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{link}</a>
-                  </li>
-              )}
+                {links.map((link) => {
+                  const isInternal = link.href.startsWith("/");
+                  return (
+                    <li key={link.label}>
+                      {isInternal ? (
+                        <Link to={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                          {link.label}
+                        </Link>
+                      ) : (
+                        <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                          {link.label}
+                        </a>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
