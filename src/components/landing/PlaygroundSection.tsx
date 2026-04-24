@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { profiles, type Profile } from "@/lib/profileData";
 import { Sparkles, X, Check, MapPin, Briefcase, Rocket, Clock, ChevronDown } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 function SwipeCard({
   profile,
@@ -127,6 +128,7 @@ function SwipeCard({
 }
 
 export function PlaygroundSection() {
+  const { t } = useLanguage();
   const [location, setLocation] = useState<string>("");
   const [stage, setStage] = useState<string>("");
   const [commitment, setCommitment] = useState<string>("");
@@ -173,13 +175,13 @@ export function PlaygroundSection() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-medium mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            Try the App
+            {t("Try the App", "Coba Aplikasi")}
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Swipe. Match. <span className="gradient-text-accent">Build Together.</span>
+            Swipe. Match. <span className="gradient-text-accent">{t("Build Together.", "Bangun Bersama.")}</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
-            Experience how ConnectX helps you discover co-founders and teammates. Try the interactive demo below or jump into the full app.
+            {t("Experience how ConnectX helps you discover co-founders and teammates. Try the interactive demo below or jump into the full app.", "Rasakan bagaimana ConnectX membantu kamu menemukan co-founder dan teammate. Coba demo interaktif di bawah atau langsung masuk ke aplikasi penuh.")}
           </p>
         </motion.div>
 
@@ -192,16 +194,16 @@ export function PlaygroundSection() {
             className="w-full lg:w-80 flex-shrink-0"
           >
             <div className="glass-card rounded-2xl p-6">
-              <p className="text-xs text-primary font-medium mb-2">Welcome to our app's Playground</p>
+              <p className="text-xs text-primary font-medium mb-2">{t("Welcome to our app's Playground", "Selamat datang di Playground aplikasi")}</p>
               <h3 className="font-display text-xl font-bold text-foreground mb-6">
-                What are you looking for in a co-founder?
+                {t("What are you looking for in a co-founder?", "Apa yang kamu cari dari co-founder?")}
               </h3>
 
-              <p className="text-sm text-muted-foreground mb-4">Basic preferences</p>
+              <p className="text-sm text-muted-foreground mb-4">{t("Basic preferences", "Preferensi dasar")}</p>
 
               <div className="space-y-4 mb-6">
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Location</label>
+                  <label className="text-sm font-medium text-foreground mb-1.5 block">{t("Location", "Lokasi")}</label>
                   <Select value={location} onValueChange={setLocation}>
                     <SelectTrigger className="bg-card border-border">
                       <SelectValue placeholder="Any location" />
@@ -218,7 +220,7 @@ export function PlaygroundSection() {
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Startup Stage</label>
+                  <label className="text-sm font-medium text-foreground mb-1.5 block">{t("Startup Stage", "Tahap Startup")}</label>
                   <Select value={stage} onValueChange={setStage}>
                     <SelectTrigger className="bg-card border-border">
                       <SelectValue placeholder="Any stage" />
@@ -233,7 +235,7 @@ export function PlaygroundSection() {
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Commitment</label>
+                  <label className="text-sm font-medium text-foreground mb-1.5 block">{t("Commitment", "Komitmen")}</label>
                   <Select value={commitment} onValueChange={setCommitment}>
                     <SelectTrigger className="bg-card border-border">
                       <SelectValue placeholder="Any level" />
@@ -252,7 +254,7 @@ export function PlaygroundSection() {
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary"
                 onClick={generateMatches}
               >
-                Generate Candidates
+                {t("Generate Candidates", "Buat Kandidat")}
               </Button>
             </div>
           </motion.div>

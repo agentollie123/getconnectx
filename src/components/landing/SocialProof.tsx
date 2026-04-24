@@ -5,6 +5,7 @@ import logoTechInAsia from "@/assets/logo-techinasia.png";
 import logoGoogleStartups from "@/assets/logo-google-startups.png";
 import logoBisnis from "@/assets/logo-bisnis.png";
 import logoAlibabaCloud from "@/assets/logo-alibaba-cloud.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const stats = [
   { icon: Users, value: "12,000+", label: "Builders" },
@@ -22,6 +23,9 @@ const partners = [
 ];
 
 export function SocialProof() {
+  const { t } = useLanguage();
+  const localizedStats = stats.map((stat, i) => ({ ...stat, label: [t("Builders", "Builder"), t("Connections Made", "Koneksi Dibuat"), t("Startups Forming", "Startup Terbentuk"), t("Cities", "Kota")][i] }));
+
   return (
     <section className="py-24">
       <div className="container mx-auto px-4">
@@ -33,12 +37,12 @@ export function SocialProof() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Community <span className="gradient-text">Momentum</span>
+            {t("Community", "Momentum")} <span className="gradient-text">{t("Momentum", "Komunitas")}</span>
           </h2>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-20">
-          {stats.map((s, i) => (
+          {localizedStats.map((s, i) => (
             <motion.div
               key={s.label}
               initial={{ opacity: 0, y: 20 }}
@@ -63,7 +67,7 @@ export function SocialProof() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8">Backed & Supported By</p>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8">{t("Backed & Supported By", "Didukung Oleh")}</p>
           <div className="flex items-center justify-center gap-10 md:gap-14 flex-wrap">
             {partners.map((p) => (
               <img
