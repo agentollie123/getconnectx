@@ -60,10 +60,10 @@ export function PremiumVsFree() {
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 max-w-2xl mx-auto">
             {t("Free to Explore.", "Gratis untuk Eksplorasi.")} {" "}
-            <span className="gradient-text">{t("Premium to Move Faster.", "Premium untuk Bergerak Lebih Cepat.")}</span>
+            <span className="gradient-text">{t("Premium to Move Faster.", "Premium untuk Terkoneksi Lebih Cepat.")}</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            {t("Better builders. Faster outcomes. Higher chances to build.", "Builder lebih tepat. Hasil lebih cepat. Peluang membangun lebih besar.")}
+            {t("Better builders. Faster outcomes. Higher chances to build.", "Builder lebih tepat. Hasil lebih pas. Peluang membangun lebih besar.")}
           </p>
         </motion.div>
 

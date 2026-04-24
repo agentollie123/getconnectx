@@ -42,8 +42,8 @@ export function StartupPipeline() {
     description: [
       t("Are you a Builder looking for opportunities, or a Startup looking for people? Pick your side.", "Apakah kamu Builder yang mencari peluang, atau Startup yang mencari orang? Pilih modemu."),
       t("Builders choose their role as a founder, co-founder, or team member. Startups define the roles they're hiring for.", "Builder memilih peran sebagai founder, co-founder, atau anggota tim. Startup menentukan peran yang sedang dicari."),
-      t("Browse curated profiles matched to your skills, industry, and goals. No noise only relevant connections.", "Jelajahi profil terkurasi yang cocok dengan skill, industri, dan tujuanmu. Tanpa noise, hanya koneksi relevan."),
-      t("When both sides are interested, you're connected. Start conversations, form teams, and build your startup.", "Saat kedua pihak tertarik, kalian terhubung. Mulai percakapan, bentuk tim, dan bangun startupmu."),
+      t("Browse curated profiles matched to your skills, industry, and goals. No noise only relevant connections.", "Jelajahi profil terkurasi yang cocok dengan skill, industri, dan tujuanmu. Tanpa pilihan random, hanya koneksi yang relevan."),
+      t("When both sides are interested, you're connected. Start conversations, form teams, and build your startup.", "Saat kedua pihak terkoneksi, kalian terhubung. Mulai percakapan, bentuk tim, dan bangun startupmu."),
     ][i],
   }));
 

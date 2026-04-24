@@ -23,12 +23,12 @@ export function FinalCTA() {
           </div>
 
           <h2 className="font-display text-3xl sm:text-5xl font-bold mb-6 max-w-2xl mx-auto leading-tight">
-            {t("Start Your Startup With the", "Mulai Startup Kamu Dengan")}{" "}
+            {t("Start Your Startup With the", "Bangun Startupmu Dengan")}{" "}
             <span className="gradient-text">{t("Right People", "Orang yang Tepat")}</span>
           </h2>
 
           <p className="text-lg text-muted-foreground mb-10 max-w-lg mx-auto">
-            {t("Don't wait to find the right team. Join thousands of founders, engineers, and operators building on ConnectX.", "Jangan menunggu untuk menemukan tim yang tepat. Bergabung dengan ribuan founder, engineer, dan operator yang membangun di ConnectX.")}
+            {t("Don't wait to find the right team. Join thousands of founders, engineers, and operators building on ConnectX.", "Jangan hanya menunggu untuk ditemukan tim yang tepat. Bergabung dengan ribuan founder, engineer, dan operator yang sedang cari koneksi di ConnectX.")}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-4">
