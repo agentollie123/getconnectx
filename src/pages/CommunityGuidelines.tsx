@@ -2,6 +2,8 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { communitySectionsId } from "@/lib/legalContentId";
 
 const sections = [
   {
@@ -196,6 +198,9 @@ const sections = [
 ];
 
 const CommunityGuidelines = () => {
+  const { language, t } = useLanguage();
+  const activeSections = language === "id" ? communitySectionsId : sections;
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -206,23 +211,23 @@ const CommunityGuidelines = () => {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to home
+            {t("Back to home", "Kembali ke beranda")}
           </Link>
 
           <header className="mb-12 pb-8 border-b border-border">
             <p className="text-xs uppercase tracking-widest text-primary font-semibold mb-3">
-              Trust & Safety
+              {t("Trust & Safety", "Trust & Safety")}
             </p>
             <h1 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-4 leading-tight">
-              ConnectX Community Guidelines
+              {t("ConnectX Community Guidelines", "Panduan Komunitas ConnectX")}
             </h1>
             <p className="text-sm text-muted-foreground">
-              PT Koneksix Digital Nusantara · Last updated April 2026
+              {t("PT Koneksix Digital Nusantara · Last updated April 2026", "PT Koneksix Digital Nusantara · Terakhir diperbarui April 2026")}
             </p>
           </header>
 
           <div className="space-y-10">
-            {sections.map((section) => (
+            {activeSections.map((section) => (
               <section key={section.title}>
                 <h2 className="font-display font-semibold text-xl md:text-2xl text-foreground mb-4">
                   {section.title}
@@ -243,7 +248,7 @@ const CommunityGuidelines = () => {
 
           <div className="mt-16 pt-8 border-t border-border">
             <p className="text-xs text-muted-foreground text-center">
-              Questions or reports? Contact{" "}
+              {t("Questions or reports? Contact", "Pertanyaan atau laporan? Hubungi")}{" "}
               <a
                 href="mailto:info@getconnectx.app"
                 className="text-primary hover:underline"
