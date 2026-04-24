@@ -32,6 +32,8 @@ import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
 import { OnboardingFlow, type UserRole, type OnboardingResult } from "@/components/app/OnboardingFlow";
+import { LanguageSwitch } from "@/components/LanguageSwitch";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const navItems = [
   { icon: Home, label: "Home" },
@@ -64,6 +66,7 @@ const getFeedLabel = (role: UserRole, mode: MatchingMode): string => {
 
 export default function AppDemo() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
   const [userRole, setUserRole] = useState<UserRole>("founder");
@@ -425,7 +428,7 @@ export default function AppDemo() {
                 <button onClick={() => setReportProfile(null)} className="text-muted-foreground hover:text-foreground">
                   <ArrowLeft className="w-4 h-4" />
                 </button>
-                <span className="font-display text-xs font-semibold text-foreground">Compatibility Report</span>
+                <span className="font-display text-xs font-semibold text-foreground">{t("Compatibility Report", "Laporan Kompatibilitas")}</span>
               </>
             ) : (
               <>
@@ -451,6 +454,7 @@ export default function AppDemo() {
                 </button>
               </>
             )}
+            {!reportProfile && <LanguageSwitch className="scale-75 origin-right" />}
             <Button
               variant="outline"
               size="sm"
@@ -458,7 +462,7 @@ export default function AppDemo() {
               onClick={() => navigate("/app/premium")}
             >
               <Crown className="w-3 h-3" />
-              Premium
+              {t("Premium", "Premium")}
             </Button>
           </div>
         </div>

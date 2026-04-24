@@ -30,6 +30,8 @@ import { VersionBadge, SwipeLimitBar } from "@/components/app/VersionBadge";
 import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { OnboardingFlow } from "@/components/app/OnboardingFlow";
+import { LanguageSwitch } from "@/components/LanguageSwitch";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const navItems = [
   { icon: Home, label: "Home" },
@@ -58,6 +60,7 @@ const FEED_TITLES: Record<MatchingMode, string> = {
 };
 
 export default function AppPremium() {
+  const { t } = useLanguage();
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
   const [cardStack, setCardStack] = useState<Profile[]>([...profiles]);
@@ -359,7 +362,7 @@ export default function AppPremium() {
               <button onClick={() => setReportProfile(null)} className="text-muted-foreground hover:text-foreground">
                 <ArrowLeft className="w-4 h-4" />
               </button>
-              <span className="font-display text-xs font-semibold text-foreground">Compatibility Report</span>
+              <span className="font-display text-xs font-semibold text-foreground">{t("Compatibility Report", "Laporan Kompatibilitas")}</span>
             </>
           ) : (
             <>
@@ -380,6 +383,7 @@ export default function AppPremium() {
               </button>
             </>
           )}
+          {!reportProfile && <LanguageSwitch className="scale-75 origin-right" />}
         </div>
       </header>
 
