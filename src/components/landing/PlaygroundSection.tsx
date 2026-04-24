@@ -254,7 +254,7 @@ export function PlaygroundSection() {
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary"
                 onClick={generateMatches}
               >
-                {t("Generate Candidates", "Buat Kandidat")}
+                {t("Generate Candidates", "Cari Koneksi")}
               </Button>
             </div>
           </motion.div>
@@ -293,9 +293,9 @@ export function PlaygroundSection() {
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                       <Sparkles className="w-8 h-8 text-primary" />
                     </div>
-                    <p className="font-display font-semibold text-foreground mb-2">{t("Ready to discover?", "Siap menemukan?")}</p>
+                    <p className="font-display font-semibold text-foreground mb-2">{t("Ready to discover?", "Siap untuk terkoneksi?")}</p>
                     <p className="text-xs text-muted-foreground mb-4">
-                      {t("Set your preferences and tap \"Generate Candidates\" to start swiping.", "Atur preferensimu dan ketuk \"Buat Kandidat\" untuk mulai swipe.")}
+                      {t("Set your preferences and tap \"Generate Candidates\" to start swiping.", "Atur preferensimu dan ketuk \"Cari Koneksi\" untuk mulai swipe.")}
                     </p>
                     <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce" />
                   </div>
