@@ -17,24 +17,24 @@ export function SolutionSection() {
   const { t } = useLanguage();
   const localizedBuilderRoles = builderRoles.map((role) => ({ ...role, label: t(role.label, role.label === "Founder" ? "Founder" : role.label === "Co-Founder" ? "Co-Founder" : "Anggota Tim") }));
   const localizedStartupNeeds = startupNeeds.map((role) => ({ ...role, label: t(role.label, role.label === "Hiring" ? "Merekrut" : "Membangun Tim") }));
-  const steps = [t("Choose who you are", "Pilih siapa kamu"), t("Define what you need", "Tentukan yang kamu butuhkan"), t("Connect with the right people", "Terhubung dengan orang yang tepat")];
-
-  return (
-    <section className="py-24">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            {t("Where Builders and Startups", "Tempat Builder dan Startup")} {" "}
-            <span className="gradient-text">{t("Find Each Other", "Saling Bertemu")}</span>
-          </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto">
-            {t("ConnectX helps you find the right people based on what you want to build not random connections.", "ConnectX membantu kamu menemukan orang yang tepat berdasarkan apa yang ingin kamu bangun, bukan koneksi acak.")}
-          </p>
+    const steps = [t("Choose who you are", "Pilih mode"), t("Define what you need", "Tentukan yang kamu butuhkan"), t("Connect with the right people", "Terkoneksi dengan orang yang tepat")];
+  
+    return (
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+              {t("Where Builders and Startups", "Tempat Builder dan Startup")} {" "}
+              <span className="gradient-text">{t("Find Each Other", "Saling Terkoneksi")}</span>
+            </h2>
+            <p className="text-muted-foreground max-w-lg mx-auto">
+              {t("ConnectX helps you find the right people based on what you want to build not random connections.", "ConnectX membantu kamu koneksikan dengan orang yang tepat berdasarkan apa yang ingin kamu bangun, bukan koneksi acak.")}
+            </p>
         </motion.div>
 
         {/* Visual matching diagram */}

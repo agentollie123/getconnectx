@@ -76,14 +76,14 @@ export function FounderProblem() {
   const localizedInsights = insights.map((ins, i) => ({
     ...ins,
     title: [
-      t("Talent exists but access is broken", "Talenta ada tetapi aksesnya rusak"),
+      t("Talent exists but access is broken", "Talenta ada tetapi aksesnya minim."),
       t("It's not a talent problem.\nIt's a connection problem.", "Ini bukan masalah talenta.\nIni masalah koneksi."),
-      t("Today, people rely on luck", "Hari ini, orang mengandalkan keberuntungan"),
+      t("Today, people rely on luck", "Mereka masih mengandalkan faktor keberuntungan"),
     ][i],
     lines: [
       [t("Millions want to join startups.", "Jutaan orang ingin bergabung dengan startup."), t("They don't know where to start.", "Mereka tidak tahu harus mulai dari mana.")],
       [t("People exist.", "Orangnya ada."), t("Opportunities exist.", "Peluangnya ada."), t("They don't meet.", "Mereka tidak bertemu.")],
-      ["LinkedIn. Events. Networks.", t("Fragmented. Slow. Random.", "Terpecah. Lambat. Acak.")],
+      ["LinkedIn. Events. Networks.", t("Fragmented. Slow. Random.", "Terpecah. Lambat. Terlalu Acak.")],
     ][i],
   }));
 
@@ -99,14 +99,14 @@ export function FounderProblem() {
         >
           <h2 className="font-display font-bold max-w-3xl mx-auto">
             <span className="block whitespace-nowrap" style={{ fontSize: "clamp(24px, 3.2vw, 40px)", lineHeight: 1.15, color: "#FFFFFF" }}>
-              {t("The hardest part of building a startup", "Bagian tersulit membangun startup")}
+              {t("The hardest part of building a startup", "Bagian tersulit membangun startup itu")}
             </span>
             <span className="block mt-1" style={{ fontSize: "clamp(24px, 3.2vw, 40px)", lineHeight: 1.15, color: "#FF8A3D" }}>
-              {t("isn't the idea it's the people", "bukan idenya tetapi orangnya")}
+              {t("isn't the idea it's the people", "bukan soal idenya, tapi orangnya")}
             </span>
           </h2>
           <p className="mt-5 max-w-lg mx-auto" style={{ fontSize: 16, color: "#8E8E93", lineHeight: "24px" }}>
-            {t("Founders don't struggle to start. They struggle to find", "Founder tidak kesulitan untuk mulai. Mereka kesulitan menemukan")}{" "}
+            {t("Founders don't struggle to start. They struggle to find", "Founder merasa kesulitan menemukan")}{" "}
             <span style={{ color: "#FFFFFF", fontWeight: 500 }}>{t("the right people", "orang yang tepat")}</span>.
           </p>
         </motion.div>
