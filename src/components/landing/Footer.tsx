@@ -1,5 +1,6 @@
 import { Linkedin, Twitter, Instagram, Youtube, Mail, Send } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 import logoIcon from "@/assets/logo-icon.png";
 
 const footerLinks: Record<string, { label: string; href: string }[]> = {
@@ -42,6 +43,8 @@ const socials = [
 ];
 
 export function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="border-t border-border py-16">
       <div className="container mx-auto px-4">
@@ -52,10 +55,10 @@ export function Footer() {
               <span className="font-display font-bold text-lg text-foreground">ConnectX</span>
             </div>
             <p className="text-sm text-muted-foreground mb-2">
-              The platform where startups begin.
+              {t("The platform where startups begin.", "Platform tempat startup dimulai.")}
             </p>
             <p className="text-xs text-muted-foreground mb-4 italic">
-              Swipe. Match. Build together.
+              {t("Swipe. Match. Build together.", "Swipe. Match. Bangun bersama.")}
             </p>
             <div className="flex flex-wrap gap-2">
               {socials.map((s) => {
@@ -71,7 +74,7 @@ export function Footer() {
 
           {Object.entries(footerLinks).map(([title, links]) =>
           <div key={title}>
-              <h4 className="font-display font-semibold text-foreground mb-4">{title}</h4>
+              <h4 className="font-display font-semibold text-foreground mb-4">{t(title, title === "Product" ? "Produk" : title === "Company" ? "Perusahaan" : "Sumber Daya")}</h4>
               <ul className="space-y-2">
                 {links.map((link) => {
                   const isInternal = link.href.startsWith("/");
@@ -79,11 +82,11 @@ export function Footer() {
                     <li key={link.label}>
                       {isInternal ? (
                         <Link to={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                          {link.label}
+                          {t(link.label, link.label === "Privacy Policy" ? "Kebijakan Privasi" : link.label === "Terms of Condition" ? "Syarat dan Ketentuan" : link.label === "Community Guidelines" ? "Panduan Komunitas" : link.label === "Contact" ? "Kontak" : link.label)}
                         </Link>
                       ) : (
                         <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                          {link.label}
+                          {t(link.label, link.label === "Privacy Policy" ? "Kebijakan Privasi" : link.label === "Terms of Condition" ? "Syarat dan Ketentuan" : link.label === "Community Guidelines" ? "Panduan Komunitas" : link.label === "Contact" ? "Kontak" : link.label)}
                         </a>
                       )}
                     </li>
@@ -96,7 +99,7 @@ export function Footer() {
 
         <div className="border-t border-border pt-6 text-center">
           <p className="text-xs text-muted-foreground">
-            © 2026 ConnectX. All rights reserved. Building the infrastructure for the next generation of startups.
+            {t("© 2026 ConnectX. All rights reserved. Building the infrastructure for the next generation of startups.", "© 2026 ConnectX. Seluruh hak cipta dilindungi. Membangun infrastruktur untuk generasi startup berikutnya.")}
           </p>
         </div>
       </div>
