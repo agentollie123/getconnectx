@@ -293,9 +293,9 @@ export function PlaygroundSection() {
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                       <Sparkles className="w-8 h-8 text-primary" />
                     </div>
-                    <p className="font-display font-semibold text-foreground mb-2">Ready to discover?</p>
+                    <p className="font-display font-semibold text-foreground mb-2">{t("Ready to discover?", "Siap menemukan?")}</p>
                     <p className="text-xs text-muted-foreground mb-4">
-                      Set your preferences and tap "Generate Candidates" to start swiping.
+                      {t("Set your preferences and tap \"Generate Candidates\" to start swiping.", "Atur preferensimu dan ketuk \"Buat Kandidat\" untuk mulai swipe.")}
                     </p>
                     <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce" />
                   </div>
@@ -304,17 +304,17 @@ export function PlaygroundSection() {
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                       <Check className="w-8 h-8 text-primary" />
                     </div>
-                    <p className="font-display font-semibold text-foreground mb-2">All done!</p>
+                    <p className="font-display font-semibold text-foreground mb-2">{t("All done!", "Selesai!")}</p>
                     <p className="text-xs text-muted-foreground mb-1">
-                      Connected: <span className="text-primary font-bold">{stats.connected}</span> · Skipped: <span className="text-muted-foreground font-bold">{stats.skipped}</span>
+                      {t("Connected", "Terhubung")}: <span className="text-primary font-bold">{stats.connected}</span> · {t("Skipped", "Dilewati")}: <span className="text-muted-foreground font-bold">{stats.skipped}</span>
                     </p>
-                    <p className="text-xs text-muted-foreground mb-4">Adjust filters and generate again.</p>
+                    <p className="text-xs text-muted-foreground mb-4">{t("Adjust filters and generate again.", "Ubah filter dan buat lagi.")}</p>
                     <Button
                       size="sm"
                       className="bg-primary text-primary-foreground hover:bg-primary/90"
                       onClick={generateMatches}
                     >
-                      Try Again
+                      {t("Try Again", "Coba Lagi")}
                     </Button>
                   </div>
                 ) : (
@@ -360,10 +360,10 @@ export function PlaygroundSection() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors glow-primary"
               >
                 <Rocket className="w-4 h-4" />
-                Open Full App Demo
+                {t("Open Full App Demo", "Buka Demo Aplikasi Penuh")}
               </a>
               <p className="text-[10px] text-muted-foreground max-w-[320px]">
-                Explore all features such as swipe modes, team builder, chat & more.
+                {t("Explore all features such as swipe modes, team builder, chat & more.", "Jelajahi semua fitur seperti mode swipe, team builder, chat, dan lainnya.")}
               </p>
             </div>
           </motion.div>
