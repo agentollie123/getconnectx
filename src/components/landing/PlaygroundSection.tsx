@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { profiles, type Profile } from "@/lib/profileData";
 import { Sparkles, X, Check, MapPin, Briefcase, Rocket, Clock, ChevronDown } from "lucide-react";
 import logoIcon from "@/assets/logo-icon.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 function SwipeCard({
   profile,
@@ -127,6 +128,7 @@ function SwipeCard({
 }
 
 export function PlaygroundSection() {
+  const { t } = useLanguage();
   const [location, setLocation] = useState<string>("");
   const [stage, setStage] = useState<string>("");
   const [commitment, setCommitment] = useState<string>("");
@@ -173,13 +175,13 @@ export function PlaygroundSection() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-medium mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            Try the App
+            {t("Try the App", "Coba Aplikasi")}
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Swipe. Match. <span className="gradient-text-accent">Build Together.</span>
+            Swipe. Match. <span className="gradient-text-accent">{t("Build Together.", "Bangun Bersama.")}</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
-            Experience how ConnectX helps you discover co-founders and teammates. Try the interactive demo below or jump into the full app.
+            {t("Experience how ConnectX helps you discover co-founders and teammates. Try the interactive demo below or jump into the full app.", "Rasakan bagaimana ConnectX membantu kamu menemukan co-founder dan teammate. Coba demo interaktif di bawah atau langsung masuk ke aplikasi penuh.")}
           </p>
         </motion.div>
 
@@ -192,16 +194,16 @@ export function PlaygroundSection() {
             className="w-full lg:w-80 flex-shrink-0"
           >
             <div className="glass-card rounded-2xl p-6">
-              <p className="text-xs text-primary font-medium mb-2">Welcome to our app's Playground</p>
+              <p className="text-xs text-primary font-medium mb-2">{t("Welcome to our app's Playground", "Selamat datang di Playground aplikasi")}</p>
               <h3 className="font-display text-xl font-bold text-foreground mb-6">
-                What are you looking for in a co-founder?
+                {t("What are you looking for in a co-founder?", "Apa yang kamu cari dari co-founder?")}
               </h3>
 
-              <p className="text-sm text-muted-foreground mb-4">Basic preferences</p>
+              <p className="text-sm text-muted-foreground mb-4">{t("Basic preferences", "Preferensi dasar")}</p>
 
               <div className="space-y-4 mb-6">
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Location</label>
+                  <label className="text-sm font-medium text-foreground mb-1.5 block">{t("Location", "Lokasi")}</label>
                   <Select value={location} onValueChange={setLocation}>
                     <SelectTrigger className="bg-card border-border">
                       <SelectValue placeholder="Any location" />
@@ -218,7 +220,7 @@ export function PlaygroundSection() {
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Startup Stage</label>
+                  <label className="text-sm font-medium text-foreground mb-1.5 block">{t("Startup Stage", "Tahap Startup")}</label>
                   <Select value={stage} onValueChange={setStage}>
                     <SelectTrigger className="bg-card border-border">
                       <SelectValue placeholder="Any stage" />
@@ -233,7 +235,7 @@ export function PlaygroundSection() {
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Commitment</label>
+                  <label className="text-sm font-medium text-foreground mb-1.5 block">{t("Commitment", "Komitmen")}</label>
                   <Select value={commitment} onValueChange={setCommitment}>
                     <SelectTrigger className="bg-card border-border">
                       <SelectValue placeholder="Any level" />
@@ -252,7 +254,7 @@ export function PlaygroundSection() {
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary"
                 onClick={generateMatches}
               >
-                Generate Candidates
+                {t("Generate Candidates", "Buat Kandidat")}
               </Button>
             </div>
           </motion.div>
@@ -291,9 +293,9 @@ export function PlaygroundSection() {
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                       <Sparkles className="w-8 h-8 text-primary" />
                     </div>
-                    <p className="font-display font-semibold text-foreground mb-2">Ready to discover?</p>
+                    <p className="font-display font-semibold text-foreground mb-2">{t("Ready to discover?", "Siap menemukan?")}</p>
                     <p className="text-xs text-muted-foreground mb-4">
-                      Set your preferences and tap "Generate Candidates" to start swiping.
+                      {t("Set your preferences and tap \"Generate Candidates\" to start swiping.", "Atur preferensimu dan ketuk \"Buat Kandidat\" untuk mulai swipe.")}
                     </p>
                     <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce" />
                   </div>
@@ -302,17 +304,17 @@ export function PlaygroundSection() {
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                       <Check className="w-8 h-8 text-primary" />
                     </div>
-                    <p className="font-display font-semibold text-foreground mb-2">All done!</p>
+                    <p className="font-display font-semibold text-foreground mb-2">{t("All done!", "Selesai!")}</p>
                     <p className="text-xs text-muted-foreground mb-1">
-                      Connected: <span className="text-primary font-bold">{stats.connected}</span> · Skipped: <span className="text-muted-foreground font-bold">{stats.skipped}</span>
+                      {t("Connected", "Terhubung")}: <span className="text-primary font-bold">{stats.connected}</span> · {t("Skipped", "Dilewati")}: <span className="text-muted-foreground font-bold">{stats.skipped}</span>
                     </p>
-                    <p className="text-xs text-muted-foreground mb-4">Adjust filters and generate again.</p>
+                    <p className="text-xs text-muted-foreground mb-4">{t("Adjust filters and generate again.", "Ubah filter dan buat lagi.")}</p>
                     <Button
                       size="sm"
                       className="bg-primary text-primary-foreground hover:bg-primary/90"
                       onClick={generateMatches}
                     >
-                      Try Again
+                      {t("Try Again", "Coba Lagi")}
                     </Button>
                   </div>
                 ) : (
@@ -358,10 +360,10 @@ export function PlaygroundSection() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors glow-primary"
               >
                 <Rocket className="w-4 h-4" />
-                Open Full App Demo
+                {t("Open Full App Demo", "Buka Demo Aplikasi Penuh")}
               </a>
               <p className="text-[10px] text-muted-foreground max-w-[320px]">
-                Explore all features such as swipe modes, team builder, chat & more.
+                {t("Explore all features such as swipe modes, team builder, chat & more.", "Jelajahi semua fitur seperti mode swipe, team builder, chat, dan lainnya.")}
               </p>
             </div>
           </motion.div>

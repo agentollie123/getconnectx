@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ToggleLeft, Settings, Compass, Handshake } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const steps = [
   {
@@ -29,6 +30,23 @@ const steps = [
 ];
 
 export function StartupPipeline() {
+  const { t } = useLanguage();
+  const localizedSteps = steps.map((step, i) => ({
+    ...step,
+    title: [
+      t("Choose How You Use ConnectX", "Pilih Cara Kamu Menggunakan ConnectX"),
+      t("Define Your Role or What You're Looking For", "Tentukan Peran atau yang Kamu Cari"),
+      t("Discover Relevant People or Startups", "Temukan Orang atau Startup yang Relevan"),
+      t("Connect and Start Building", "Terhubung dan Mulai Membangun"),
+    ][i],
+    description: [
+      t("Are you a Builder looking for opportunities, or a Startup looking for people? Pick your side.", "Apakah kamu Builder yang mencari peluang, atau Startup yang mencari orang? Pilih sisimu."),
+      t("Builders choose their role as a founder, co-founder, or team member. Startups define the roles they're hiring for.", "Builder memilih peran sebagai founder, co-founder, atau anggota tim. Startup menentukan peran yang sedang dicari."),
+      t("Browse curated profiles matched to your skills, industry, and goals. No noise only relevant connections.", "Jelajahi profil terkurasi yang cocok dengan skill, industri, dan tujuanmu. Tanpa noise, hanya koneksi relevan."),
+      t("When both sides are interested, you're connected. Start conversations, form teams, and build your startup.", "Saat kedua pihak tertarik, kalian terhubung. Mulai percakapan, bentuk tim, dan bangun startupmu."),
+    ][i],
+  }));
+
   return (
     <section id="how-it-works" className="py-24">
       <div className="container mx-auto px-4">
@@ -39,15 +57,15 @@ export function StartupPipeline() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            How It <span className="gradient-text">Works</span>
+            {t("How It", "Cara")} <span className="gradient-text">{t("Works", "Kerja")}</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Four simple steps from sign-up to building your startup.
+            {t("Four simple steps from sign-up to building your startup.", "Empat langkah sederhana dari daftar sampai membangun startupmu.")}
           </p>
         </motion.div>
 
         <div className="max-w-3xl mx-auto">
-          {steps.map((s, i) => (
+          {localizedSteps.map((s, i) => (
             <motion.div
               key={s.step}
               initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
@@ -65,7 +83,7 @@ export function StartupPipeline() {
                 )}
               </div>
               <div className="pb-8">
-                <span className="text-xs font-bold text-primary mb-1 block">Step {s.step}</span>
+                <span className="text-xs font-bold text-primary mb-1 block">{t("Step", "Langkah")} {s.step}</span>
                 <h3 className="font-display font-semibold text-lg text-foreground mb-1">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.description}</p>
               </div>

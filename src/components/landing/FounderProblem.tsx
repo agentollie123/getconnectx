@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 function CountUp({ end, suffix = "%", duration = 1.2 }: { end: number; suffix?: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -62,6 +63,30 @@ function Card({ children, delay = 0, className = "" }: { children: React.ReactNo
 }
 
 export function FounderProblem() {
+  const { t } = useLanguage();
+  const localizedStats = stats.map((s, i) => ({
+    ...s,
+    title: [t("of startups fail", "startup gagal"), t("fail due to team issues", "gagal karena masalah tim"), t("experience co-founder conflict", "mengalami konflik co-founder")][i],
+    body: [
+      t("Most don't fail because of ideas, but because of execution, market, and team challenges.", "Sebagian besar bukan gagal karena ide, tetapi karena eksekusi, pasar, dan tantangan tim."),
+      t("Problems inside the team are one of the most common reasons startups break down.", "Masalah di dalam tim adalah salah satu alasan paling umum startup runtuh."),
+      t("Misalignment between founders is one of the biggest risks early on.", "Ketidakselarasan antar founder adalah salah satu risiko terbesar di tahap awal."),
+    ][i],
+  }));
+  const localizedInsights = insights.map((ins, i) => ({
+    ...ins,
+    title: [
+      t("Talent exists but access is broken", "Talenta ada tetapi aksesnya rusak"),
+      t("It's not a talent problem.\nIt's a connection problem.", "Ini bukan masalah talenta.\nIni masalah koneksi."),
+      t("Today, people rely on luck", "Hari ini, orang mengandalkan keberuntungan"),
+    ][i],
+    lines: [
+      [t("Millions want to join startups.", "Jutaan orang ingin bergabung dengan startup."), t("They don't know where to start.", "Mereka tidak tahu harus mulai dari mana.")],
+      [t("People exist.", "Orangnya ada."), t("Opportunities exist.", "Peluangnya ada."), t("They don't meet.", "Mereka tidak bertemu.")],
+      ["LinkedIn. Events. Networks.", t("Fragmented. Slow. Random.", "Terpecah. Lambat. Acak.")],
+    ][i],
+  }));
+
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
@@ -74,21 +99,21 @@ export function FounderProblem() {
         >
           <h2 className="font-display font-bold max-w-3xl mx-auto">
             <span className="block whitespace-nowrap" style={{ fontSize: "clamp(24px, 3.2vw, 40px)", lineHeight: 1.15, color: "#FFFFFF" }}>
-              The hardest part of building a startup
+              {t("The hardest part of building a startup", "Bagian tersulit membangun startup")}
             </span>
             <span className="block mt-1" style={{ fontSize: "clamp(24px, 3.2vw, 40px)", lineHeight: 1.15, color: "#FF8A3D" }}>
-              isn't the idea it's the people
+              {t("isn't the idea it's the people", "bukan idenya tetapi orangnya")}
             </span>
           </h2>
           <p className="mt-5 max-w-lg mx-auto" style={{ fontSize: 16, color: "#8E8E93", lineHeight: "24px" }}>
-            Founders don't struggle to start. They struggle to find{" "}
-            <span style={{ color: "#FFFFFF", fontWeight: 500 }}>the right people</span>.
+            {t("Founders don't struggle to start. They struggle to find", "Founder tidak kesulitan untuk mulai. Mereka kesulitan menemukan")}{" "}
+            <span style={{ color: "#FFFFFF", fontWeight: 500 }}>{t("the right people", "orang yang tepat")}</span>.
           </p>
         </motion.div>
 
         {/* Stats row */}
         <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-4">
-          {stats.map((s, i) => (
+          {localizedStats.map((s, i) => (
             <Card key={s.title} delay={i * 0.08}>
               <p className="font-display font-bold mb-1" style={{ fontSize: 30, color: "#FF8A3D" }}>
                 <CountUp end={s.end} />
@@ -110,7 +135,7 @@ export function FounderProblem() {
 
         {/* Insight row — 3 cards */}
         <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
-          {insights.map((ins, i) => (
+          {localizedInsights.map((ins, i) => (
             <Card key={i} delay={0.24 + i * 0.08} className={ins.accent ? "border-[#FF8A3D]/20" : ""}>
               <p
                 className="font-sans font-semibold mb-2 whitespace-pre-line"

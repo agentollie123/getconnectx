@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Rocket, Play } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function FinalCTA() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-32 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -20,25 +23,25 @@ export function FinalCTA() {
           </div>
 
           <h2 className="font-display text-3xl sm:text-5xl font-bold mb-6 max-w-2xl mx-auto leading-tight">
-            Start Your Startup With the{" "}
-            <span className="gradient-text">Right People</span>
+            {t("Start Your Startup With the", "Mulai Startup Kamu Dengan")}{" "}
+            <span className="gradient-text">{t("Right People", "Orang yang Tepat")}</span>
           </h2>
 
           <p className="text-lg text-muted-foreground mb-10 max-w-lg mx-auto">
-            Don't wait to find the right team. Join thousands of founders, engineers, and operators building on ConnectX.
+            {t("Don't wait to find the right team. Join thousands of founders, engineers, and operators building on ConnectX.", "Jangan menunggu untuk menemukan tim yang tepat. Bergabung dengan ribuan founder, engineer, dan operator yang membangun di ConnectX.")}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-4">
             <Button size="lg" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
               <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">
-                Join Waitlist
+                {t("Join Waitlist", "Gabung Waitlist")}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
             </Button>
             <Button size="lg" variant="outline" className="h-12 border-border text-foreground hover:bg-secondary" asChild>
               <a href="/app">
                 <Play className="w-4 h-4 mr-2" />
-                Try Playground
+                {t("Try Playground", "Coba Playground")}
               </a>
             </Button>
           </div>

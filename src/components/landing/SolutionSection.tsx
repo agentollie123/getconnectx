@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { User, Building2, Search, UserPlus, Users, Rocket, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const builderRoles = [
   { icon: User, label: "Founder" },
@@ -13,6 +14,11 @@ const startupNeeds = [
 ];
 
 export function SolutionSection() {
+  const { t } = useLanguage();
+  const localizedBuilderRoles = builderRoles.map((role) => ({ ...role, label: t(role.label, role.label === "Founder" ? "Founder" : role.label === "Co-Founder" ? "Co-Founder" : "Anggota Tim") }));
+  const localizedStartupNeeds = startupNeeds.map((role) => ({ ...role, label: t(role.label, role.label === "Hiring" ? "Merekrut" : "Membangun Tim") }));
+  const steps = [t("Choose who you are", "Pilih siapa kamu"), t("Define what you need", "Tentukan yang kamu butuhkan"), t("Connect with the right people", "Terhubung dengan orang yang tepat")];
+
   return (
     <section className="py-24">
       <div className="container mx-auto px-4">
@@ -23,11 +29,11 @@ export function SolutionSection() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Where Builders and Startups{" "}
-            <span className="gradient-text">Find Each Other</span>
+            {t("Where Builders and Startups", "Tempat Builder dan Startup")} {" "}
+            <span className="gradient-text">{t("Find Each Other", "Saling Bertemu")}</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            ConnectX helps you find the right people based on what you want to build not random connections.
+            {t("ConnectX helps you find the right people based on what you want to build not random connections.", "ConnectX membantu kamu menemukan orang yang tepat berdasarkan apa yang ingin kamu bangun, bukan koneksi acak.")}
           </p>
         </motion.div>
 
@@ -45,10 +51,10 @@ export function SolutionSection() {
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                   <User className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-display font-bold text-lg text-foreground">Builders</h3>
+                <h3 className="font-display font-bold text-lg text-foreground">{t("Builders", "Builder")}</h3>
               </div>
               <div className="space-y-3">
-                {builderRoles.map((r, i) => (
+                {localizedBuilderRoles.map((r, i) => (
                   <motion.div
                     key={r.label}
                     initial={{ opacity: 0, x: -10 }}
@@ -84,7 +90,7 @@ export function SolutionSection() {
                 <div className="w-px h-8 bg-primary/20" />
               </div>
               <p className="text-[10px] text-muted-foreground font-medium text-center max-w-[100px]">
-                Smart Matching
+                {t("Smart Matching", "Matching Cerdas")}
               </p>
             </motion.div>
 
@@ -99,10 +105,10 @@ export function SolutionSection() {
                 <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
                   <Building2 className="w-5 h-5 text-accent-foreground" />
                 </div>
-                <h3 className="font-display font-bold text-lg text-foreground">Startups</h3>
+                <h3 className="font-display font-bold text-lg text-foreground">Startup</h3>
               </div>
               <div className="space-y-3">
-                {startupNeeds.map((r, i) => (
+                {localizedStartupNeeds.map((r, i) => (
                   <motion.div
                     key={r.label}
                     initial={{ opacity: 0, x: 10 }}
@@ -127,9 +133,7 @@ export function SolutionSection() {
             className="flex flex-wrap justify-center gap-6 mt-12"
           >
             {[
-              "Choose who you are",
-              "Define what you need",
-              "Connect with the right people",
+              ...steps,
             ].map((text, i) => (
               <div key={text} className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center">
