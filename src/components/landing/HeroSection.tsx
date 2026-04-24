@@ -27,18 +27,18 @@ export function HeroSection() {
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              {t("Build Your Startup", "Bangun Startup Kamu")}{" "}
+              {t("Build Your Startup", "Bangun Startupmu")}{" "}
               <br className="hidden sm:block" />
               {t("With the", "Dengan")}{" "}
               <span className="gradient-text">{t("Right People.", "Orang yang Tepat.")}</span>
             </h1>
 
             <p className="text-lg text-muted-foreground max-w-lg mb-3 leading-relaxed">
-              {t("ConnectX connects founders, co-founders, and early teams to start startups together.", "ConnectX menghubungkan founder, co-founder, dan tim awal untuk membangun startup bersama.")}
+              {t("ConnectX connects founders, co-founders, and early teams to start startups together.", "ConnectX mengkoneksikan founder, co-founder, dan tim untuk membangun startup bersama.")}
             </p>
 
             <p className="text-sm text-muted-foreground/70 max-w-lg mb-8">
-              {t("No networking. No job boards. Just the people you need to start.", "Bukan networking. Bukan job board. Hanya orang yang kamu butuhkan untuk mulai.")}
+              {t("No networking. No job boards. Just the people you need to start.", "Bukan cuma networking. Bukan job portal. Tapi orang-orang yang kamu butuhkan untuk memulai.")}
             </p>
 
             <div className="flex flex-wrap gap-4 mb-3">
@@ -57,7 +57,7 @@ export function HeroSection() {
             </div>
 
             <p className="text-xs text-primary/80 font-medium">
-              {t("Be early. The best teams form first.", "Jadilah yang awal. Tim terbaik terbentuk lebih dulu.")}
+              {t("Be early. The best teams form first.", "Jadilah yang pertama. Untuk bentuk Tim terbaik lebih dulu.")}
             </p>
 
             <div className="flex gap-8 mt-10 pt-8 border-t border-border/50">
