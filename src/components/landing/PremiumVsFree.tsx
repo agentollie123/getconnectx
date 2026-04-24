@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Check, X, ArrowRight, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const freeFeatures = [
   "Discover founders, builders, and startups",
@@ -26,6 +27,28 @@ const premiumFeatures = [
 ];
 
 export function PremiumVsFree() {
+  const { t } = useLanguage();
+  const localizedFreeFeatures = freeFeatures.map((feature, i) => [
+    t("Discover founders, builders, and startups", "Temukan founder, builder, dan startup"),
+    t("Basic matches based on your profile", "Match dasar berdasarkan profilmu"),
+    t("Connect with people", "Terhubung dengan orang"),
+    t("Build your profile", "Bangun profilmu"),
+  ][i]);
+  const localizedFreeLimitations = freeLimitations.map((feature, i) => [
+    t("Matches may be less precise", "Match mungkin kurang presisi"),
+    t("Limited visibility to others", "Visibilitas terbatas ke pengguna lain"),
+    t("You won't see who wants to connect", "Kamu tidak melihat siapa yang ingin terhubung"),
+  ][i]);
+  const localizedPremiumFeatures = premiumFeatures.map((feature, i) => [
+    t("See who wants to connect with you", "Lihat siapa yang ingin terhubung denganmu"),
+    t("Get higher-quality matches", "Dapatkan match yang lebih berkualitas"),
+    t("Appear first to founders and startups", "Muncul lebih dulu ke founder dan startup"),
+    t("Increase your chances of finding the right team", "Tingkatkan peluang menemukan tim yang tepat"),
+    t("Priority visibility in discovery", "Visibilitas prioritas di discovery"),
+    t("Better match precision", "Presisi match lebih baik"),
+    t("Monthly profile boost", "Boost profil bulanan"),
+  ][i]);
+
   return (
     <section id="premium" className="py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
@@ -36,11 +59,11 @@ export function PremiumVsFree() {
           className="text-center mb-16"
         >
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4 max-w-2xl mx-auto">
-            Free to Explore.{" "}
-            <span className="gradient-text">Premium to Move Faster.</span>
+            {t("Free to Explore.", "Gratis untuk Eksplorasi.")} {" "}
+            <span className="gradient-text">{t("Premium to Move Faster.", "Premium untuk Bergerak Lebih Cepat.")}</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Better builders. Faster outcomes. Higher chances to build.
+            {t("Better builders. Faster outcomes. Higher chances to build.", "Builder lebih tepat. Hasil lebih cepat. Peluang membangun lebih besar.")}
           </p>
         </motion.div>
 
@@ -53,10 +76,10 @@ export function PremiumVsFree() {
             className="glass-card rounded-2xl p-8"
           >
             <h3 className="font-display font-bold text-2xl text-foreground mb-1">Free</h3>
-            <p className="text-sm text-muted-foreground mb-6">Start exploring the network</p>
+            <p className="text-sm text-muted-foreground mb-6">{t("Start exploring the network", "Mulai jelajahi jaringan")}</p>
 
             <div className="space-y-3 mb-6">
-              {freeFeatures.map((f) => (
+              {localizedFreeFeatures.map((f) => (
                 <div key={f} className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                   <span className="text-sm text-muted-foreground">{f}</span>
@@ -65,7 +88,7 @@ export function PremiumVsFree() {
             </div>
 
             <div className="border-t border-border/50 pt-4 space-y-2.5">
-              {freeLimitations.map((l) => (
+              {localizedFreeLimitations.map((l) => (
                 <div key={l} className="flex items-start gap-2.5">
                   <X className="w-4 h-4 text-muted-foreground/50 mt-0.5 flex-shrink-0" />
                   <span className="text-xs text-muted-foreground/60">{l}</span>
@@ -86,14 +109,14 @@ export function PremiumVsFree() {
           >
             <div className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold flex items-center gap-1">
               <Crown className="w-3 h-3" />
-              Recommended
+              {t("Recommended", "Direkomendasikan")}
             </div>
 
             <h3 className="font-display font-bold text-2xl text-foreground mb-1">Premium</h3>
-            <p className="text-sm text-primary mb-6">Find the right people, faster</p>
+            <p className="text-sm text-primary mb-6">{t("Find the right people, faster", "Temukan orang yang tepat lebih cepat")}</p>
 
             <div className="space-y-3 mb-6">
-              {premiumFeatures.map((f) => (
+              {localizedPremiumFeatures.map((f) => (
                 <div key={f} className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                   <span className="text-sm text-foreground">{f}</span>
@@ -102,12 +125,12 @@ export function PremiumVsFree() {
             </div>
 
             <p className="text-xs text-primary/80 mb-5 italic">
-              Premium users are matched earlier with higher-fit profiles
+              {t("Premium users are matched earlier with higher-fit profiles", "Pengguna Premium dipertemukan lebih awal dengan profil yang lebih cocok")}
             </p>
 
             <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
               <a href="/app/premium">
-                Upgrade to Premium
+                {t("Upgrade to Premium", "Upgrade ke Premium")}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </a>
             </Button>
@@ -120,7 +143,7 @@ export function PremiumVsFree() {
           viewport={{ once: true }}
           className="text-center text-sm text-muted-foreground mt-10 italic"
         >
-          The best teams don't wait to be discovered.
+          {t("The best teams don't wait to be discovered.", "Tim terbaik tidak menunggu untuk ditemukan.")}
         </motion.p>
       </div>
     </section>
