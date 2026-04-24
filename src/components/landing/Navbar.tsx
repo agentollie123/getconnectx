@@ -3,10 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageSwitch } from "@/components/LanguageSwitch";
+import { useLanguage } from "@/contexts/LanguageContext";
 import logoIcon from "@/assets/logo-icon.png";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <nav className="fixed top-0 inset-x-0 z-50 glass-card border-b border-border/30 backdrop-blur-xl">
@@ -18,19 +21,20 @@ export function Navbar() {
 
         <div className="hidden md:flex items-center gap-8">
           <a href="#modes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Ecosystem</a>
-          <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
+          <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t("How It Works", "Cara Kerja")}</a>
           <a href="#playground" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Mock Up </a>
           <Link to="/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Playground</Link>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
+          <LanguageSwitch />
           <ThemeToggle />
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
             <Link to="/app">Playground</Link>
           </Button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">
-              Join Waitlist
+              {t("Join Waitlist", "Gabung Waitlist")}
             </a>
           </Button>
         </div>
@@ -42,12 +46,13 @@ export function Navbar() {
 
       {open &&
       <div className="md:hidden glass-card border-t border-border/30 px-4 pb-4 space-y-3">
+          <LanguageSwitch className="mt-3" />
           <a href="#modes" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Ecosystem</a>
-          <a href="#how-it-works" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>How It Works</a>
+          <a href="#how-it-works" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>{t("How It Works", "Cara Kerja")}</a>
           <a href="#playground" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Playground</a>
           <Link to="/app" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Web App</Link>
           <Button size="sm" className="w-full bg-primary text-primary-foreground" asChild>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">Join Waitlist</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">{t("Join Waitlist", "Gabung Waitlist")}</a>
           </Button>
         </div>
       }
