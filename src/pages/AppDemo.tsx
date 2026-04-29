@@ -32,7 +32,7 @@ import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
 import { OnboardingFlow, type UserRole, type OnboardingResult } from "@/components/app/OnboardingFlow";
-import { LanguageSwitch } from "@/components/LanguageSwitch";
+
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const navItems = [
@@ -454,7 +454,7 @@ export default function AppDemo() {
                 </button>
               </>
             )}
-            {!reportProfile && <LanguageSwitch className="scale-75 origin-right" />}
+            
             <Button
               variant="outline"
               size="sm"

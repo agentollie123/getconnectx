@@ -30,7 +30,7 @@ import { VersionBadge, SwipeLimitBar } from "@/components/app/VersionBadge";
 import { V2ComingSoonGrid } from "@/components/app/V2ComingSoon";
 import { VersionRoadmap } from "@/components/app/VersionRoadmap";
 import { OnboardingFlow } from "@/components/app/OnboardingFlow";
-import { LanguageSwitch } from "@/components/LanguageSwitch";
+
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const navItems = [
@@ -383,7 +383,7 @@ export default function AppPremium() {
               </button>
             </>
           )}
-          {!reportProfile && <LanguageSwitch className="scale-75 origin-right" />}
+          
         </div>
       </header>
 
