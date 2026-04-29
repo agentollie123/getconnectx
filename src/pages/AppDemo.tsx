@@ -454,7 +454,7 @@ export default function AppDemo() {
                 </button>
               </>
             )}
-            {!reportProfile && <LanguageSwitch className="scale-75 origin-right" />}
+            
             <Button
               variant="outline"
               size="sm"

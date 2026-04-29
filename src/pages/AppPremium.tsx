@@ -383,7 +383,7 @@ export default function AppPremium() {
               </button>
             </>
           )}
-          {!reportProfile && <LanguageSwitch className="scale-75 origin-right" />}
+          
         </div>
       </header>
 
