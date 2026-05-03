@@ -18,6 +18,7 @@ import { SwipeCard } from "@/components/app/SwipeCard";
 import { StartupSwipeCard } from "@/components/app/StartupSwipeCard";
 import { StartupDetailModal } from "@/components/app/StartupDetailModal";
 import { MatchModal } from "@/components/app/MatchModal";
+import { StartupMatchModal } from "@/components/app/StartupMatchModal";
 import { CompatibilityReport } from "@/components/app/CompatibilityReport";
 import { MatchesView } from "@/components/app/MatchesView";
 import { ChatView } from "@/components/app/ChatView";
@@ -410,10 +411,8 @@ export default function AppPremium() {
       <StartupDetailModal startup={startupDetail} onClose={() => setStartupDetail(null)}
         onInterested={() => { if (startupDetail) setConnectedStartups((prev) => [...prev, startupDetail]); setStartupDetail(null); }}
         onPass={() => setStartupDetail(null)} />
-      {matchedStartup && (
-        <StartupMatchModal startup={matchedStartup} onClose={() => setMatchedStartup(null)}
-          onChat={() => { setMatchedStartup(null); setActiveNav("Chat"); }} />
-      )}
+      <StartupMatchModal startup={matchedStartup} onClose={() => setMatchedStartup(null)}
+        onChat={() => { setMatchedStartup(null); setActiveNav("Chat"); }} />
       <SpotlightModal open={showSpotlight} onClose={() => setShowSpotlight(false)} />
       <AddToTeamModal profile={addToTeamTarget} onClose={() => setAddToTeamTarget(null)} onConfirm={handleAddToTeamConfirm} />
       </div>
@@ -421,28 +420,3 @@ export default function AppPremium() {
   );
 }
 
-function StartupMatchModal({ startup, onClose, onChat }: { startup: Startup; onClose: () => void; onChat: () => void }) {
-  const initials = startup.name.split(" ").map(w => w[0]).join("").slice(0, 2);
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4" onClick={onClose}>
-      <div className="relative w-full max-w-sm rounded-2xl bg-card border border-border p-8 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground">
-          <X className="w-5 h-5" />
-        </button>
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-4">
-          <span className="text-xl font-display font-bold text-primary-foreground">{initials}</span>
-        </div>
-        <h2 className="font-display text-xl font-bold gradient-text mb-1">Connection started! 🚀</h2>
-        <p className="text-sm text-foreground font-semibold mb-1">{startup.name}</p>
-        <p className="text-xs text-muted-foreground mb-1">Founded by {startup.founder}</p>
-        <Badge variant="outline" className="text-[10px] border-primary/30 text-primary mb-4">Connected</Badge>
-        <p className="text-xs text-muted-foreground mb-4">
-          You and {startup.name} are now connected for <span className="text-primary font-medium">{startup.openRoles[0]}</span>
-        </p>
-        <Button className="w-full bg-primary text-primary-foreground" onClick={onChat}>
-          <MessageCircle className="w-4 h-4 mr-1.5" /> Chat with Founder
-        </Button>
-      </div>
-    </div>
-  );
-}
