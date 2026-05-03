@@ -151,10 +151,7 @@ export function StartupMatchModal({ startup, onClose, onChat }: StartupMatchModa
           >
             <p className="text-sm text-foreground font-semibold mb-1">{startup.name}</p>
             <p className="text-xs text-muted-foreground mb-2">Founded by {startup.founder}</p>
-            <Badge variant="outline" className="text-[10px] border-primary/30 text-primary mb-3">
-              Connected
-            </Badge>
-            <p className="text-xs text-muted-foreground mb-5">
+            <p className="text-xs text-muted-foreground mb-5 mt-3">
               You and {startup.name} are now connected for{" "}
               <span className="text-primary font-medium">{startup.openRoles[0]}</span>
             </p>
