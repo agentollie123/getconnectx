@@ -422,7 +422,8 @@ export default function AppPremium() {
       <SpotlightModal open={showSpotlight} onClose={() => setShowSpotlight(false)} />
       <AddToTeamModal profile={addToTeamTarget} onClose={() => setAddToTeamTarget(null)} onConfirm={handleAddToTeamConfirm} />
       </div>
-    </div>
+    </main>
   );
+
 }
 
