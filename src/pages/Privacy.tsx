@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/landing/Navbar";
+import { SEO } from "@/components/SEO";
 import { Footer } from "@/components/landing/Footer";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -174,8 +175,10 @@ const Privacy = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO title="Privacy Policy — ConnectX" description="How ConnectX collects, uses, and protects your personal data across our platform and services." path="/privacy" />
       <Navbar />
       <main className="pt-28 pb-20">
+
         <article className="container mx-auto max-w-3xl px-4">
           <Link
             to="/"

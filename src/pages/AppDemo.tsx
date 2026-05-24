@@ -10,6 +10,8 @@ import { startups, type Startup } from "@/lib/startupData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import logoIcon from "@/assets/logo-icon.png";
+import { SEO } from "@/components/SEO";
+
 
 import { FilterPanel, type FilterState } from "@/components/app/FilterPanel";
 import { startups as allStartups } from "@/lib/startupData";
@@ -417,9 +419,15 @@ export default function AppDemo() {
   );
 
   return (
-    <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
+    <main className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
+      <SEO
+        title="ConnectX App Demo — Free Co-Founder Matching Playground"
+        description="Try the free ConnectX experience: swipe builders and startups, see compatibility, and feel how intent-based co-founder matching works."
+        path="/app"
+      />
       {/* Mobile frame */}
       <div className="w-full max-w-[390px] h-[844px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
+
 
         {/* Header */}
         <div className="flex-shrink-0 px-4 py-2 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
@@ -540,7 +548,8 @@ export default function AppDemo() {
         onClose={() => setAddToTeamTarget(null)}
         onConfirm={handleAddToTeamConfirm}
       />
-    </div>
+    </main>
   );
+
 }
 

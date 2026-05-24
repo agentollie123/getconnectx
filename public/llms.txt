@@ -1,0 +1,14 @@
+# ConnectX
+
+> No networking. No job boards. Just the people you need to start your startup.
+
+ConnectX helps builders and startups find co-founders, early teammates, and the right people to build with — through intent-based matching rather than profile-browsing.
+
+## Pages
+
+- [Home](/): What ConnectX is, how it works, and waitlist signup.
+- [App Demo (Free)](/app): Interactive mobile playground showing the free matching experience.
+- [App Demo (Premium)](/app/premium): Interactive playground showing Premium features.
+- [Terms](/terms): Terms of service.
+- [Privacy](/privacy): Privacy policy.
+- [Community Guidelines](/community-guidelines): Community rules.
