@@ -11,6 +11,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import logoIcon from "@/assets/logo-icon.png";
+import { SEO } from "@/components/SEO";
+
 
 import { PremiumFilterPanel, type PremiumFilterState } from "@/components/app/PremiumFilterPanel";
 import { startups as allStartups } from "@/lib/startupData";
