@@ -204,8 +204,10 @@ const CommunityGuidelines = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO title="Community Guidelines — ConnectX" description="The trust, safety, and conduct standards every ConnectX member agrees to follow." path="/community-guidelines" />
       <Navbar />
       <main className="pt-28 pb-20">
+
         <article className="container mx-auto max-w-3xl px-4">
           <Link
             to="/"

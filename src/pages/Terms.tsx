@@ -203,8 +203,10 @@ const Terms = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO title="Terms of Service — ConnectX" description="Read the ConnectX Terms of Service governing use of our co-founder matching platform." path="/terms" />
       <Navbar />
       <main className="pt-28 pb-20">
+
         <article className="container mx-auto max-w-3xl px-4">
           <Link
             to="/"
