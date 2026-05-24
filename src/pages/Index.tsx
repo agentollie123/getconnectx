@@ -32,8 +32,10 @@ const Index = () => {
       <SocialProof />
       
       <FinalCTA />
+      </main>
       <Footer />
     </div>
+
   );
 };
 
