@@ -9,11 +9,6 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
     { label: "Playground", href: "/app" },
     { label: "Download", href: "#" },
   ],
-  Founders: [
-    { label: "Find a Co-Founder", href: "/find-a-cofounder" },
-    { label: "Connect with Founders", href: "/connects-founders" },
-    { label: "CoFoundersLab Alternative", href: "/cofounderslab-alternative" },
-  ],
   Company: [
     { label: "About", href: "#" },
     { label: "Contact", href: "mailto:info@getconnectx.app" },
@@ -52,7 +47,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border py-16">
       <div className="container mx-auto px-4">
-        <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-10 mb-12">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <img src={logoIcon} alt="ConnectX" className="w-8 h-8 rounded-lg" />
