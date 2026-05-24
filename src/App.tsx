@@ -9,7 +9,11 @@ import AppPremium from "./pages/AppPremium";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import CommunityGuidelines from "./pages/CommunityGuidelines";
+import FindACofounder from "./pages/FindACofounder";
+import ConnectsFounders from "./pages/ConnectsFounders";
+import CofounderslabAlternative from "./pages/CofounderslabAlternative";
 import NotFound from "./pages/NotFound";
+
 
 const queryClient = new QueryClient();
 
@@ -26,7 +30,11 @@ const App = () => (
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/community-guidelines" element={<CommunityGuidelines />} />
+          <Route path="/find-a-cofounder" element={<FindACofounder />} />
+          <Route path="/connects-founders" element={<ConnectsFounders />} />
+          <Route path="/cofounderslab-alternative" element={<CofounderslabAlternative />} />
           <Route path="*" element={<NotFound />} />
+
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
