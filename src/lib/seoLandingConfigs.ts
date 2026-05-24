@@ -210,4 +210,131 @@ export const seoLandingConfigs: Record<string, SeoLandingProps> = {
   },
 };
 
+// ============================================================
+// Region-specific landing pages (SEA, APAC, South Asia, Middle East)
+// ============================================================
+
+type RegionSpec = {
+  slug: string;
+  place: string;
+  shortPlace?: string;
+  marketNote: string;
+  nearby: string;
+};
+
+const cities: RegionSpec[] = [
+  // SEA
+  { slug: "singapore", place: "Singapore", marketNote: "Singapore is Southeast Asia's startup capital — fintech, deeptech, and B2B SaaS builders are everywhere.", nearby: "Singapore, KL, Jakarta, and Ho Chi Minh" },
+  { slug: "jakarta", place: "Jakarta", marketNote: "Jakarta is Indonesia's startup engine — the largest builder pool in Southeast Asia.", nearby: "Jakarta, Bandung, Bali, and Surabaya" },
+  { slug: "bangkok", place: "Bangkok", marketNote: "Bangkok's startup scene is growing fast across fintech, e-commerce, and travel tech.", nearby: "Bangkok, Chiang Mai, and Phuket" },
+  { slug: "manila", place: "Manila", marketNote: "Manila and Cebu host one of Asia's most underrated technical talent pools.", nearby: "Manila, Cebu, and Davao" },
+  { slug: "kuala-lumpur", place: "Kuala Lumpur", marketNote: "KL connects Malaysian builders with regional capital across SEA.", nearby: "KL, Penang, and Johor Bahru" },
+  { slug: "ho-chi-minh", place: "Ho Chi Minh City", marketNote: "Ho Chi Minh City has one of Asia's deepest engineering talent benches.", nearby: "Ho Chi Minh City, Hanoi, and Da Nang" },
+  { slug: "hanoi", place: "Hanoi", marketNote: "Hanoi's engineering scene rivals any in Southeast Asia.", nearby: "Hanoi, Ho Chi Minh City, and Da Nang" },
+  // APAC
+  { slug: "tokyo", place: "Tokyo", marketNote: "Tokyo's startup scene is global-tier — deeptech, robotics, AI, and consumer.", nearby: "Tokyo, Osaka, and Fukuoka" },
+  { slug: "seoul", place: "Seoul", marketNote: "Seoul leads APAC in consumer, gaming, and AI startups.", nearby: "Seoul and Busan" },
+  { slug: "hong-kong", place: "Hong Kong", marketNote: "Hong Kong remains a cross-border hub for fintech and Web3 founders.", nearby: "Hong Kong and the Greater Bay Area" },
+  { slug: "taipei", place: "Taipei", marketNote: "Taipei is a powerhouse for hardware, semiconductors, and AI infrastructure founders.", nearby: "Taipei, Hsinchu, and Taichung" },
+  { slug: "sydney", place: "Sydney", marketNote: "Sydney and Melbourne anchor APAC's most mature startup ecosystem outside Asia.", nearby: "Sydney, Melbourne, and Brisbane" },
+  // South Asia
+  { slug: "bangalore", place: "Bangalore", marketNote: "Bangalore is the world's largest concentration of technical co-founders outside the Bay Area.", nearby: "Bangalore, Hyderabad, and Chennai" },
+  { slug: "mumbai", place: "Mumbai", marketNote: "Mumbai is India's commercial capital — fintech, D2C, and SaaS founders galore.", nearby: "Mumbai, Pune, and Ahmedabad" },
+  { slug: "delhi", place: "Delhi NCR", marketNote: "Delhi NCR (Gurgaon and Noida included) is India's fastest-growing founder hub.", nearby: "Delhi, Gurgaon, and Noida" },
+  { slug: "karachi", place: "Karachi", marketNote: "Karachi anchors Pakistan's growing fintech and e-commerce scene.", nearby: "Karachi, Lahore, and Islamabad" },
+  { slug: "dhaka", place: "Dhaka", marketNote: "Dhaka's startup scene is emerging fast across fintech and logistics.", nearby: "Dhaka and Chittagong" },
+  // Middle East
+  { slug: "dubai", place: "Dubai", marketNote: "Dubai is the Middle East's startup magnet — capital, talent, and zero income tax.", nearby: "Dubai, Abu Dhabi, and Sharjah" },
+  { slug: "abu-dhabi", place: "Abu Dhabi", marketNote: "Abu Dhabi's Hub71 and sovereign capital make it a serious founder destination.", nearby: "Abu Dhabi and Dubai" },
+  { slug: "riyadh", place: "Riyadh", marketNote: "Riyadh is the fastest-growing startup capital in MENA, backed by Vision 2030.", nearby: "Riyadh, Jeddah, and NEOM" },
+  { slug: "tel-aviv", place: "Tel Aviv", marketNote: "Tel Aviv is one of the densest startup ecosystems on earth.", nearby: "Tel Aviv, Herzliya, and Haifa" },
+  { slug: "cairo", place: "Cairo", marketNote: "Cairo leads North Africa's startup scene across fintech and e-commerce.", nearby: "Cairo and Alexandria" },
+  { slug: "doha", place: "Doha", marketNote: "Doha is investing heavily in becoming a regional startup hub.", nearby: "Doha and the Gulf" },
+];
+
+const countries: RegionSpec[] = [
+  { slug: "indonesia", place: "Indonesia", marketNote: "Indonesia is Southeast Asia's largest startup market — 270M+ people and a booming digital economy.", nearby: "Jakarta, Bandung, Surabaya, and Bali" },
+  { slug: "thailand", place: "Thailand", marketNote: "Thailand's startup scene spans fintech, travel, and consumer tech.", nearby: "Bangkok, Chiang Mai, and Phuket" },
+  { slug: "vietnam", place: "Vietnam", marketNote: "Vietnam has one of Asia's deepest pools of engineering talent.", nearby: "Ho Chi Minh City, Hanoi, and Da Nang" },
+  { slug: "philippines", place: "the Philippines", shortPlace: "the Philippines", marketNote: "The Philippines combines English-fluent talent with a fast-growing digital market.", nearby: "Manila, Cebu, and Davao" },
+  { slug: "malaysia", place: "Malaysia", marketNote: "Malaysia connects ASEAN's builder ecosystems with regional capital.", nearby: "KL, Penang, and Johor Bahru" },
+  { slug: "india", place: "India", marketNote: "India has the world's largest concentration of technical co-founders outside the US.", nearby: "Bangalore, Mumbai, Delhi NCR, and Hyderabad" },
+  { slug: "pakistan", place: "Pakistan", marketNote: "Pakistan's startup ecosystem is among the fastest-growing in South Asia.", nearby: "Karachi, Lahore, and Islamabad" },
+  { slug: "bangladesh", place: "Bangladesh", marketNote: "Bangladesh's startup scene is emerging fast in fintech and logistics.", nearby: "Dhaka and Chittagong" },
+  { slug: "uae", place: "the UAE", shortPlace: "the UAE", marketNote: "The UAE is the Middle East's startup capital — capital, talent, and zero income tax.", nearby: "Dubai, Abu Dhabi, and Sharjah" },
+  { slug: "saudi-arabia", place: "Saudi Arabia", marketNote: "Saudi Arabia's Vision 2030 is fueling the fastest startup growth in MENA.", nearby: "Riyadh, Jeddah, and NEOM" },
+  { slug: "israel", place: "Israel", marketNote: "Israel is one of the densest startup ecosystems on earth.", nearby: "Tel Aviv, Herzliya, and Haifa" },
+  { slug: "qatar", place: "Qatar", marketNote: "Qatar is investing heavily in startup infrastructure across the Gulf.", nearby: "Doha and the Gulf" },
+  { slug: "japan", place: "Japan", marketNote: "Japan's startup ecosystem is global-tier in deeptech, robotics, and AI.", nearby: "Tokyo, Osaka, and Fukuoka" },
+  { slug: "south-korea", place: "South Korea", marketNote: "South Korea leads APAC in consumer, gaming, and AI startups.", nearby: "Seoul and Busan" },
+  { slug: "taiwan", place: "Taiwan", marketNote: "Taiwan is a global powerhouse for hardware and AI infrastructure founders.", nearby: "Taipei, Hsinchu, and Taichung" },
+];
+
+function buildCofounderConfig(r: RegionSpec): SeoLandingProps {
+  const place = r.shortPlace ?? r.place;
+  return {
+    path: `/find-a-cofounder-${r.slug}`,
+    metaTitle: `Find a Co-Founder in ${r.place} — Match & Build | ConnectX`,
+    metaDescription: `Find a co-founder in ${r.place}. ConnectX matches founders and builders in ${r.place} by intent, skills, and stage — swipe, connect, build.`,
+    eyebrow: `Find a Co-Founder · ${r.place}`,
+    h1: `Find a co-founder in ${place},`,
+    h1Highlight: `built for builders.`,
+    subhead: `Swipe through founders and builders in ${r.place}. Match on intent, skills, and stage — then start the real conversation.`,
+    intro: `${r.marketNote} ConnectX gives founders in ${r.place} a swipe-and-match way to meet co-founders, technical partners, and early teammates — without cold DMs or networking events.`,
+    benefits: [
+      { title: `Local to ${r.place}`, body: `Filter for builders across ${r.nearby} — and open up to regional or global matches when you need a wider skill set.` },
+      { title: "Intent-matched, not résumé-matched", body: "Match on what you're building and what they bring — not job titles or LinkedIn headlines." },
+      { title: "Equity-first builders", body: `Everyone on ConnectX in ${r.place} is here to start or join a startup — not freelance, not consult.` },
+    ],
+    vsLabel: `Why founders in ${r.place} use ConnectX`,
+    vsTable: [
+      { feature: "Built for", us: `Founders in ${r.place}`, them: "Mostly US/SF" },
+      { feature: "Match mechanic", us: "Swipe + mutual connect", them: "Cold outreach" },
+      { feature: "Talent signal", us: "Intent + skills + stage", them: "Résumé bullets" },
+      { feature: "Access", us: "Open to anyone", them: "Accelerator-gated" },
+    ],
+    faq: [
+      { q: `How do I find a co-founder in ${r.place} on ConnectX?`, a: `Set your intent, stage, and location to ${r.place}. Swipe through founders and builders who match. Connect when both sides swipe right.` },
+      { q: `Are there enough builders in ${r.place}?`, a: `Yes — ${r.place} is an active market for ConnectX, with founders, engineers, designers, and operators across ${r.nearby}.` },
+      { q: "Can I match outside my city?", a: "Yes. Filter for local-only or open to regional and global matches when you need a wider talent pool." },
+      { q: "Is it free?", a: "Yes, the core matching is free. Premium unlocks deeper filters and priority visibility." },
+    ],
+  };
+}
+
+function buildStartupConfig(r: RegionSpec): SeoLandingProps {
+  const place = r.shortPlace ?? r.place;
+  return {
+    path: `/startup-matching-${r.slug}`,
+    metaTitle: `Startup Matching in ${r.place} — Find Your Team | ConnectX`,
+    metaDescription: `Startup matching in ${r.place}. ConnectX connects ${r.place} startups with co-founders and early teammates by intent — swipe, match, build.`,
+    eyebrow: `Startup Matching · ${r.place}`,
+    h1: `Startup matching in ${place} —`,
+    h1Highlight: `swipe. match. build.`,
+    subhead: `Startups in ${r.place} swipe through builders. Builders swipe through startups. Mutual match opens the chat.`,
+    intro: `${r.marketNote} ConnectX is where startups in ${r.place} meet the people who'll build them — no recruiters, no job boards, no middlemen.`,
+    benefits: [
+      { title: "Regional reach", body: `Match across ${r.nearby} — or open up to global builders when you need cross-border skills.` },
+      { title: "Founders, not freelancers", body: "Every match is someone here to start or join a startup, not contract or consult." },
+      { title: "From swipe to shipping", body: "Connect, message, and start building. No fees on the team you form." },
+    ],
+    vsLabel: `Why startups in ${r.place} use ConnectX`,
+    vsTable: [
+      { feature: "Built for", us: `${r.place} startup formation`, them: "Job hunting" },
+      { feature: "Match mechanic", us: "Mutual swipe", them: "Apply & wait" },
+      { feature: "Cost to form a team", us: "Free to match", them: "Recruiter fees" },
+    ],
+    faq: [
+      { q: `Does ConnectX have many builders in ${r.place}?`, a: `Yes — ${r.place} is a core market with active founders, engineers, designers, and operators.` },
+      { q: "Can I match regionally?", a: `Yes, filter by region to reach builders across ${r.nearby} and beyond.` },
+      { q: "Who's on the app?", a: "Founders looking for co-founders, builders looking for startups, and early operators wanting equity." },
+    ],
+  };
+}
+
+for (const r of [...cities, ...countries]) {
+  seoLandingConfigs[`find-a-cofounder-${r.slug}`] = buildCofounderConfig(r);
+  seoLandingConfigs[`startup-matching-${r.slug}`] = buildStartupConfig(r);
+}
+
 export const seoLandingSlugs = Object.keys(seoLandingConfigs);

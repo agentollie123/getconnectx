@@ -18,6 +18,14 @@ ConnectX helps builders and startups find co-founders, early teammates, and the 
 - [YC Co-Founder Matching Alternative](/yc-cofounder-match-alternative): Open alternative to YC's tool.
 - [YC Alternative for Asia](/yc-cofounder-match-alternative-asia): Co-founder matching for Asia.
 - [YC Startup Matching for Indonesia](/yc-startup-match-alternative-indonesia): Indonesia-first matching.
+
+## Regional pages — SEA, APAC, South Asia, Middle East
+
+Each region has two pages: `/find-a-cofounder-{slug}` and `/startup-matching-{slug}`.
+
+Cities: singapore, jakarta, bangkok, manila, kuala-lumpur, ho-chi-minh, hanoi, tokyo, seoul, hong-kong, taipei, sydney, bangalore, mumbai, delhi, karachi, dhaka, dubai, abu-dhabi, riyadh, tel-aviv, cairo, doha.
+
+Countries: indonesia, thailand, vietnam, philippines, malaysia, india, pakistan, bangladesh, uae, saudi-arabia, israel, qatar, japan, south-korea, taiwan.
 - [App Demo (Free)](/app): Interactive mobile playground showing the free matching experience.
 - [App Demo (Premium)](/app/premium): Interactive playground showing Premium features.
 - [Terms](/terms): Terms of service.
