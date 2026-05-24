@@ -7,8 +7,12 @@ ConnectX helps builders and startups find co-founders, early teammates, and the 
 ## Pages
 
 - [Home](/): What ConnectX is, how it works, and waitlist signup.
+- [Find a Co-Founder](/find-a-cofounder): How founders use ConnectX to find a technical or business co-founder.
+- [Connects Founders](/connects-founders): How ConnectX connects founders with builders and early teammates.
+- [CoFoundersLab Alternative](/cofounderslab-alternative): ConnectX vs CoFoundersLab comparison.
 - [App Demo (Free)](/app): Interactive mobile playground showing the free matching experience.
 - [App Demo (Premium)](/app/premium): Interactive playground showing Premium features.
 - [Terms](/terms): Terms of service.
 - [Privacy](/privacy): Privacy policy.
 - [Community Guidelines](/community-guidelines): Community rules.
+
