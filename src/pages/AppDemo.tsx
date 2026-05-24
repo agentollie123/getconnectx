@@ -546,7 +546,8 @@ export default function AppDemo() {
         onClose={() => setAddToTeamTarget(null)}
         onConfirm={handleAddToTeamConfirm}
       />
-    </div>
+    </main>
   );
+
 }
 
