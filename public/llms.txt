@@ -10,6 +10,14 @@ ConnectX helps builders and startups find co-founders, early teammates, and the 
 - [Find a Co-Founder](/find-a-cofounder): How founders use ConnectX to find a technical or business co-founder.
 - [Connects Founders](/connects-founders): How ConnectX connects founders with builders and early teammates.
 - [CoFoundersLab Alternative](/cofounderslab-alternative): ConnectX vs CoFoundersLab comparison.
+- [Find a Technical Co-Founder](/find-a-technical-cofounder): Match with engineers and CTOs ready to build.
+- [Bumble for Co-Founders](/bumble-for-cofounders): Swipe-and-match co-founder discovery.
+- [Bumble for Startups](/bumble-for-startups): Startups matching with builders.
+- [Tinder for Co-Founders](/tinder-for-cofounders): Fast swipe-style co-founder matching.
+- [Tinder for Startups](/tinder-for-startups): Startups swipe with builders.
+- [YC Co-Founder Matching Alternative](/yc-cofounder-match-alternative): Open alternative to YC's tool.
+- [YC Alternative for Asia](/yc-cofounder-match-alternative-asia): Co-founder matching for Asia.
+- [YC Startup Matching for Indonesia](/yc-startup-match-alternative-indonesia): Indonesia-first matching.
 - [App Demo (Free)](/app): Interactive mobile playground showing the free matching experience.
 - [App Demo (Premium)](/app/premium): Interactive playground showing Premium features.
 - [Terms](/terms): Terms of service.
