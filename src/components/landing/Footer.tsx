@@ -9,11 +9,6 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
     { label: "Playground", href: "/app" },
     { label: "Download", href: "#" },
   ],
-  Founders: [
-    { label: "Find a Co-Founder", href: "/find-a-cofounder" },
-    { label: "Connect with Founders", href: "/connects-founders" },
-    { label: "CoFoundersLab Alternative", href: "/cofounderslab-alternative" },
-  ],
   Company: [
     { label: "About", href: "#" },
     { label: "Contact", href: "mailto:info@getconnectx.app" },
