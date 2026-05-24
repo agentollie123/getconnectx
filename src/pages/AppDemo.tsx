@@ -10,6 +10,8 @@ import { startups, type Startup } from "@/lib/startupData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import logoIcon from "@/assets/logo-icon.png";
+import { SEO } from "@/components/SEO";
+
 
 import { FilterPanel, type FilterState } from "@/components/app/FilterPanel";
 import { startups as allStartups } from "@/lib/startupData";

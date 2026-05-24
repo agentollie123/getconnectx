@@ -352,8 +352,14 @@ export default function AppPremium() {
   );
 
   return (
-    <div className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
+    <main className="min-h-screen bg-[hsl(0,0%,5%)] flex items-center justify-center p-2 sm:p-4">
+      <SEO
+        title="ConnectX Premium Demo — Advanced Co-Founder Matching"
+        description="Preview the Premium ConnectX experience: deeper filters, compatibility intelligence, and priority signals for serious founders."
+        path="/app/premium"
+      />
       <div className="w-full max-w-[390px] h-[844px] rounded-[2rem] border-2 border-border/20 bg-background overflow-hidden shadow-2xl flex flex-col relative">
+
       {/* Phone notch/camera spacer */}
       <div className="flex-shrink-0 h-11 bg-card/60 backdrop-blur-md" />
       <header className="flex-shrink-0 px-4 py-2 flex items-center justify-between bg-card/60 backdrop-blur-md border-b border-border/30">
