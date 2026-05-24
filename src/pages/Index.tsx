@@ -10,11 +10,20 @@ import { SocialProof } from "@/components/landing/SocialProof";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
 
+import { SEO } from "@/components/SEO";
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="ConnectX — Find Co-Founders & Teammates to Build Your Startup"
+        description="ConnectX matches builders and startups with the right co-founders, early teammates, and operators. No networking. No job boards. Just the people you need to start."
+        path="/"
+      />
       <Navbar />
+      <main>
       <HeroSection />
+
       <FounderProblem />
       <SolutionSection />
       <StartupPipeline />
