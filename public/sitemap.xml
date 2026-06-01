@@ -93,4 +93,6 @@
   <url><loc>https://getconnectx.app/startup-matching-south-korea</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://getconnectx.app/find-a-cofounder-taiwan</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://getconnectx.app/startup-matching-taiwan</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://getconnectx.app/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://getconnectx.app/blog/child-safety-and-protection-policy</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
