@@ -181,7 +181,7 @@ export function PlaygroundSection() {
             Swipe. Connect. <span className="gradient-text-accent">{t("Build Together.", "Bangun Bersama.")}</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
-            {t("Experience how ConnectX helps you discover co-founders and teammates. Try the interactive demo below or jump into the full app.", "Rasakan bagaimana ConnectX membantu kamu menemukan co-founder dan teammate. Coba demo interaktif di bawah atau langsung masuk ke aplikasi penuh.")}
+            {t("Experience how ConnectX helps you discover founders, builders, co-founders, investors, and startup opportunities. Try the interactive demo or download the full app.", "Rasakan bagaimana ConnectX membantu kamu menemukan founder, builder, co-founder, investor, dan peluang startup. Coba demo interaktif atau unduh aplikasi penuh.")}
           </p>
         </motion.div>
 
