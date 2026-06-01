@@ -58,7 +58,7 @@ export function Footer() {
               {t("The platform where startups begin.", "Platform tempat startup dimulai.")}
             </p>
             <p className="text-xs text-muted-foreground mb-4 italic">
-              {t("Swipe. Match. Build together.", "Swipe. Match. Bangun bersama.")}
+              {t("Swipe. Connect. Build together.", "Swipe. Connect. Bangun bersama.")}
             </p>
             <div className="flex flex-wrap gap-2">
               {socials.map((s) => {
