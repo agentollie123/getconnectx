@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Rocket, Play } from "lucide-react";
+import { Rocket } from "lucide-react";
 import { StoreBadges } from "./StoreBadges";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -31,15 +30,6 @@ export function FinalCTA() {
           <p className="text-lg text-muted-foreground mb-10 max-w-lg mx-auto">
             {t("Join thousands of founders, builders, engineers, operators, and startup teams already connecting on ConnectX.", "Bergabunglah dengan ribuan founder, builder, engineer, operator, dan tim startup yang sudah terkoneksi di ConnectX.")}
           </p>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <Button size="lg" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
-              <a href="/app">
-                <Play className="w-4 h-4 mr-2" />
-                {t("Try Playground", "Coba Playground")}
-              </a>
-            </Button>
-          </div>
 
           <div className="flex justify-center">
             <StoreBadges align="center" />

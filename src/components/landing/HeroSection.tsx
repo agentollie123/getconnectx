@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
 import { NetworkVisualization } from "./NetworkVisualization";
 import { StoreBadges } from "./StoreBadges";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -41,15 +39,6 @@ export function HeroSection() {
             <p className="text-sm text-muted-foreground/70 max-w-lg mb-8">
               {t("No networking. No job boards. No cold outreach. Just the right connections to start building.", "Bukan networking. Bukan job portal. Bukan cold outreach. Hanya koneksi yang tepat untuk mulai membangun.")}
             </p>
-
-            <div className="flex flex-wrap gap-4 mb-6">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
-                <a href="/app">
-                  <Play className="w-4 h-4 mr-2" />
-                  {t("Try Playground", "Coba Playground")}
-                </a>
-              </Button>
-            </div>
 
             <StoreBadges />
 
