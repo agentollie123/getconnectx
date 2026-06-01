@@ -32,15 +32,6 @@ export function FinalCTA() {
             {t("Join thousands of founders, builders, engineers, operators, and startup teams already connecting on ConnectX.", "Bergabunglah dengan ribuan founder, builder, engineer, operator, dan tim startup yang sudah terkoneksi di ConnectX.")}
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <Button size="lg" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
-              <a href="/app">
-                <Play className="w-4 h-4 mr-2" />
-                {t("Try Playground", "Coba Playground")}
-              </a>
-            </Button>
-          </div>
-
           <div className="flex justify-center">
             <StoreBadges align="center" />
           </div>
