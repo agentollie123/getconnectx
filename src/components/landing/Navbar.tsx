@@ -52,7 +52,7 @@ export function Navbar() {
           <a href="#playground" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Playground</a>
           <Link to="/app" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Web App</Link>
           <Button size="sm" className="w-full bg-primary text-primary-foreground" asChild>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">{t("Join Waitlist", "Gabung Waitlist")}</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">{t("Download App", "Unduh Aplikasi")}</a>
           </Button>
         </div>
       }
