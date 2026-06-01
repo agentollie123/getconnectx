@@ -122,7 +122,7 @@ const ChildSafetyPolicy = () => {
       <SEO
         title="Child Safety and Protection Policy — ConnectX"
         description="ConnectX's zero-tolerance child safety and protection policy covering age eligibility, prohibited content, reporting, enforcement, and global compliance."
-        path="/blog/child-safety-and-protection-policy"
+        path="/child-safety-and-protection-policy"
       />
       <Navbar />
       <main className="pt-28 pb-20">
