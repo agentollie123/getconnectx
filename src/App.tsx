@@ -37,7 +37,7 @@ const App = () => (
           <Route path="/connects-founders" element={<ConnectsFounders />} />
           <Route path="/cofounderslab-alternative" element={<CofounderslabAlternative />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/child-safety-and-protection-policy" element={<ChildSafetyPolicy />} />
+          <Route path="/child-safety-and-protection-policy" element={<ChildSafetyPolicy />} />
           <Route path="/:slug" element={<SeoLanding />} />
           <Route path="*" element={<NotFound />} />
 
