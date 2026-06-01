@@ -30,22 +30,22 @@ export function PremiumVsFree() {
   const { t } = useLanguage();
   const localizedFreeFeatures = freeFeatures.map((feature, i) => [
     t("Discover founders, builders, and startups", "Temukan founder, builder, dan startup"),
-    t("Basic matches based on your profile", "Match dasar berdasarkan profilmu"),
+    t("Basic connection recommendations", "Rekomendasi koneksi dasar"),
     t("Connect with people", "Terhubung dengan orang"),
     t("Build your profile", "Bangun profilmu"),
   ][i]);
   const localizedFreeLimitations = freeLimitations.map((feature, i) => [
-    t("Matches may be less precise", "Match mungkin kurang presisi"),
+    t("Connections may be less precise", "Koneksi mungkin kurang presisi"),
     t("Limited visibility to others", "Visibilitas terbatas ke pengguna lain"),
-    t("You won't see who wants to connect", "Kamu tidak melihat siapa yang ingin terhubung"),
+    t("You won't see who wants to connect with you", "Kamu tidak melihat siapa yang ingin terhubung denganmu"),
   ][i]);
   const localizedPremiumFeatures = premiumFeatures.map((feature, i) => [
     t("See who wants to connect with you", "Lihat siapa yang ingin terhubung denganmu"),
-    t("Get higher-quality matches", "Dapatkan match yang lebih berkualitas"),
+    t("Higher quality connection recommendations", "Rekomendasi koneksi berkualitas lebih tinggi"),
     t("Appear first to founders and startups", "Muncul lebih dulu ke founder dan startup"),
     t("Increase your chances of finding the right team", "Tingkatkan peluang menemukan tim yang tepat"),
     t("Priority visibility in discovery", "Visibilitas prioritas di discovery"),
-    t("Better match precision", "Presisi match lebih baik"),
+    t("Better connection precision", "Presisi koneksi lebih baik"),
     t("Monthly profile boost", "Boost profil bulanan"),
   ][i]);
 
