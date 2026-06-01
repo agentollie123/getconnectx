@@ -42,15 +42,6 @@ export function HeroSection() {
               {t("No networking. No job boards. No cold outreach. Just the right connections to start building.", "Bukan networking. Bukan job portal. Bukan cold outreach. Hanya koneksi yang tepat untuk mulai membangun.")}
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-6">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
-                <a href="/app">
-                  <Play className="w-4 h-4 mr-2" />
-                  {t("Try Playground", "Coba Playground")}
-                </a>
-              </Button>
-            </div>
-
             <StoreBadges />
 
             <p className="text-xs text-primary/80 font-medium mt-4">
