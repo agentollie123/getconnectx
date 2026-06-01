@@ -13,7 +13,7 @@ export function HeroSection() {
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
       </div>
 
-      <div className="container mx-auto px-4 py-20">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-16 py-20">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
