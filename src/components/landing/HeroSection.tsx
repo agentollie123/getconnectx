@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
 import { NetworkVisualization } from "./NetworkVisualization";
 import { StoreBadges } from "./StoreBadges";
 import { useLanguage } from "@/contexts/LanguageContext";
