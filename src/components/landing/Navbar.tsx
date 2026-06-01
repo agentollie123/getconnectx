@@ -30,11 +30,11 @@ export function Navbar() {
           <LanguageSwitch />
           <ThemeToggle />
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
-            <Link to="/app">Playground</Link>
+            <Link to="/app">{t("Try Demo", "Coba Demo")}</Link>
           </Button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">
-              {t("Join Waitlist", "Gabung Waitlist")}
+              {t("Download App", "Unduh Aplikasi")}
             </a>
           </Button>
         </div>
