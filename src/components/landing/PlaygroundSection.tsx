@@ -295,7 +295,7 @@ export function PlaygroundSection() {
                     </div>
                     <p className="font-display font-semibold text-foreground mb-2">{t("Ready to discover?", "Siap untuk terkoneksi?")}</p>
                     <p className="text-xs text-muted-foreground mb-4">
-                      {t("Set your preferences and tap \"Generate Candidates\" to start swiping.", "Atur preferensimu dan ketuk \"Cari Koneksi\" untuk mulai swipe.")}
+                      {t("Set your preferences and tap \"Discover Connections\" to start swiping.", "Atur preferensimu dan ketuk \"Temukan Koneksi\" untuk mulai swipe.")}
                     </p>
                     <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce" />
                   </div>
