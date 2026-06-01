@@ -18,7 +18,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="ConnectX — Find Co-Founders & Teammates to Build Your Startup"
-        description="ConnectX matches builders and startups with the right co-founders, early teammates, and operators. No networking. No job boards. Just the people you need to start."
+        description="ConnectX connects founders, co-founders, builders, investors, and early teams to start startups together. No networking. No job boards. Just the right connections to start building."
         path="/"
       />
       <Navbar />
