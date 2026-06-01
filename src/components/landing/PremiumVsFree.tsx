@@ -143,7 +143,7 @@ export function PremiumVsFree() {
           viewport={{ once: true }}
           className="text-center text-sm text-muted-foreground mt-10 italic"
         >
-          {t("The best teams don't wait to be discovered.", "Tim terbaik tidak menunggu untuk ditemukan.")}
+          {t("The best startup connections don't wait.", "Koneksi startup terbaik tidak menunggu.")}
         </motion.p>
       </div>
     </section>
