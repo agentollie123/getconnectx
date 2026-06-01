@@ -19,7 +19,7 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Condition", href: "/terms" },
     { label: "Community Guidelines", href: "/community-guidelines" },
-    { label: "Child Safety Policy", href: "/blog/child-safety-and-protection-policy" },
+    { label: "Child Safety Policy", href: "/child-safety-and-protection-policy" },
   ],
 };
 
