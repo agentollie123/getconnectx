@@ -12,6 +12,8 @@ import CommunityGuidelines from "./pages/CommunityGuidelines";
 import FindACofounder from "./pages/FindACofounder";
 import ConnectsFounders from "./pages/ConnectsFounders";
 import CofounderslabAlternative from "./pages/CofounderslabAlternative";
+import Blog from "./pages/Blog";
+import ChildSafetyPolicy from "./pages/blog/ChildSafetyPolicy";
 import SeoLanding from "./pages/SeoLanding";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +36,8 @@ const App = () => (
           <Route path="/find-a-cofounder" element={<FindACofounder />} />
           <Route path="/connects-founders" element={<ConnectsFounders />} />
           <Route path="/cofounderslab-alternative" element={<CofounderslabAlternative />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/child-safety-and-protection-policy" element={<ChildSafetyPolicy />} />
           <Route path="/:slug" element={<SeoLanding />} />
           <Route path="*" element={<NotFound />} />
 

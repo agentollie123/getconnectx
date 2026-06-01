@@ -13,12 +13,13 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
     { label: "About", href: "#" },
     { label: "Contact", href: "mailto:info@getconnectx.app" },
     { label: "Careers", href: "#" },
+    { label: "Blog", href: "/blog" },
   ],
   Resources: [
-    { label: "Blog", href: "https://getconnectx.com" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Condition", href: "/terms" },
     { label: "Community Guidelines", href: "/community-guidelines" },
+    { label: "Child Safety Policy", href: "/blog/child-safety-and-protection-policy" },
   ],
 };
 
