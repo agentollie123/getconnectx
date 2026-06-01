@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { NetworkVisualization } from "./NetworkVisualization";
+import { StoreBadges } from "./StoreBadges";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export function HeroSection() {
