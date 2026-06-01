@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Rocket, Play } from "lucide-react";
+import { Rocket, Play } from "lucide-react";
+import { StoreBadges } from "./StoreBadges";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export function FinalCTA() {
