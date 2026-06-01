@@ -125,7 +125,7 @@ export function PremiumVsFree() {
             </div>
 
             <p className="text-xs text-primary/80 mb-5 italic">
-              {t("Premium users are matched earlier with higher-fit profiles", "Pengguna Premium dipertemukan lebih awal dengan profil yang lebih cocok")}
+              {t("Premium users are discovered earlier by more relevant founders, startups, and builders.", "Pengguna Premium ditemukan lebih awal oleh founder, startup, dan builder yang lebih relevan.")}
             </p>
 
             <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
