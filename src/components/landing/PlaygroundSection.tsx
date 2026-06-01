@@ -181,7 +181,7 @@ export function PlaygroundSection() {
             Swipe. Connect. <span className="gradient-text-accent">{t("Build Together.", "Bangun Bersama.")}</span>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
-            {t("Experience how ConnectX helps you discover co-founders and teammates. Try the interactive demo below or jump into the full app.", "Rasakan bagaimana ConnectX membantu kamu menemukan co-founder dan teammate. Coba demo interaktif di bawah atau langsung masuk ke aplikasi penuh.")}
+            {t("Experience how ConnectX helps you discover founders, builders, co-founders, investors, and startup opportunities. Try the interactive demo or download the full app.", "Rasakan bagaimana ConnectX membantu kamu menemukan founder, builder, co-founder, investor, dan peluang startup. Coba demo interaktif atau unduh aplikasi penuh.")}
           </p>
         </motion.div>
 
@@ -254,7 +254,7 @@ export function PlaygroundSection() {
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary"
                 onClick={generateMatches}
               >
-                {t("Generate Candidates", "Cari Koneksi")}
+                {t("Discover Connections", "Temukan Koneksi")}
               </Button>
             </div>
           </motion.div>
@@ -295,7 +295,7 @@ export function PlaygroundSection() {
                     </div>
                     <p className="font-display font-semibold text-foreground mb-2">{t("Ready to discover?", "Siap untuk terkoneksi?")}</p>
                     <p className="text-xs text-muted-foreground mb-4">
-                      {t("Set your preferences and tap \"Generate Candidates\" to start swiping.", "Atur preferensimu dan ketuk \"Cari Koneksi\" untuk mulai swipe.")}
+                      {t("Set your preferences and tap \"Discover Connections\" to start swiping.", "Atur preferensimu dan ketuk \"Temukan Koneksi\" untuk mulai swipe.")}
                     </p>
                     <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce" />
                   </div>

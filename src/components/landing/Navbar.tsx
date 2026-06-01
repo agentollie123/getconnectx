@@ -30,11 +30,11 @@ export function Navbar() {
           <LanguageSwitch />
           <ThemeToggle />
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
-            <Link to="/app">Playground</Link>
+            <Link to="/app">{t("Try Demo", "Coba Demo")}</Link>
           </Button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">
-              {t("Join Waitlist", "Gabung Waitlist")}
+              {t("Download App", "Unduh Aplikasi")}
             </a>
           </Button>
         </div>
@@ -52,7 +52,7 @@ export function Navbar() {
           <a href="#playground" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Playground</a>
           <Link to="/app" className="block text-sm text-muted-foreground py-2" onClick={() => setOpen(false)}>Web App</Link>
           <Button size="sm" className="w-full bg-primary text-primary-foreground" asChild>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">{t("Join Waitlist", "Gabung Waitlist")}</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">{t("Download App", "Unduh Aplikasi")}</a>
           </Button>
         </div>
       }

@@ -34,30 +34,34 @@ export function HeroSection() {
             </h1>
 
             <p className="text-lg text-muted-foreground max-w-lg mb-3 leading-relaxed">
-              {t("ConnectX connects founders, co-founders, and early teams to start startups together.", "ConnectX mengkoneksikan founder, co-founder, dan tim untuk membangun startup bersama.")}
+              {t("ConnectX connects founders, co-founders, builders, investors, and early teams to start startups together.", "ConnectX mengkoneksikan founder, co-founder, builder, investor, dan tim awal untuk membangun startup bersama.")}
             </p>
 
             <p className="text-sm text-muted-foreground/70 max-w-lg mb-8">
-              {t("No networking. No job boards. Just the people you need to start.", "Bukan cuma networking. Bukan job portal. Tapi orang-orang yang kamu butuhkan untuk memulai.")}
+              {t("No networking. No job boards. No cold outreach. Just the right connections to start building.", "Bukan networking. Bukan job portal. Bukan cold outreach. Hanya koneksi yang tepat untuk mulai membangun.")}
             </p>
 
             <div className="flex flex-wrap gap-4 mb-3">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-primary" asChild>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">
-                  {t("Join Waitlist", "Gabung Waitlist")}
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                <a href="/app">
+                  <Play className="w-4 h-4 mr-2" />
+                  {t("Try Demo", "Coba Demo")}
                 </a>
               </Button>
               <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-secondary" asChild>
-                <a href="/app">
-                  <Play className="w-4 h-4 mr-2" />
-                  {t("Explore Playground", "Coba Playground")}
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCiRvEYfR_cVMqnoLtcTpAp6xagcchRJv6mQPMvFhgMyOqWQ/viewform" target="_blank" rel="noopener noreferrer">
+                  {t("Download App", "Unduh Aplikasi")}
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </a>
               </Button>
             </div>
 
+            <p className="text-xs text-muted-foreground/70 mb-2">
+              {t("Available on App Store & Google Play", "Tersedia di App Store & Google Play")}
+            </p>
+
             <p className="text-xs text-primary/80 font-medium">
-              {t("Be early. The best teams form first.", "Jadilah yang pertama. Untuk bentuk Tim terbaik lebih dulu.")}
+              {t("Be early. The best startup connections happen first.", "Jadilah yang pertama. Koneksi startup terbaik terjadi lebih dulu.")}
             </p>
 
             <div className="flex gap-8 mt-10 pt-8 border-t border-border/50">
