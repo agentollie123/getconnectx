@@ -254,7 +254,7 @@ export function PlaygroundSection() {
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-primary"
                 onClick={generateMatches}
               >
-                {t("Generate Candidates", "Cari Koneksi")}
+                {t("Discover Connections", "Temukan Koneksi")}
               </Button>
             </div>
           </motion.div>
