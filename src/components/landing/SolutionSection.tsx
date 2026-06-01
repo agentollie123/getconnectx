@@ -90,7 +90,7 @@ export function SolutionSection() {
                 <div className="w-px h-8 bg-primary/20" />
               </div>
               <p className="text-[10px] text-muted-foreground font-medium text-center max-w-[100px]">
-                {t("Smart Matching", "Matching Cerdas")}
+                {t("Smart Connecting", "Koneksi Cerdas")}
               </p>
             </motion.div>
 
