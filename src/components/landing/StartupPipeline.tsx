@@ -19,7 +19,7 @@ const steps = [
     icon: Compass,
     step: "03",
     title: "Discover Relevant People or Startups",
-    description: "Browse curated profiles matched to your skills, industry, and goals. No noise only relevant connections.",
+    description: "Explore founders, builders, investors, and startups aligned with your skills, interests, and goals. No noise — only relevant connections.",
   },
   {
     icon: Handshake,
