@@ -31,4 +31,6 @@ Countries: indonesia, thailand, vietnam, philippines, malaysia, india, pakistan,
 - [Terms](/terms): Terms of service.
 - [Privacy](/privacy): Privacy policy.
 - [Community Guidelines](/community-guidelines): Community rules.
+- [Blog](/blog): ConnectX articles and announcements.
+- [Child Safety and Protection Policy](/child-safety-and-protection-policy): Zero-tolerance child safety policy and reporting.
 
