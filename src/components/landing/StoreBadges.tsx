@@ -45,7 +45,7 @@ export function StoreBadges({ align = "start" }: { align?: "start" | "center" })
           <span className="text-sm font-semibold tracking-tight">App Store</span>
         </a>
         <a
-          href={DOWNLOAD_URL}
+          href="https://play.google.com/store/apps/details?id=com.connectx.app&hl=id"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2.5 h-12 px-5 rounded-full bg-foreground text-background hover:bg-foreground/90 transition-all hover:-translate-y-0.5"
